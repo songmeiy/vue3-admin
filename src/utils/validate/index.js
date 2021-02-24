@@ -6,7 +6,16 @@
 export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
-
+/**
+ * @description 校验用户名是否小于6位
+ * @param value
+ * @returns {boolean}
+ */
+export function isUsername(value) {
+  // const reg = /^[1-9][0-9]{9}$/
+  // return reg.test(value)
+  return value.length >= 6
+}
 /**
  * @description 校验密码是否小于6位
  * @param value

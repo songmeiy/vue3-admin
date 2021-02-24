@@ -89,6 +89,15 @@ const demo = {
       ]
     },
     {
+      path: 'timeline',
+      name: 'TimeLine',
+      component: () => import('@/views/demo/timeline'),
+      meta: {
+        title: '时间线',
+        icon: 'timeline'
+      }
+    },
+    {
       path: 'editor',
       name: 'Editor',
       redirect: 'demo/editor/wangEditor',
@@ -177,7 +186,7 @@ const demo = {
     {
       path: 'meta',
       name: 'Meta',
-      component: () => import('@/views/demo/meta'),
+      component: () => import('@/views/demo/meta/meta'),
       redirect: '/demo/meta/button',
       meta: {
         title: '路由参数',
@@ -185,9 +194,9 @@ const demo = {
       },
       children: [
         {
-          path: 'button',
-          name: 'MetaButton',
-          component: () => import('@/views/demo/meta/button'),
+          path: 'index',
+          name: 'MetaIndex',
+          component: () => import('@/views/demo/meta/index'),
           meta: {
             title: '操作',
             icon: 'show'
@@ -238,6 +247,48 @@ const demo = {
       ]
     },
     {
+      path: 'dynamicSegment',
+      name: 'DynamicSegment',
+      component: () => import('@/views/demo/dynamicSegment/dynamicSegment'),
+      meta: {
+        title: '路由传参',
+        icon: 'arrow-left-right-line'
+      },
+      children: [
+        {
+          path: 'index',
+          name: 'DynamicSegmentIndex',
+          component: () => import('@/views/demo/dynamicSegment/index'),
+          meta: {
+            title: '路由传参',
+            icon: 'arrow-left-right-line'
+          }
+        },
+        {
+          path: 'query',
+          name: 'DynamicSegmentQuery',
+          component: () => import('@/views/demo/dynamicSegment/query'),
+          hidden: true,
+          meta: {
+            title: 'query',
+            icon: 'query',
+            noKeepAlive: true
+          }
+        },
+        {
+          path: 'params',
+          name: 'DynamicSegmentParam',
+          component: () => import('@/views/demo/dynamicSegment/params'),
+          hidden: true,
+          meta: {
+            title: 'params',
+            icon: 'params',
+            noKeepAlive: true
+          }
+        }
+      ]
+    },
+    {
       path: 'nested',
       name: 'Nested',
       component: () => import('@/views/demo/nested'),
@@ -266,7 +317,6 @@ const demo = {
               name: 'Nested11',
               component: () => import('@/views/demo/nested/nested1/nested1-1'),
               redirect: '/demo/nested/nested-1/nested-1-1/nested-1-1-1',
-              alwaysShow: true,
               meta: {
                 title: '多级路由-1-1',
                 noKeepAlive: false
@@ -279,6 +329,7 @@ const demo = {
                     title: '多级路由-1-1-1',
                     noKeepAlive: false
                   },
+                  alwaysShow: true,
                   component: () => import('@/views/demo/nested/nested1/nested1-1/nested1-1-1'),
                   children: [
                     {

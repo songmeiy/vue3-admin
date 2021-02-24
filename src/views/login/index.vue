@@ -1,203 +1,223 @@
 <template>
   <div class="login-container">
-    <el-row>
-      <el-col :lg="14" :md="11" :sm="24" :xl="14" :xs="24">
-        <div style="color: transparent">占位符</div>
-      </el-col>
-      <el-col :lg="9" :md="12" :sm="24" :xl="9" :xs="24">
-        <el-form
-          ref="loginFormRef"
-          :model="loginForm"
-          :rules="rules"
-          class="login-form"
-          label-position="left"
-        >
-          <div class="title">hello !</div>
-          <div class="title-tips">
-            {{ translate('login', '欢迎来到') }}{{ title }}！
-          </div>
-          <el-form-item prop="username" style="margin-top: 40px">
-            <el-input
-              v-model="loginForm.username"
-              :placeholder="translate('login', '请输入用户名')"
-              tabindex="1"
-              type="text"
-            >
-              <template #prefix><SvgIcon :iconClass="'user'" /></template>
-            </el-input>
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input
-              ref="passwordRef"
-              v-model="loginForm.password"
-              :placeholder="translate('login', '请输入密码')"
-              :type="passwordType"
-              tabindex="2"
-            >
-              <template #prefix>
-                <SvgIcon :iconClass="'lock'" />
-              </template>
-              <template v-if="passwordType === 'password'" #suffix>
-                <SvgIcon
-                  class="show-password"
-                  :iconClass="'eye-off'"
-                  @click="handlePassword"
-                />
-              </template>
-              <template v-else #suffix>
-                <SvgIcon
-                  class="show-password"
-                  :iconClass="'eye'"
-                  @click="handlePassword"
-                />
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-button
-            :loading="loading"
-            class="login-btn"
-            type="primary"
-            @click="handleLogin"
-          >
-            {{ translate('login', '登录') }}
-          </el-button>
-          <router-link to="/login">
-            <div style="margin-top: 20px">{{ translate('login', '注册') }}</div>
-          </router-link>
-        </el-form>
-      </el-col>
-      <el-col :lg="1" :md="1" :sm="24" :xl="1" :xs="24">
-        <div style="color: transparent">占位符</div>
-      </el-col>
-    </el-row>
+    <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+      <div class="title-container">
+        <h3 class="title">{{ system.websiteTitle }}</h3>
+      </div>
+
+      <el-form-item prop="username">
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <el-input
+          ref="usernameRef"
+          v-model="loginForm.username"
+          :placeholder="translate('login', '用户名')"
+          name="username"
+          type="text"
+          tabindex="1"
+          autocomplete="on"
+        />
+      </el-form-item>
+
+      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <svg-icon icon-class="password" />
+          </span>
+          <el-input
+            :key="passwordType"
+            ref="passwordRef"
+            v-model="loginForm.password"
+            :type="passwordType"
+            :placeholder="translate('login', '密码')"
+            name="password"
+            tabindex="2"
+            autocomplete="on"
+            @blur="capsTooltip = false"
+          />
+          <span class="show-pwd" @click="showPwd">
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          </span>
+        </el-form-item>
+      </el-tooltip>
+      <div class="tips">
+        <router-link to="/register">{{ translate('login', '注册账号') }}</router-link>
+      </div>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ translate('login', '登录') }}</el-button>
+    </el-form>
+    <div class="language">
+      <element-language />
+    </div>
   </div>
 </template>
 
 <script>
+
+import { computed, getCurrentInstance, onMounted, reactive, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { translate } from '@/utils/i18n'
-import { reactive, ref, computed, getCurrentInstance } from 'vue'
+
 export default {
   name: 'Login',
   setup() {
-    const { $store } = getCurrentInstance().appContext.config.globalProperties
-    const loading = ref(false)
+    const { $router, $store } = getCurrentInstance().appContext.config.globalProperties
+    const system = computed(() => $store.state.settings.system)
+    const $route = useRoute()
     const passwordType = ref('password')
-    const title = computed(() => $store.state.settings.title)
-    const loginFormRef = ref(null)
+    const capsTooltip = ref(false)
+    const loading = ref(false)
+    const redirect = ref(undefined)
+    const otherQuery = ref({})
+    const usernameRef = ref(null)
     const passwordRef = ref(null)
+    const loginFormRef = ref(null)
     const loginForm = reactive({
       username: 'admin',
-      password: '1999.331'
+      password: '111111'
     })
-    const rules = reactive({
-      username: [
-        {
-          required: true,
-          trigger: 'blur'
-        }
-      ],
-      password: [
-        {
-          required: true,
-          trigger: 'blur'
-        }
-      ]
+    const loginRules = reactive({
+      username: [{ required: true, message: translate('login', '用户名不能为空'), trigger: 'blur' }],
+      password: [{ required: true, message: translate('login', '密码不能为空'), trigger: 'blur' }]
     })
-    const handlePassword = () => {
-      passwordType.value === 'password' ? (passwordType.value = '') : (passwordType.value = 'password')
+    const checkCapslock = (e) => {
+      const { key } = e
+      capsTooltip.value = key && key.length === 1 && (key >= 'A' && key <= 'Z')
+    }
+    const showPwd = () => {
+      if (passwordType.value === 'password') {
+        passwordType.value = ''
+      } else {
+        passwordType.value = 'password'
+      }
       passwordRef.value.focus()
     }
     const handleLogin = () => {
       loginFormRef.value.validate(async(valid) => {
-        if (valid) {
-          try {
-            loading.value = true
-            await $store.dispatch('user/login', loginForm)
-          } finally {
-            loading.value = false
-          }
-        } else {
-          return false
-        }
+        if (!valid) return
+        loading.value = true
+        await $store.dispatch('user/login', loginForm)
+        $router.push({ path: redirect.value || '/', query: otherQuery.value })
+        loading.value = false
       })
     }
+    const getOtherQuery = (query) => {
+      return Object.keys(query).reduce((acc, cur) => {
+        if (cur !== 'redirect') {
+          acc[cur] = query[cur]
+        }
+        return acc
+      }, {})
+    }
+    onMounted(() => {
+      if (loginForm.username === '') {
+        usernameRef.value.focus()
+      } else if (loginForm.password === '') {
+        passwordRef.value.focus()
+      }
+    })
+    watch(() => $route.path, () => {
+      const query = $route.query
+      if (query) {
+        redirect.value = query.redirect
+        otherQuery.value = getOtherQuery(query)
+      }
+    })
+
     return {
-      rules,
-      title,
+      system,
       loading,
-      loginFormRef,
-      passwordRef,
       loginForm,
       passwordType,
+      loginRules,
+      usernameRef,
+      passwordRef,
+      capsTooltip,
+      loginFormRef,
+      checkCapslock,
+      showPwd,
       handleLogin,
-      translate,
-      handlePassword
+      translate
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.login-container {
-  height: 100vh;
-  background: url('~@/assets/login_images/background.jpg') center center fixed
-  no-repeat;
-  background-size: cover;
+<style lang="scss">
+/* 修复input 背景不协调 和光标变色 */
+
+$bg:#283443;
+$light_gray:#fff;
+$cursor: #fff;
+
+@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
+  .login-container .el-input input {
+    color: $cursor;
+  }
 }
 
-.login-form {
-  position: relative;
-  max-width: 100%;
-  padding: 4.5vh;
-  margin: calc((100vh - 475px) / 2) 5vw 5vw;
-  overflow: hidden;
-  background: url('~@/assets/login_images/login_form.png');
-  background-size: 100% 100%;
+/* reset element-ui css */
+.login-container {
+  .el-input {
+    display: inline-block;
+    height: 47px;
+    width: 85%;
 
-  .title {
-    font-size: 54px;
-    font-weight: 500;
-    color: $base-color-white;
-  }
+    input {
+      background: transparent;
+      border: 0;
+      -webkit-appearance: none;
+      border-radius: 0;
+      padding: 12px 5px 12px 15px;
+      color: $light_gray;
+      height: 47px;
+      caret-color: $cursor;
 
-  .title-tips {
-    margin-top: 29px;
-    font-size: 26px;
-    font-weight: 400;
-    color: $base-color-white;
-  }
-
-  .login-btn {
-    display: inherit;
-    width: 100%;
-    height: 50px;
-    margin-top: 5px;
-    border: 0;
-
-    &:hover {
-      opacity: 0.9;
-    }
-
-    .forget-passwordword {
-      width: 100%;
-      margin-top: 40px;
-      text-align: left;
-
-      .forget-password {
-        width: 129px;
-        height: 19px;
-        font-size: 20px;
-        font-weight: 400;
-        color: rgba(92, 102, 240, 1);
+      &:-webkit-autofill {
+        box-shadow: 0 0 0 1000px $bg inset !important;
+        -webkit-text-fill-color: $cursor !important;
       }
     }
   }
 
-  .tips {
-    margin-bottom: 10px;
-    font-size: $base-font-size-default;
-    color: $base-color-white;
+  .el-form-item {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    color: #454545;
+  }
+  .language{
+    color: white;
+  }
+}
+</style>
 
+<style lang="scss" scoped>
+$bg:#2d3a4b;
+$dark_gray:#889aa4;
+$light_gray:#eee;
+
+.login-container {
+  height: 100%;
+  width: 100%;
+  background-color: $bg;
+  overflow: hidden;
+  .login-form {
+    width: 520px;
+    max-width: 100%;
+    padding: 0;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+
+  .tips {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 10px;
+    text-align: right;
     span {
       &:first-of-type {
         margin-right: 16px;
@@ -205,74 +225,45 @@ export default {
     }
   }
 
+  .svg-container {
+    padding: 6px 5px 6px 15px;
+    color: $dark_gray;
+    vertical-align: middle;
+    width: 30px;
+    display: inline-block;
+  }
+
   .title-container {
     position: relative;
 
     .title {
+      font-size: 26px;
+      color: $light_gray;
       margin: 0 auto 40px auto;
-      font-size: 34px;
-      font-weight: bold;
-      color: $base-color-blue;
       text-align: center;
+      font-weight: bold;
     }
   }
 
-  i {
+  .show-pwd {
     position: absolute;
-    top: 8px;
-    left: 5px;
-    z-index: $base-z-index;
+    right: 10px;
+    top: 7px;
     font-size: 16px;
-    color: #d7dee3;
+    color: $dark_gray;
     cursor: pointer;
     user-select: none;
   }
 
-  .show-password {
+  .thirdparty-button {
     position: absolute;
-    right: 25px;
-    left: -35px;
-    font-size: 16px;
-    color: #d7dee3;
-    cursor: pointer;
-    user-select: none;
+    right: 0;
+    bottom: 6px;
   }
 
-  ::v-deep {
-    .el-form-item {
-      padding-right: 0;
-      margin: 20px 0;
-      color: #454545;
-      background: transparent;
-      border: 1px solid transparent;
-      border-radius: 2px;
-
-      &__content {
-        min-height: $base-input-height;
-        line-height: $base-input-height;
-      }
-
-      &__error {
-        position: absolute;
-        top: 100%;
-        left: 18px;
-        font-size: $base-font-size-small;
-        line-height: 18px;
-        color: $base-color-red;
-      }
-    }
-
-    .el-input {
-      box-sizing: border-box;
-
-      input {
-        height: 48px;
-        padding-left: 35px;
-        font-size: $base-font-size-default;
-        line-height: 58px;
-        background: #f6f4fc;
-        border: 0;
-      }
+  @media only screen and (max-width: 470px) {
+    .thirdparty-button {
+      display: none;
     }
   }
 }

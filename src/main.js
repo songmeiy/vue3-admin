@@ -8,6 +8,14 @@ import '@/style'
 import loadLayout from '@/layout'
 import installComponents from '@/components'
 import Highlight from '@/components/ElementHighlight'
+/**
+ * @description 正式环境默认使用mock，正式项目记得注释后再打包
+ */
+if (process.env.NODE_ENV === 'production') {
+  // eslint-disable-next-line global-require
+  const { mockXHR } = require('@/utils/static')
+  mockXHR()
+}
 const app = createApp(App)
 loadLayout(app)
 installComponents(app)

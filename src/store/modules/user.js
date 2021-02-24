@@ -2,7 +2,7 @@
  * @author WangZeping zepingwong@gmail.com
  * @description 登录、获取用户信息、退出登录、清除accessToken逻辑，不建议修改
  */
-import { getMyInfo, login } from '@/api/user'
+import { getMyInfo, login, logout } from '@/api/user'
 import {
   getAccessToken,
   removeAccessToken,
@@ -136,7 +136,7 @@ const actions = {
    * @param {*} { dispatch }
    */
   async logout({ dispatch }) {
-    // await logout(state.accessToken)
+    await logout(state.accessToken)
     await dispatch('resetAll')
   },
   /**
@@ -162,10 +162,6 @@ const actions = {
 const loginNotify = () => {
   const hour = new Date().getHours()
   const thisTime = hour < 8 ? '早上好' : hour <= 11 ? '上午好' : hour <= 13 ? '中午好' : hour < 18 ? '下午好' : '晚上好'
-  baseNotify(
-    `欢迎登录${system.value.websiteTitle}`,
-    `${thisTime}！`,
-    'success'
-  )
+  baseNotify(`欢迎登录${system.value.websiteTitle}`, `${thisTime}！`, 'success')
 }
 export default { state, getters, mutations, actions }

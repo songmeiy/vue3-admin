@@ -48,5 +48,7 @@ export default {
   '管理日志': 'Mange logs',
   '日志详情': 'Detail',
   '测试': 'Test',
-  '错误测试': 'Error page'
+  '错误测试': 'Error page',
+  '时间线': 'TimeLine',
+  '路由传参': 'Routing parameters'
 }

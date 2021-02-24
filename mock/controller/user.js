@@ -30,7 +30,7 @@ module.exports = [
     response() {
       return {
         code: 200,
-        msg: '模拟修改成功',
+        message: '模拟修改成功',
         data: {}
       }
     }
@@ -54,23 +54,23 @@ module.exports = [
       if (!code) {
         return {
           code: 500,
-          msg: '未成功获取Token。'
+          message: 'message.login.未成功获取Token'
         }
       }
       return {
         code: 200,
-        msg: 'success',
+        message: 'message.login.模拟登录成功',
         data: { accessToken: accessTokens['admin'] }
       }
     }
   },
   {
-    url: '/register',
+    url: '/user/register',
     type: 'post',
     response() {
       return {
         code: 200,
-        msg: '模拟注册成功'
+        message: 'message.register.模拟注册成功'
       }
     }
   },
@@ -150,20 +150,25 @@ module.exports = [
           personality,
           description,
           'avatar|1': [
-            'https://i.gtimg.cn/club/item/face/img/2/15922_100.gif',
-            'https://i.gtimg.cn/club/item/face/img/8/15918_100.gif'
+            'https://zepingwong.github.io/image/avatar-1.png',
+            'https://zepingwong.github.io/image/avatar-2.png',
+            'https://zepingwong.github.io/image/avatar-3.png',
+            'https://zepingwong.github.io/image/avatar-4.png',
+            'https://zepingwong.github.io/image/avatar-5.png',
+            'https://zepingwong.github.io/image/avatar-6.png',
+            'https://zepingwong.github.io/image/avatar-7.png'
           ]
         }
       }
     }
   },
   {
-    url: '/logout',
+    url: '/user/logout',
     type: 'post',
     response() {
       return {
         code: 200,
-        msg: 'success'
+        message: 'success'
       }
     }
   }

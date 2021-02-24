@@ -89,9 +89,13 @@ export default {
   }
 }
 </script>
-
+<style lang="scss">
+.el-autocomplete {
+  width: 100%;
+}
+</style>
 <style lang="scss" scoped>
-:deep {
+::v-deep {
   .el-dialog {
     &__header {
       display: none;
@@ -110,17 +114,6 @@ export default {
         position: absolute;
         top: 14px;
         left: $base-margin/1.5;
-      }
-
-      .el-autocomplete {
-        width: 100%;
-
-        .el-input__inner {
-          width: 100%;
-          height: 60px;
-          padding-left: $base-padding * 2.5;
-          border: 0 !important;
-        }
       }
     }
   }

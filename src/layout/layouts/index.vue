@@ -10,7 +10,7 @@
     <el-backtop target="#app" />
     <!--  主题组件放到layouts下防止主题切换，导致主题组件重新加载 -->
     <element-theme-drawer />
-    <element-theme-setting v-if="theme.showThemeSetting"/>
+    <element-theme-setting v-if="theme.showThemeSetting && device !== 'mobile'"/>
   </div>
 </template>
 <script>

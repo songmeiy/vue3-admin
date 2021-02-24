@@ -8,7 +8,7 @@ module.exports = [
         message: 'success',
         data: {
           websiteTitle: 'vue3-admin',
-          allowRegister: false,
+          allowRegister: true,
           supportVisit: false,
           titleReverse: false,
           titleSeparator: ' - ',
