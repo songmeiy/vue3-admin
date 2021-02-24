@@ -1,0 +1,25 @@
+/* 刷新|国际化|通知|搜索|主题 头部快捷按钮样式 */
+.quick-button {
+  margin: 0 10px;
+  cursor:pointer;
+  color: white;
+  font-size: 16px;
+  &-commom,
+  &-horizontal {
+    &-white {
+      color: black;
+    }
+  }
+  &-comprehensive,
+  &-column,
+  &-hide,
+  &-vertical {
+    &-default,
+    &-ocean,
+    &-green,
+    &-white,
+    &-red{
+      color: black;
+    }
+  }
+}

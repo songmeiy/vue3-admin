@@ -1,0 +1,233 @@
+/**
+ * @description 绿荫草场主题
+ */
+
+.element-theme-red {
+  $base-menu-background: linear-gradient(to right, #282c34, #000);
+  $base-color-red: #ff4d4f;
+  $base-color-red-light: mix($base-color-white, $base-color-red, 90%);
+
+  @mixin container {
+    background: $base-menu-background !important;
+  }
+
+  @mixin container-common {
+    background: #20222a !important;
+  }
+
+  @mixin active {
+    &:hover {
+      color: $base-color-white !important;
+      background-color: $base-color-red !important;
+    }
+
+    &.is-active {
+      color: $base-color-white !important;
+      background-color: $base-color-red !important;
+    }
+  }
+
+  .logo-container-horizontal,
+  .logo-container-vertical {
+    @include container;
+  }
+
+  .logo-container-comprehensive {
+    @include container;
+  }
+
+  .logo-container-column {
+    .logo {
+      @include container;
+    }
+  }
+
+  .column-bar-container.el-scrollbar {
+    .el-tabs {
+      .el-tabs__nav-wrap.is-left {
+        @include container;
+      }
+
+      .el-tabs__nav {
+        @include container;
+      }
+
+      .el-tabs__item.is-active {
+        background: $base-color-red !important;
+      }
+    }
+
+    .el-menu {
+      .el-menu-item.is-active,
+      .el-submenu__title.is-active,
+      .el-menu-item:hover,
+      .el-submenu__title:hover {
+        i {
+          color: $base-color-red !important;
+        }
+
+        color: $base-color-red !important;
+        background-color: $base-color-red-light !important;
+      }
+    }
+  }
+
+  .column-bar-container-card.el-scrollbar {
+    .el-tabs {
+      .el-tabs__item.is-active {
+        background: transparent !important;
+
+        .column-grid {
+          background: $base-color-red !important;
+        }
+      }
+    }
+  }
+
+  .element-layout-vertical,
+  .element-layout-horizontal,
+  .element-layout-comprehensive {
+    .el-menu {
+      @include container;
+
+      .el-submenu__title {
+        @include container;
+      }
+
+      .el-menu-item {
+        @include container;
+      }
+    }
+
+    .element-side-bar,
+    .comprehensive-bar-container {
+      @include container;
+
+      .el-menu-item {
+        @include active;
+      }
+    }
+  }
+
+  .element-layout-common {
+    .el-menu {
+      @include container-common;
+
+      .el-submenu__title {
+        @include container-common;
+      }
+
+      .el-menu-item {
+        @include container-common;
+      }
+    }
+
+    .element-side-bar {
+      @include container-common;
+
+      .el-menu-item {
+        @include active;
+      }
+    }
+  }
+
+  .element-header {
+    @include container;
+
+    .element-main {
+      @include container;
+
+      .right-panel {
+        .el-menu.el-menu {
+          &--horizontal {
+            .el-submenu,
+            .el-menu-item {
+              @include active;
+
+              &.is-active {
+                background-color: $base-color-red !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .element-tabs {
+    .element-tabs-content-card {
+      .el-tabs__header {
+        .el-tabs__item {
+          &.is-active {
+            color: $base-color-red !important;
+            background: $base-color-red-light !important;
+            border: 1px solid $base-color-red !important;
+          }
+
+          &:hover {
+            border: 1px solid $base-color-red !important;
+          }
+        }
+      }
+    }
+
+    .element-tabs-content-smart {
+      .el-tabs__header {
+        .el-tabs__item {
+          &.is-active {
+            background: $base-color-red-light !important;
+          }
+
+          &:after {
+            background-color: $base-color-red !important;
+          }
+
+          &:hover {
+            background: $base-color-red-light !important;
+          }
+        }
+      }
+    }
+
+    .element-tabs-content-smooth {
+      .el-tabs__header {
+        .el-tabs__item {
+          &.is-active {
+            color: $base-color-red !important;
+            background: $base-color-red-light !important;
+
+            &:hover {
+              color: $base-color-red !important;
+              background: $base-color-red-light !important;
+            }
+          }
+
+          &:hover {
+            color: $base-color-black !important;
+          }
+        }
+      }
+    }
+  }
+
+  .element-nav {
+    .el-tabs__item.is-active,
+    .el-tabs__item:hover {
+      color: $base-color-red !important;
+    }
+
+    .el-tabs__active-bar {
+      background-color: $base-color-red !important;
+    }
+  }
+
+  #nprogress {
+    .bar {
+      background: $base-color-red !important;
+    }
+
+    .peg {
+      box-shadow: 0 0 10px $base-color-red, 0 0 5px $base-color-red !important;
+    }
+  }
+}

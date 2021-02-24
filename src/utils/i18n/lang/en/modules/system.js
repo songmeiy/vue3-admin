@@ -1,0 +1,20 @@
+export default {
+  '国际化': 'International',
+  '选择语言': 'Select language',
+  '网站标题': 'Website title',
+  '标题分隔符': 'Title separator',
+  '图标': 'Icon',
+  '版权': 'Copyright',
+  '消息提示时间': 'Message prompt time',
+  '加载文字': 'Loading text',
+  '开放注册': 'Allow register',
+  '登录RSA加密': 'Login RSA',
+  '登录拦截': 'Login interception',
+  '支持游客访问': 'Support visit',
+  '路由记录': 'Record route',
+  '路由白名单': 'Routes whiteList',
+  '标题翻转': 'Title reverse',
+  '通用设置': 'Common settings',
+  '如果为false: page - title 如果为true: title - page': 'if false: page - title, if true: title - page',
+  '这些设置由后台控制，会对全局产生影响，请谨慎操作': 'These settings are controlled by the background and will have an impact on the overall situation. Please operate carefully'
+}
