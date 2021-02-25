@@ -52,9 +52,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.WangEditor{
-  padding: 20px 20px;
-}
-</style>

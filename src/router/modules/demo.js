@@ -59,7 +59,7 @@ const demo = {
       path: 'table',
       name: 'Table',
       component: () => import('@/views/demo/table'),
-      redirect: '/demo/table/customTable',
+      redirect: '/demo/table/comprehensive',
       meta: {
         title: '表格',
         icon: 'table',
@@ -67,9 +67,19 @@ const demo = {
       },
       children: [
         {
-          path: 'customTable',
+          path: 'comprehensive',
+          name: 'ComprehensiveTable',
+          component: () => import('@/views/demo/table/comprehensive'),
+          meta: {
+            title: '综合表格',
+            icon: 'comprehensive',
+            noKeepAlive: false
+          }
+        },
+        {
+          path: 'custom',
           name: 'CustomTable',
-          component: () => import('@/views/demo/table/customTable'),
+          component: () => import('@/views/demo/table/custom'),
           meta: {
             title: '自定义表格',
             icon: 'custom',
@@ -77,13 +87,54 @@ const demo = {
           }
         },
         {
-          path: 'inlineTable',
+          path: 'inline',
           name: 'InlineTable',
-          component: () => import('@/views/demo/table/inlineTable'),
+          component: () => import('@/views/demo/table/inline'),
           meta: {
             title: '行内编辑表格',
             icon: 'edit-solid',
             noKeepAlive: false
+          }
+        },
+        {
+          path: 'detail',
+          name: 'TableDetail',
+          hidden: true,
+          component: () => import('@/views/demo/table/detail'),
+          meta: {
+            title: '详情',
+            icon: 'edit-solid',
+            noKeepAlive: false
+          }
+        }
+      ]
+    },
+    {
+      path: 'form',
+      name: 'Form',
+      component: () => import('@/views/demo/form'),
+      redirect: '/demo/form/comprehensive',
+      meta: {
+        icon: 'form',
+        title: '表单'
+      },
+      children: [
+        {
+          path: 'comprehensive',
+          name: 'ComprehensiveForm',
+          component: () => import('@/views/demo/form/comprehensive'),
+          meta: {
+            icon: 'comprehensive-form',
+            title: '综合表单'
+          }
+        },
+        {
+          path: 'steps',
+          name: 'StepsForm',
+          component: () => import('@/views/demo/form/steps'),
+          meta: {
+            icon: 'steps',
+            title: '分步表单'
           }
         }
       ]
@@ -95,6 +146,15 @@ const demo = {
       meta: {
         title: '时间线',
         icon: 'timeline'
+      }
+    },
+    {
+      path: 'list',
+      name: 'List',
+      component: () => import('@/views/demo/list'),
+      meta: {
+        title: '列表',
+        icon: 'stream-list'
       }
     },
     {
@@ -125,6 +185,49 @@ const demo = {
           meta: {
             title: 'MarkDown编辑器',
             icon: 'markdown',
+            noKeepAlive: false
+          }
+        }
+      ]
+    },
+    {
+      path: 'excel',
+      name: 'Excel',
+      component: () => import('@/views/demo/excel'),
+      redirect: '/demo/excel/export',
+      meta: {
+        title: 'Excel',
+        icon: 'excel',
+        noKeepAlive: false
+      },
+      children: [
+        {
+          path: 'export',
+          name: 'ExportExcel',
+          component: () => import('@/views/demo/excel/export'),
+          meta: {
+            title: '导出表格',
+            icon: 'export',
+            noKeepAlive: false
+          }
+        },
+        {
+          path: 'selected',
+          name: 'ExportSelectedExcel',
+          component: () => import('@/views/demo/excel/selected'),
+          meta: {
+            title: '导出选中数据',
+            icon: 'select',
+            noKeepAlive: false
+          }
+        },
+        {
+          path: 'merge',
+          name: 'ExportMergeHeaderExcel',
+          component: () => import('@/views/demo/excel/merge'),
+          meta: {
+            title: '导出合并表格',
+            icon: 'merge',
             noKeepAlive: false
           }
         }
@@ -186,7 +289,7 @@ const demo = {
     {
       path: 'meta',
       name: 'Meta',
-      component: () => import('@/views/demo/meta/meta'),
+      component: () => import('@/views/demo/meta'),
       redirect: '/demo/meta/button',
       meta: {
         title: '路由参数',
@@ -196,9 +299,9 @@ const demo = {
         {
           path: 'index',
           name: 'MetaIndex',
-          component: () => import('@/views/demo/meta/index'),
+          component: () => import('@/views/demo/meta/meta'),
           meta: {
-            title: '操作',
+            title: '测试',
             icon: 'show'
           }
         },
@@ -249,19 +352,21 @@ const demo = {
     {
       path: 'dynamicSegment',
       name: 'DynamicSegment',
-      component: () => import('@/views/demo/dynamicSegment/dynamicSegment'),
+      component: () => import('@/views/demo/dynamicSegment/index'),
       meta: {
         title: '路由传参',
-        icon: 'arrow-left-right-line'
+        icon: 'arrow-left-right-line',
+        noKeepAlive: false
       },
       children: [
         {
           path: 'index',
           name: 'DynamicSegmentIndex',
-          component: () => import('@/views/demo/dynamicSegment/index'),
+          component: () => import('@/views/demo/dynamicSegment/dynamicSegment'),
           meta: {
             title: '路由传参',
-            icon: 'arrow-left-right-line'
+            icon: 'arrow-left-right-line',
+            noKeepAlive: false
           }
         },
         {
@@ -315,6 +420,7 @@ const demo = {
             {
               path: 'nested-1-1',
               name: 'Nested11',
+              alwaysShow: true,
               component: () => import('@/views/demo/nested/nested1/nested1-1'),
               redirect: '/demo/nested/nested-1/nested-1-1/nested-1-1-1',
               meta: {
@@ -348,6 +454,15 @@ const demo = {
           ]
         }
       ]
+    },
+    {
+      path: 'https://github.com/zepingwong/vue3-admin',
+      name: 'ExternalLink',
+      meta: {
+        title: '外链',
+        target: '_blank',
+        icon: 'external-link'
+      }
     }
   ]
 }

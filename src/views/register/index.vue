@@ -1,9 +1,6 @@
 <template>
   <div class="register-container">
     <el-form ref="registerFormRef" :model="registerForm" :rules="registerRules" class="register-form" autocomplete="on" label-position="left">
-      <div class="language">
-        <element-language />
-      </div>
       <div class="title-container">
         <h3 class="title">{{ system.websiteTitle }}</h3>
       </div>
@@ -27,6 +24,9 @@
         <router-link to="/login">{{ translate('register', '已有账号，登录') }}</router-link>
       </div>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleRegister">{{ translate('register', '注册') }}</el-button>
+      <div class="language">
+        <element-language />
+      </div>
     </el-form>
   </div>
 </template>
@@ -161,6 +161,7 @@ $cursor: #fff;
   }
   .language{
     color: white;
+    position: relative;
   }
 }
 </style>

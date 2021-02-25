@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getRouterList(params) {
   return request({
-    url: 'system/menu/getMenuList',
+    url: 'router/getList',
     method: 'get',
     params
   })

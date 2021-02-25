@@ -1,27 +1,23 @@
 <template>
   <div class="icon-container">
+    <el-form :inline="true" label-width="0">
+      <el-form-item>
+        <el-input v-model="queryForm.title" :placeholder="translate('component', '图标名称')"/>
+        <el-button
+          icon="el-icon-search"
+          native-type="submit"
+          type="primary"
+          @click="queryData"
+        >{{ translate('component', '查询') }}</el-button>
+        <el-button
+          v-if="device !== 'mobile'"
+          icon="el-icon-link"
+          type="primary"
+          @click="openPage()"
+        >{{ translate('component', '官网') }}</el-button>
+      </el-form-item>
+    </el-form>
     <el-row :gutter="20">
-      <el-col :span="24">
-        <el-form :inline="true" label-width="80px">
-          <el-form-item :label="translate('component', '图标名称')">
-            <el-input v-model="queryForm.title" />
-          </el-form-item>
-          <el-form-item label-width="0">
-            <el-button
-              icon="el-icon-search"
-              native-type="submit"
-              type="primary"
-              @click="queryData"
-            >{{ translate('component', '查询') }}</el-button>
-            <el-button
-              icon="el-icon-link"
-              type="primary"
-              @click="openPage()"
-            >{{ translate('component', '官网') }}</el-button>
-          </el-form-item>
-        </el-form>
-      </el-col>
-
       <el-col
         v-for="(item, index) in queryIcon"
         :key="index"
@@ -42,7 +38,7 @@
       <el-col :span="24">
         <el-pagination
           :current-page="queryForm.pageNo"
-          :layout="layout"
+          :layout="device === 'mobile'? 'total, prev, next' : 'total, sizes, prev, pager, next, jumper' "
           :page-size="queryForm.pageSize"
           :page-sizes="[36 ,72, 144, 216, 288]"
           :total="total"
@@ -58,14 +54,15 @@
 <script>
 import { getIconList } from '@/api/icon'
 import clip from '@/utils/clipboard'
-import { onMounted, reactive, ref } from 'vue'
+import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
 import { translate } from '@/utils/i18n'
 
 export default {
   name: 'ElementIcons',
   setup() {
+    const { $store } = getCurrentInstance().appContext.config.globalProperties
+    const device = computed(() => $store.state.settings.device)
     const total = ref(0)
-    const layout = 'total, sizes, prev, pager, next, jumper'
     const queryIcon = ref([])
     const queryResult = ref([])
     const queryForm = reactive({
@@ -118,7 +115,7 @@ export default {
     }
     return {
       total,
-      layout,
+      device,
       queryIcon,
       queryForm,
       translate,
@@ -136,6 +133,13 @@ export default {
 <style lang="scss" scoped>
 .icon-container {
   :deep {
+    .el-form-item {
+      width: 100%;
+      text-align: right;
+    }
+    .el-input {
+      width: 180px;
+    }
     .el-card__body {
       position: relative;
       display: flex;

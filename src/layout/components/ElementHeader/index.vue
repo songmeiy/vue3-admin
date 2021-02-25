@@ -24,6 +24,7 @@
           </template>
         </el-menu>
         <element-error-log />
+        <element-clean />
         <element-search />
         <element-notice />
         <element-full-screen />

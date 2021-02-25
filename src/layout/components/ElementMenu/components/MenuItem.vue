@@ -8,24 +8,10 @@
     <svg-icon
       v-if="itemOrMenu.meta && itemOrMenu.meta.icon"
       :iconClass="itemOrMenu.meta.icon"
-      :title="translate('router', itemOrMenu.meta.title)"
     />
-    <span :title="translate('router', itemOrMenu.meta.title)" style="margin-left: 5px">
-      {{ translate('router', itemOrMenu.meta.title) }}
-    </span>
-    <el-tag
-      v-if="itemOrMenu.meta && itemOrMenu.meta.badge"
-      effect="dark"
-      type="danger"
-    >
-      {{ itemOrMenu.meta.badge }}
-    </el-tag>
-    <span
-      v-if="itemOrMenu.meta && itemOrMenu.meta.dot"
-      class="element-dot element-dot-error"
-    >
-      <span />
-    </span>
+    <span style="margin-left: 5px">{{ translate('router', itemOrMenu.meta.title) }}</span>
+    <el-tag v-if="itemOrMenu.meta && itemOrMenu.meta.badge" effect="dark" type="danger">{{ itemOrMenu.meta.badge }}</el-tag>
+    <span v-if="itemOrMenu.meta && itemOrMenu.meta.dot" class="element-dot element-dot-error"><span></span></span>
   </el-menu-item>
 </template>
 
@@ -50,7 +36,7 @@ export default {
     const { $store, $router } = getCurrentInstance().appContext.config.globalProperties
     const activeMenu = ref('')
     const device = computed(() => $store.state.settings.device)
-    const handleLink = () => {
+    const handleLink = async() => {
       const routePath = props.itemOrMenu.path
       const target = props.itemOrMenu.meta.target
       if (target === '_blank') {
@@ -59,10 +45,8 @@ export default {
       } else {
         if (isExternal(routePath)) window.location.href = routePath
         else if ($route.fullPath !== routePath) {
-          if (device.value === 'mobile') {
-            $store.dispatch('settings/foldSideBar')
-          }
-          $router.push(routePath)
+          if (device.value === 'mobile') $store.dispatch('settings/foldSideBar')
+          await $router.push(routePath)
         }
       }
     }

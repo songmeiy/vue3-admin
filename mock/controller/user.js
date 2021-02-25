@@ -79,7 +79,7 @@ module.exports = [
     type: 'get',
     response(config) {
       const { accessToken } = config.query
-      let roles = ['admin']
+      let roles = []
       let ability = ['READ']
       let username = 'admin'
       let personality = ''
@@ -164,7 +164,7 @@ module.exports = [
   },
   {
     url: '/user/logout',
-    type: 'post',
+    type: 'get',
     response() {
       return {
         code: 200,

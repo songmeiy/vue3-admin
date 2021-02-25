@@ -81,10 +81,10 @@ export default {
     const handleGroupTitle = computed(() => {
       return routes.value.find((item) => item.name === extra.value.first).meta.title
     })
-    const handleTabClick = (handler) => {
+    const handleTabClick = async(handler) => {
       if (handler !== true && theme.value.openFirstMenu) {
-        $router.push(handlePartialRoutes.value[0].path)
-        $store.dispatch('settings/openSideBar')
+        await $router.push(handlePartialRoutes.value[0].path)
+        await $store.dispatch('settings/openSideBar')
       }
     }
     onMounted(() => {

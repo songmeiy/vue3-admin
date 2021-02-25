@@ -23,5 +23,6 @@ export default {
   '用户名不可以修改哦': 'You cannot edit username',
   '要选择性别哦': 'Please select your gender',
   '取消': 'Cancel',
-  '发送邮件': 'Send an email'
+  '发送邮件': 'Send an email',
+  '邮箱不能为空': 'Email is required'
 }

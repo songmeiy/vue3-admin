@@ -1,7 +1,7 @@
 <template>
   <el-dropdown v-if="theme.showLanguage" @command="handleCommand">
     <SvgIcon
-      :iconClass="'translate'"
+      iconClass="translate"
       class="quick-button"
       :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
     />

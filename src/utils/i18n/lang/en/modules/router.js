@@ -50,5 +50,19 @@ export default {
   '测试': 'Test',
   '错误测试': 'Error page',
   '时间线': 'TimeLine',
-  '路由传参': 'Routing parameters'
+  '路由传参': 'Routing parameters',
+  '表单': 'Form',
+  '登录页': 'Login page',
+  '注册页': 'Register page',
+  '404': '404',
+  '403': '403',
+  '综合表单': 'Comprehensive form',
+  '分步表单': 'Steps form',
+  '导出表格': 'Export excel',
+  'Excel': 'Excel',
+  '导出选中数据': 'Export selected data',
+  '导出合并表格': 'Export MergeHeader Excel',
+  '角色权限': 'Roles',
+  '外链': 'External link',
+  '列表': 'List'
 }

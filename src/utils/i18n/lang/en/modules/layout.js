@@ -10,5 +10,10 @@ export default {
   '刷新当前页': 'Refresh current page',
   '个人中心': 'User center',
   '退出登录': 'Logout',
-  '查询': 'Query'
+  '查询': 'Query',
+  '搜索': 'Search',
+  '清除缓存': 'Clear',
+  '清空消息': 'Clear notice',
+  '邮件': 'Email',
+  '通知': 'Notice'
 }

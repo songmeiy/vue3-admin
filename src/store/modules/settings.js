@@ -41,7 +41,9 @@ const {
   routesWhiteList,
   recordRoute,
   loadingText,
-  messageDuration
+  messageDuration,
+  showClean,
+  rolesControl
 } = defaultConfig
 const { collapse } = getLocalStorage('collapse')
 const { i18nLanguage } = getLocalStorage('language')
@@ -65,7 +67,8 @@ const defaultTheme = {
   showFullScreen,
   showThemeSetting,
   uniqueOpened,
-  openFirstMenu
+  openFirstMenu,
+  showClean
 }
 
 const defaultSystem = {
@@ -82,7 +85,8 @@ const defaultSystem = {
   routesWhiteList,
   recordRoute,
   loadingText,
-  messageDuration
+  messageDuration,
+  rolesControl
 }
 const state = () => ({
   device: 'desktop',

@@ -37,7 +37,7 @@ export default {
     const isMobile = ref(false)
     const oldLayout = ref('')
     const handleLayout = () => {
-      isMobile.value = screenWidth.value - 1 < 992
+      isMobile.value = document.body.clientWidth - 1 < 992
       if (isMobile.value) {
         $store.dispatch('settings/foldSideBar')
       } else {
@@ -46,14 +46,6 @@ export default {
       $store.dispatch('settings/changeLayout', isMobile.value ? 'vertical' : oldLayout.value)
       $store.dispatch('settings/toggleDevice', isMobile.value ? 'mobile' : 'desktop')
     }
-    onMounted(() => {
-      document.getElementsByTagName(
-        'body'
-      )[0].className = `element-theme-${theme.value.themeName}`
-      // 先把layout保存一下
-      oldLayout.value = theme.value.layout
-      handleLayout()
-    })
     onUnmounted(() => {
       window.removeEventListener('resize', () => {})
     })
@@ -64,6 +56,13 @@ export default {
           screenWidth.value = window.screenWidth
         })()
       })
+      document.getElementsByTagName(
+        'body'
+      )[0].className = `element-theme-${theme.value.themeName}`
+      // 先把layout保存一下
+      oldLayout.value = theme.value.layout
+      handleLayout()
+      console.log(screenWidth.value - 1)
     })
     watch(() => screenWidth.value, () => {
       handleLayout()

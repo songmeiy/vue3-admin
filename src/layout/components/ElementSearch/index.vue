@@ -2,7 +2,7 @@
   <span v-if="theme.showSearch">
     <el-tooltip placement="bottom" :effect="theme.themeName === 'white' ? 'dark' : 'light'" :content="translate('layout', '搜索')">
       <SvgIcon
-        :iconClass="'search'"
+        iconClass="search"
         class="quick-button"
         :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
         @click="openDialog"
@@ -13,6 +13,7 @@
       :model-value="dialogVisible"
       append-to-body
       width="40%"
+      :title="translate('layout', '搜索')"
     >
       <el-form :model="queryForm" @submit.native.prevent>
         <el-form-item label-width="0">

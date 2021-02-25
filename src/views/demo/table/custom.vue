@@ -136,7 +136,7 @@
     </el-table>
     <el-pagination
       :current-page="queryForm.pageNo"
-      :layout="layout"
+      :layout="device === 'mobile'? 'total, prev, next' : 'total, sizes, prev, pager, next, jumper' "
       :page-size="queryForm.pageSize"
       :total="total"
       background
@@ -157,7 +157,8 @@ export default {
     TableEdit
   },
   setup() {
-    const { $baseConfirm, $baseMessage } = getCurrentInstance().appContext.config.globalProperties
+    const { $baseConfirm, $baseMessage, $store } = getCurrentInstance().appContext.config.globalProperties
+    const device = computed(() => $store.state.settings.device)
     const border = ref(true)
     const stripe = ref(false)
     const lineHeight = ref('medium')
@@ -198,7 +199,6 @@ export default {
     const list = ref([])
     const imageList = ref([])
     const listLoading = ref(true)
-    const layout = 'total, sizes, prev, pager, next, jumper'
     const total = ref(0)
     const selectRows = ref('')
     const editRef = ref(null)
@@ -270,13 +270,13 @@ export default {
     return {
       border,
       stripe,
+      device,
       lineHeight,
       columns,
       checkList,
       list,
       imageList,
       listLoading,
-      layout,
       total,
       selectRows,
       queryForm,

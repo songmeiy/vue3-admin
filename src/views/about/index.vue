@@ -22,14 +22,7 @@
     <el-card class="page-header" shadow="never">
       <div class="page-header-tip">
         <p class="page-header-tip-description">如果你愿意的话，可以请我喝杯奶茶吗？</p>
-        <el-row>
-          <el-col :lg="12" :md="12" :sm="24" :xl="12" :xs="24">
-            <img src="">
-          </el-col>
-          <el-col :lg="12" :md="12" :sm="24" :xl="12" :xs="24">
-            <img src="">
-          </el-col>
-        </el-row>
+        <img :class="{ 'mobile': device === 'mobile' }" src="../../assets/20210225.jpg">
       </div>
     </el-card>
   </div>
@@ -46,10 +39,12 @@ export default {
   setup() {
     const { $store } = getCurrentInstance().appContext.config.globalProperties
     const userInfo = computed(() => $store.state.user.userInfo)
+    const device = computed(() => $store.state.settings.device)
     const description = ref('')
     const avatatList = [
       {
         avatar: 'https://zepingwong.github.io/image/20210223153728.jpg',
+        homepage: 'https://github.com/zepingwong',
         username: 'zepingwong'
       }
     ]
@@ -76,6 +71,7 @@ export default {
       avatatList,
       description,
       userInfo,
+      device,
       handleTips
     }
   }
@@ -121,6 +117,10 @@ export default {
     &-description {
       font-size: $base-font-size-default;
       color: #808695;
+    }
+    .mobile {
+      width: 100%;
+      height: auto;
     }
   }
 

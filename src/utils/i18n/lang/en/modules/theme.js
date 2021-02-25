@@ -51,5 +51,7 @@ export default {
   '保存成功': 'Save successfully',
   '自动打开二级菜单': 'Automatically open secondary menu',
   '横向布局下失效': 'Disabled in horizontal layout',
-  '分栏布局、综合布局、隐藏布局时生效': 'Column layout , Comprehensive layout and Hide layout take effect'
+  '分栏布局、综合布局、隐藏布局时生效': 'Column layout , Comprehensive layout and Hide layout take effect',
+  '清除缓存': 'Clear',
+  '悬浮窗在手机视图下无法显示': 'The floating window cannot be displayed in the view of mobile phone'
 }

@@ -45,10 +45,10 @@
         <router-link to="/register">{{ translate('login', '注册账号') }}</router-link>
       </div>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ translate('login', '登录') }}</el-button>
+      <div class="language">
+        <element-language />
+      </div>
     </el-form>
-    <div class="language">
-      <element-language />
-    </div>
   </div>
 </template>
 
@@ -188,6 +188,7 @@ $cursor: #fff;
   }
   .language{
     color: white;
+    position: relative;
   }
 }
 </style>
@@ -203,8 +204,8 @@ $light_gray:#eee;
   background-color: $bg;
   overflow: hidden;
   .login-form {
-    width: 520px;
-    max-width: 100%;
+    width: 320px;
+    max-width: 320px;
     padding: 0;
     margin: 0 auto;
     overflow: hidden;

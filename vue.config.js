@@ -94,13 +94,13 @@ module.exports = {
         chunks: 'all',
         cacheGroups: {
           libs: {
-            name: 'experiment-platform-libs',
+            name: 'vue3-admin-libs',
             test: /[\\/]node_modules[\\/]/,
             priority: 10,
             chunks: 'initial'
           },
           elementPlus: {
-            name: 'experiment-platform-element-plus',
+            name: 'vue3-admin-element-plus',
             priority: 20,
             test: /[\\/]node_modules[\\/]_?element-plus(.*)/
           }

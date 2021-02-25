@@ -18,7 +18,8 @@ module.exports = [
           routesWhiteList: ('/login,/callback,/404,/403,/register').split(','),
           recordRoute: true,
           loadingText: '加载中。。。',
-          messageDuration: 2000
+          messageDuration: 2000,
+          rolesControl: true
         }
       }
     }

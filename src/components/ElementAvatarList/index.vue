@@ -7,7 +7,7 @@
       effect="dark"
       placement="top-start"
     >
-      <el-avatar :src="item.avatar" />
+      <el-avatar :src="item.avatar" @click="openHomePage(item)"/>
     </el-tooltip>
   </div>
 </template>
@@ -19,6 +19,14 @@ export default {
     avatarList: {
       type: Array,
       default: () => []
+    }
+  },
+  setup() {
+    const openHomePage = (item) => {
+      window.open(item.homepage)
+    }
+    return {
+      openHomePage
     }
   }
 }

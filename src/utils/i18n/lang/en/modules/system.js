@@ -15,6 +15,7 @@ export default {
   '路由白名单': 'Routes whiteList',
   '标题翻转': 'Title reverse',
   '通用设置': 'Common settings',
+  '角色控制': 'Roles control',
   '如果为false: page - title 如果为true: title - page': 'if false: page - title, if true: title - page',
   '这些设置由后台控制，会对全局产生影响，请谨慎操作': 'These settings are controlled by the background and will have an impact on the overall situation. Please operate carefully'
 }

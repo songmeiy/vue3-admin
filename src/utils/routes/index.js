@@ -38,7 +38,7 @@ export function convertRouter(asyncRoutes) {
  * @param baseUrl 基础路由
  * @returns {[]}
  */
-export function filterRoutes(routes, rolesControl, baseUrl = '/') {
+export function filterRoutes(routes, rolesControl = system.value.rolesControl, baseUrl = '/') {
   return routes.filter((route) => {
     if (rolesControl && route.meta && route.meta.roles) {
       return hasAccess(route.meta.roles)

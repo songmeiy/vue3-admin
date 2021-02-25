@@ -28,6 +28,7 @@ const settings = {
       meta: {
         title: '系统设置',
         icon: 'system',
+        roles: ['admin'],
         noKeepAlive: false
       }
     },
@@ -38,6 +39,17 @@ const settings = {
       meta: {
         title: '个人中心',
         icon: 'personal',
+        noKeepAlive: false
+      }
+    },
+    {
+      path: 'roles',
+      name: 'Roles',
+      component: () => import('@/views/settings/roles'),
+      meta: {
+        title: '角色权限',
+        icon: 'user',
+        roles: ['admin'],
         noKeepAlive: false
       }
     }

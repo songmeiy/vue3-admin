@@ -123,12 +123,7 @@ instance.interceptors.response.use(
   (error) => {
     const { response } = error
     if (response === undefined) {
-      baseMessage(
-        '未可知错误，大部分是由于后端不支持跨域CORS或无效配置引起',
-        'error',
-        false,
-        ''
-      )
+      baseMessage('未可知错误，大部分是由于后端不支持跨域CORS或无效配置引起', 'error', false, 'element-hey-message-error')
       return {}
     } else return handleData(response)
   }

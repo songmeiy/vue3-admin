@@ -3,7 +3,7 @@
     <el-popover placement="bottom" trigger="hover" width="300">
       <template #reference>
         <SvgIcon
-          :iconClass="'notification'"
+          iconClass="notification"
           class="quick-button"
           :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
         />

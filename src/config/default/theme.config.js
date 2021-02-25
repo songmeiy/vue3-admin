@@ -36,6 +36,8 @@ module.exports = {
   showFooter: true,
   // 是否开启面包屑导航
   showBreadcrumb: true,
+  // 是否开启清楚缓存按钮
+  showClean: true,
   // 是否显示面包屑导航图标
   showBreadcrumbIcon: true,
   // vertical column comprehensive common布局时是否只保持一个子菜单的展开

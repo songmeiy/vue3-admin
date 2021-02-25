@@ -17,9 +17,7 @@
               native-type="submit"
               type="primary"
               @click="handleQuery"
-            >
-              查询
-            </el-button>
+            >查询</el-button>
           </el-form-item>
         </el-form>
       </element-query-form-right-panel>
@@ -102,7 +100,7 @@
     </el-table>
     <el-pagination
       :current-page="queryForm.pageNo"
-      :layout="layout"
+      :layout="device === 'mobile'? 'total, prev, next' : 'total, sizes, prev, pager, next, jumper' "
       :page-size="queryForm.pageSize"
       :total="total"
       background
@@ -114,14 +112,15 @@
 
 <script>
 import { getList } from '@/api/table'
-import { onMounted, reactive, ref } from 'vue'
+import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
 
 export default {
   name: 'InlineTable',
   setup() {
+    const { $store } = getCurrentInstance().appContext.config.globalProperties
+    const device = computed(() => $store.state.settings.device)
     const list = ref([])
     const listLoading = ref(true)
-    const layout = 'total, sizes, prev, pager, next, jumper'
     const total = ref(0)
     const queryForm = reactive({
       pageNo: 1,
@@ -165,7 +164,7 @@ export default {
     })
     return {
       list,
-      layout,
+      device,
       total,
       queryForm,
       listLoading,

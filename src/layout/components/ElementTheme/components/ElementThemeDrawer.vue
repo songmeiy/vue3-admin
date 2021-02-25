@@ -10,23 +10,23 @@
   >
     <div class="element-drawer__content">
       <el-scrollbar>
-        <el-form ref="formRef" :model="theme" label-width="150px">
-          <el-divider content-position="left">
-            <SvgIcon :iconClass="'theme'" />
-            {{ translate('theme', '常用设置') }}
-          </el-divider>
+        <el-form
+          ref="formRef"
+          :model="theme"
+          label-width="150px"
+          label-position="left"
+        >
+          <el-divider content-position="left"><SvgIcon :iconClass="'theme'" />{{ translate('theme', '常用设置') }}</el-divider>
           <el-form-item>
             <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '布局') }}
-                <el-tooltip
-                  :content="translate('theme', '布局配置仅在电脑视窗下生效，手机视窗时将默认锁定为纵向布局')"
-                  effect="dark"
-                  placement="top"
-                >
-                  <SvgIcon :iconClass="'tips'" />
-                </el-tooltip>
-              </label>
+              {{ translate('theme', '布局') }}
+              <el-tooltip
+                :content="translate('theme', '布局配置仅在电脑视窗下生效，手机视窗时将默认锁定为纵向布局')"
+                effect="dark"
+                placement="top"
+              >
+                <SvgIcon :iconClass="'tips'" />
+              </el-tooltip>
             </template>
             <el-select v-model="theme.layout" :disabled="device === 'mobile'">
               <el-option
@@ -61,18 +61,16 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item v-show="theme.layout === 'column'">
+          <el-form-item v-if="theme.layout === 'column'">
             <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '分栏风格') }}
-                <el-tooltip
-                  :content="translate('theme', '分栏布局时生效')"
-                  effect="dark"
-                  placement="top"
-                >
-                  <SvgIcon :iconClass="'tips'" />
-                </el-tooltip>
-              </label>
+              {{ translate('theme', '分栏风格') }}
+              <el-tooltip
+                :content="translate('theme', '分栏布局时生效')"
+                effect="dark"
+                placement="top"
+              >
+                <SvgIcon :iconClass="'tips'" />
+              </el-tooltip>
             </template>
             <el-select
               v-model="theme.columnStyle"
@@ -94,12 +92,7 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item>
-            <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '主题') }}
-              </label>
-            </template>
+          <el-form-item :label="translate('theme', '主题')">
             <el-select v-model="theme.themeName" @change="setTheme">
               <el-option
                 key="default"
@@ -123,43 +116,34 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item>
-            <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '标签') }}
-              </label>
-            </template>
+          <el-form-item :label="translate('theme', '标签')">
             <el-switch v-model="theme.showTabs"/>
           </el-form-item>
-          <el-form-item v-show="theme.showTabs">
+          <el-form-item v-if="theme.showTabs">
             <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '标签图标') }}
-                <el-tooltip
-                  :content="translate('theme', '标签开启时生效')"
-                  effect="dark"
-                  placement="top"
-                >
-                  <SvgIcon :iconClass="'tips'" />
-                </el-tooltip>
-              </label>
+              {{ translate('theme', '标签图标') }}
+              <el-tooltip
+                :content="translate('theme', '标签开启时生效')"
+                effect="dark"
+                placement="top"
+              >
+                <SvgIcon :iconClass="'tips'" />
+              </el-tooltip>
             </template>
             <el-switch
               v-model="theme.showTabsBarIcon"
             />
           </el-form-item>
-          <el-form-item v-show="theme.showTabs">
+          <el-form-item v-if="theme.showTabs">
             <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '标签风格') }}
-                <el-tooltip
-                  :content="translate('theme', '标签开启时生效')"
-                  effect="dark"
-                  placement="top"
-                >
-                  <SvgIcon :iconClass="'tips'" />
-                </el-tooltip>
-              </label>
+              {{ translate('theme', '标签风格') }}
+              <el-tooltip
+                :content="translate('theme', '标签开启时生效')"
+                effect="dark"
+                placement="top"
+              >
+                <SvgIcon :iconClass="'tips'" />
+              </el-tooltip>
             </template>
             <el-select v-model="theme.tabsBarStyle" :disabled="!theme.showTabs">
               <el-option
@@ -179,121 +163,58 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item>
-            <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '页脚') }}
-              </label>
-            </template>
+          <el-form-item :label="translate('theme', '页脚')">
             <el-switch v-model="theme.showFooter"/>
           </el-form-item>
-          <el-form-item v-show="theme.layout !== 'common'">
-            <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '面包屑导航') }}
-              </label>
-            </template>
+          <el-form-item v-if="theme.layout !== 'common'" :label="translate('theme', '面包屑导航')">
             <el-switch v-model="theme.showBreadcrumb"/>
           </el-form-item>
-          <el-form-item v-show="theme.layout !== 'common' && theme.showBreadcrumb">
+          <el-form-item v-if="theme.layout !== 'common' && theme.showBreadcrumb">
             <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '导航图标') }}
-                <el-tooltip
-                  :content="translate('theme', '面包屑导航开启时生效')"
-                  effect="dark"
-                  placement="top"
-                >
-                  <SvgIcon :iconClass="'tips'" />
-                </el-tooltip>
-              </label>
+              {{ translate('theme', '导航图标') }}
+              <el-tooltip
+                :content="translate('theme', '面包屑导航开启时生效')"
+                effect="dark"
+                placement="top"
+              >
+                <SvgIcon :iconClass="'tips'" />
+              </el-tooltip>
             </template>
-            <el-switch
-              v-model="theme.showBreadcrumbIcon"
-            />
+            <el-switch v-model="theme.showBreadcrumbIcon" />
           </el-form-item>
-          <el-divider content-position="left" style="margin-top: 20px">
-            <SvgIcon :iconClass="'theme'" />
-            {{ translate('theme', '其它设置') }}
-          </el-divider>
-          <el-form-item>
-            <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '头部固定') }}
-              </label>
-            </template>
-            <el-switch
-              v-model="theme.fixedHeader"
-              :disabled="theme.layout === 'common'"
-            />
+          <el-divider content-position="left" style="margin-top: 20px"><SvgIcon :iconClass="'theme'" />{{ translate('theme', '其它设置') }}</el-divider>
+          <el-form-item :label="translate('theme', '头部固定')">
+            <el-switch v-model="theme.fixedHeader" :disabled="theme.layout === 'common'" />
           </el-form-item>
-          <el-form-item>
-            <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '国际化') }}
-              </label>
-            </template>
+          <el-form-item :label="translate('theme', '清除缓存')">
+            <el-switch v-model="theme.showClean" />
+          </el-form-item>
+          <el-form-item :label="translate('theme', '国际化')">
             <el-switch v-model="theme.showLanguage" />
           </el-form-item>
-          <el-form-item>
-            <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '进度条') }}
-              </label>
-            </template>
+          <el-form-item :label="translate('theme', '进度条')">
             <el-switch v-model="theme.showProgressBar" />
           </el-form-item>
-          <el-form-item>
-            <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '刷新') }}
-              </label>
-            </template>
+          <el-form-item :label="translate('theme', '刷新')">
             <el-switch v-model="theme.showRefresh" />
           </el-form-item>
-          <el-form-item>
-            <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '搜索') }}
-              </label>
-            </template>
+          <el-form-item :label="translate('theme', '搜索')">
             <el-switch v-model="theme.showSearch" onchange="" />
           </el-form-item>
-          <el-form-item>
-            <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '通知') }}
-              </label>
-            </template>
+          <el-form-item :label="translate('theme', '通知')">
             <el-switch v-model="theme.showNotice" />
           </el-form-item>
-          <el-form-item>
-            <template #label>
-              <label class="el-form-item__label">
-                {{ translate('theme', '全屏') }}
-              </label>
-            </template>
+          <el-form-item :label="translate('theme', '全屏')">
             <el-switch v-model="theme.showFullScreen" />
           </el-form-item>
         </el-form>
       </el-scrollbar>
       <div class="element-drawer__footer">
-        <el-divider content-position="left" style="margin-top: 20px">
-          <SvgIcon :iconClass="'theme'" />
-          {{ translate('theme', '操作') }}
-        </el-divider>
-        <el-button type="primary" @click="handleSaveTheme">
-          {{ translate('theme', '保存') }}
-        </el-button>
-        <el-button @click="setDefaultTheme">
-          {{ translate('theme', '恢复默认') }}
-        </el-button>
-        <el-button @click="randomTheme">
-          {{ translate('theme', '随机换肤') }}
-        </el-button>
-        <el-button @click="more">
-          {{ translate('theme', '更多') }}
-        </el-button>
+        <el-divider content-position="left" style="margin-top: 20px"><SvgIcon :iconClass="'theme'" />{{ translate('theme', '操作') }}</el-divider>
+        <el-button type="primary" @click="handleSaveTheme">{{ translate('theme', '保存') }}</el-button>
+        <el-button @click="setDefaultTheme">{{ translate('theme', '恢复默认') }}</el-button>
+        <el-button @click="randomTheme">{{ translate('theme', '随机换肤') }}</el-button>
+        <el-button @click="more">{{ translate('theme', '更多') }}</el-button>
       </div>
     </div>
   </el-drawer>

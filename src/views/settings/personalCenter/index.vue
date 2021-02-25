@@ -14,12 +14,10 @@
             </div>
             <ul class="personal-center-user-info-list">
               <li>
-                <svg-icon iconClass="ip"></svg-icon>
-                {{ userInfo.last_ip }}
+                <svg-icon iconClass="ip"></svg-icon>{{ userInfo.last_ip }}
               </li>
               <li>
-                <svg-icon iconClass="meditor-time"></svg-icon>
-                {{ userInfo.last_time }}
+                <svg-icon iconClass="meditor-time"></svg-icon>{{ userInfo.last_time }}
               </li>
               <li>
                 <el-divider />
@@ -34,8 +32,8 @@
         <el-card shadow="hover">
           <el-tabs v-model="activeName" @tab-click="tabClick">
             <el-tab-pane :label="translate('user', '基本信息')" name="info">
-              <el-col :lg="12" :md="16" :sm="24" :xl="12" :xs="24">
-                <el-form ref="formRef" :model="userInfo" :rules="rules" label-width="120px">
+              <el-col :lg="20" :md="20" :sm="24" :xl="20" :xs="24">
+                <el-form ref="formRef" :model="userInfo" :rules="rules" label-width="120px" :label-position="device === 'mobile' ? 'top' : 'left'">
                   <el-form-item :label="translate('user', '用户名')" prop="username">
                     <el-input v-model="userInfo.username" disabled></el-input>
                   </el-form-item>
@@ -132,6 +130,7 @@ export default {
     const { $store, $baseMessage } = getCurrentInstance().appContext.config.globalProperties
     const { t } = useI18n()
     const activeName = ref('info')
+    const device = computed(() => $store.state.settings.device)
     const userInfo = computed(() => $store.state.user.userInfo)
     const personality = ref(userInfo.value.personality.join(','))
     const avatar = computed(() => $store.state.user.avatar)
@@ -148,14 +147,16 @@ export default {
         trigger: 'blur'
       }],
       gender: [{ required: true, message: translate('user', 'message.user.要选择性别哦'), trigger: 'blur' }],
-      email: [{
-        validator: async(_rule, value) => {
-          if (userInfo.bindedEmail) return Promise.reject(t('message.user.已绑定的邮箱不能修改'))
-          else if (!isEmail(value)) return Promise.reject(t('message.user.请输入正确的邮箱'))
-          return Promise.resolve()
-        },
-        trigger: 'change'
-      }],
+      email: [
+        { required: true, message: translate('user', 'message.user.邮箱不能为空'), trigger: 'blur' },
+        {
+          validator: async(_rule, value) => {
+            if (userInfo.bindedEmail) return Promise.reject(t('message.user.已绑定的邮箱不能修改'))
+            else if (!isEmail(value)) return Promise.reject(t('message.user.请输入正确的邮箱'))
+            return Promise.resolve()
+          },
+          trigger: 'change'
+        }],
       personality: [{
         validator: async() => {
           userInfo.value.personality = personality.value.split(',')
@@ -230,6 +231,7 @@ export default {
       handleAvatarFail,
       onCancel,
       onSave,
+      device,
       headers,
       uploadRef,
       userInfo,
