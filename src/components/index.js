@@ -25,7 +25,7 @@ export default (app) => {
   app.config.globalProperties.$baseAlert = baseAlert
   app.config.globalProperties.$baseConfirm = baseConfirm
   app.config.globalProperties.$baseNotify = baseNotify
-  app.config.globalProperties.$baseI18n = translate
+  app.config.globalProperties.$translate = translate
   /**
    * @description 表格高度
    * @param {*} formType

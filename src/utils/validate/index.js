@@ -90,8 +90,18 @@ export function isUpperCase(value) {
  * @param value
  * @returns {boolean}
  */
-export function isAlphabets(value) {
-  const reg = /^[A-Za-z]+$/
+export function isStartWithCapitalLetter(value) {
+  const reg = /^[A-Z][A-Za-z]*$/
+  return reg.test(value)
+}
+
+/**
+ * @description 判断是否是小写字母开头
+ * @param value
+ * @returns {boolean}
+ */
+export function isStartWithSmallLetter(value) {
+  const reg = /^[a-z][A-Za-z]*$/
   return reg.test(value)
 }
 

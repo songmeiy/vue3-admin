@@ -1,6 +1,6 @@
 <template>
   <SvgIcon
-    :iconClass="collapse ? 'menu-unfold-line' : 'menu-fold-line'"
+    :icon-class="collapse ? 'menu-unfold-line' : 'menu-fold-line'"
     class="fold-unfold"
     @click="toggleCollapse"
   />

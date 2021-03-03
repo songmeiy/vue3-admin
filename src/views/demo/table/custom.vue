@@ -150,7 +150,7 @@
 <script>
 import { doDelete, getList } from '@/api/table'
 import TableEdit from './components/TableEdit'
-import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
+import { computed, getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
 export default {
   name: 'CustomTable',
   components: {
@@ -264,6 +264,9 @@ export default {
       total.value = totalCount
       listLoading.value = false
     }
+    onActivated(() => {
+      fetchData()
+    })
     onMounted(() => {
       fetchData()
     })

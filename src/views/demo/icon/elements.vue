@@ -54,7 +54,7 @@
 <script>
 import { getIconList } from '@/api/icon'
 import clip from '@/utils/clipboard'
-import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
+import { computed, getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
 import { translate } from '@/utils/i18n'
 
 export default {
@@ -107,6 +107,9 @@ export default {
     const handleCopyIcon = (item, event) => {
       clip(`<i class="${item}"></i>`, event)
     }
+    onActivated(() => {
+      fetchData()
+    })
     onMounted(() => {
       fetchData()
     })

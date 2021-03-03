@@ -6,14 +6,14 @@
       :label-position="device === 'mobile' ? 'top' : 'left'"
     >
       <el-divider content-position="left">
-        <SvgIcon :iconClass="'system'" />
+        <SvgIcon :icon-class="'system'" />
         {{ translate('system', '通用设置') }}
         <el-tooltip
           :content="translate('system', `这些设置由后台控制，会对全局产生影响，请谨慎操作`)"
           effect="dark"
           placement="top"
         >
-          <SvgIcon :iconClass="'tips'" />
+          <SvgIcon :icon-class="'tips'" />
         </el-tooltip>
       </el-divider>
       <el-form-item :label="translate('system', '网站标题')">
@@ -101,12 +101,12 @@
             effect="dark"
             placement="top"
           >
-            <SvgIcon :iconClass="'tips'" />
+            <SvgIcon :icon-class="'tips'" />
           </el-tooltip>
         </template>
         <el-switch v-model="system.titleReverse" @change="handleChangeSettings('titleReverse', system.titleReverse)"></el-switch>
       </el-form-item>
-      <el-divider content-position="left"><SvgIcon :iconClass="'system'" />{{ translate('system', '国际化') }}</el-divider>
+      <el-divider content-position="left"><SvgIcon :icon-class="'system'" />{{ translate('system', '国际化') }}</el-divider>
       <el-form-item :label="translate('system', '选择语言')">
         <el-radio-group v-model="system.language" size="small" @change="handleChangeLanguage">
           <el-radio label="zh-cn" border>简体中文</el-radio>
@@ -119,7 +119,7 @@
 
 <script>
 import { translate } from '@/utils/i18n'
-import { computed, getCurrentInstance, ref, watch } from 'vue'
+import { computed, getCurrentInstance, ref, onActivated, onDeactivated } from 'vue'
 import getPageTitle from '@/utils/pageTitle'
 import ElementIconSelector from '@/components/ElementIconSelector'
 export default {
@@ -160,8 +160,11 @@ export default {
     const handleMessageDurationMinus = () => {
       messageDuration.value--
     }
-    watch(() => system.value.language, () => {
-      console.log('test')
+    onActivated(() => {
+      $store.dispatch('settings/initialSystemSettings')
+    })
+    onDeactivated(() => {
+      $store.dispatch('settings/initialSystemSettings')
     })
     return {
       system,

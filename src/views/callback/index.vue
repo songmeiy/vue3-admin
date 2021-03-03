@@ -14,7 +14,7 @@ export default {
     callback()
     window.close()
     onBeforeUnmount(() => {
-      loading.close()
+      loading.value.close()
     })
   }
 }

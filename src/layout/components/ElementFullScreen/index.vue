@@ -6,7 +6,7 @@
     :content="translate('layout', isFullscreen === true ?'退出全屏' : '全屏')"
   >
     <SvgIcon
-      :iconClass="isFullscreen ? 'fullscreen-exit-fill' : 'fullscreen-fill'"
+      :icon-class="isFullscreen ? 'fullscreen-exit-fill' : 'fullscreen-fill'"
       class="quick-button"
       :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
       @click="click"

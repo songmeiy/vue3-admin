@@ -6,7 +6,7 @@
     :content="translate('layout', '刷新当前页')"
   >
     <SvgIcon
-      iconClass="refresh"
+      icon-class="refresh"
       class="quick-button"
       :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
       @click="refreshRoute"

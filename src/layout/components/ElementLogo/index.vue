@@ -5,7 +5,7 @@
   >
     <router-link to="/">
       <span class="logo">
-        <SvgIcon v-if="system.websiteLogo" :iconClass="system.websiteLogo"/>
+        <SvgIcon v-if="system.websiteLogo" :icon-class="system.websiteLogo"/>
       </span>
       <span
         :class="{ 'hidden-xs-only': theme.layout === 'horizontal' || theme.layout === 'common' }"

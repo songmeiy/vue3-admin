@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="pay-top-content">
-      <svg-icon class="pay-success" iconClass="checkbox-circle-line" />
+      <svg-icon class="pay-success" icon-class="checkbox-circle-line" />
       <p>支付成功</p>
     </div>
     <el-form

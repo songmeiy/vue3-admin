@@ -132,11 +132,16 @@ const mutations = {
     baseMessage('message.theme.保存成功', 'success', false, 'element-hey-message-success')
   },
   resetTheme(state) {
+    const oldLayout = state.theme.layout
     state.theme = { ...defaultTheme }
     localStorage.removeItem('theme')
     document.getElementsByTagName(
       'body'
     )[0].className = `element-theme-${state.theme.themeName}`
+    if (state.device === 'mobile') {
+      state.theme.layout = oldLayout
+      baseMessage('message.theme.移动端布局被锁定', 'warning', false, 'element-hey-message-warning')
+    }
   },
   async initialSystemSettings(state, settings) {
     Object.keys(settings).forEach((key) => {

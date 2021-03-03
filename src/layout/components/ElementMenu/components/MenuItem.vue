@@ -7,7 +7,7 @@
   >
     <svg-icon
       v-if="itemOrMenu.meta && itemOrMenu.meta.icon"
-      :iconClass="itemOrMenu.meta.icon"
+      :icon-class="itemOrMenu.meta.icon"
     />
     <span style="margin-left: 5px">{{ translate('router', itemOrMenu.meta.title) }}</span>
     <el-tag v-if="itemOrMenu.meta && itemOrMenu.meta.badge" effect="dark" type="danger">{{ itemOrMenu.meta.badge }}</el-tag>

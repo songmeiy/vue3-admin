@@ -164,7 +164,7 @@
           <el-table-column align="center" label="icon" show-overflow-tooltip>
             <template #default="{ row }">
               <span v-if="row.meta">
-                <svg-icon v-if="row.meta.icon" :iconClass="row.meta.icon" />
+                <svg-icon v-if="row.meta.icon" :icon-class="row.meta.icon" />
               </span>
             </template>
           </el-table-column>
@@ -230,12 +230,12 @@ import {
   authentication,
   tokenTableName
 } from '@/config'
-import { getRouterList } from '@/api/router'
+import { getRouterList } from '@/api/system'
 import { filterRoutes } from '@/utils/routes'
 import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
 
 export default {
-  name: 'Roles',
+  name: 'RoleManagement',
   setup() {
     const { $store, $baseLoading, $baseMessage } = getCurrentInstance().appContext.config.globalProperties
     const userInfo = computed(() => $store.state.user.userInfo)

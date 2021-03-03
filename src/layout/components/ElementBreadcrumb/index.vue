@@ -2,7 +2,7 @@
   <el-breadcrumb v-show="theme.showBreadcrumb" class="element-breadcrumb" separator=">">
     <el-breadcrumb-item v-for="(item, index) in levelList.value" :key="index">
       <a @click.prevent="handleLink(item.redirect)">
-        <SvgIcon v-if="item.meta && item.meta.icon && theme.showBreadcrumbIcon" :iconClass="item.meta.icon" />
+        <SvgIcon v-if="item.meta && item.meta.icon && theme.showBreadcrumbIcon" :icon-class="item.meta.icon" />
         {{ translate('router', item.meta.title) }}
       </a>
     </el-breadcrumb-item>

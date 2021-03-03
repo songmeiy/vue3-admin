@@ -1,41 +1,69 @@
 import Layout from '@/layout/layouts'
 
-const home = {
-  path: '/',
-  name: 'Root',
-  component: Layout,
-  redirect: '/index',
-  meta: {
-    title: '首页',
-    icon: 'home',
-    dynamicNewTab: false,
-    noKeepAlive: false
-  },
-  children: [
-    {
-      path: 'index',
-      name: 'Home',
-      component: () => import('@/views/home'),
-      meta: {
-        title: '首页',
-        icon: 'home',
-        affix: true,
-        dynamicNewTab: false,
-        noKeepAlive: false
-      }
+const home =
+  {
+    path: '/',
+    name: 'Root',
+    component: Layout,
+    redirect: '/home',
+    hidden: false,
+    alwaysShow: false,
+    meta: {
+      title: '首页',
+      isCustomSvg: true,
+      icon: 'home',
+      roles: [],
+      badge: '',
+      dot: false,
+      tabHidden: false,
+      dynamicNewTab: false,
+      noKeepAlive: false,
+      activeMenu: false
     },
-    {
-      path: 'workbench',
-      name: 'Workbench',
-      component: () => import('@/views/home/workbench'),
-      meta: {
-        title: '工作台',
-        icon: 'workbench',
-        dot: true,
-        dynamicNewTab: true,
-        noKeepAlive: false
+    children: [
+      {
+        path: 'home',
+        name: 'Home',
+        component: () => import('@/views/home/home'),
+        hidden: false,
+        alwaysShow: false,
+        redirect: '',
+        meta: {
+          affix: true,
+          title: '首页',
+          isCustomSvg: true,
+          icon: 'home',
+          roles: [],
+          badge: '',
+          dot: false,
+          tabHidden: false,
+          dynamicNewTab: false,
+          noKeepAlive: false,
+          activeMenu: false
+        },
+        children: []
+      },
+      {
+        path: 'workbench',
+        name: 'Workbench',
+        component: () => import('@/views/home/workbench'),
+        hidden: false,
+        alwaysShow: false,
+        redirect: '',
+        meta: {
+          title: '工作台',
+          isCustomSvg: true,
+          icon: 'workbench',
+          roles: [],
+          badge: '',
+          dot: false,
+          tabHidden: false,
+          dynamicNewTab: false,
+          noKeepAlive: false,
+          activeMenu: false
+        },
+        children: []
       }
-    }
-  ]
-}
+    ]
+  }
 export default home

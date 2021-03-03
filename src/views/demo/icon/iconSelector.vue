@@ -5,10 +5,10 @@
         <el-button>
           <el-input v-model="icon">
             <template #append>
-              <svg-icon :iconClass="icon" />
+              <svg-icon :icon-class="icon" />
             </template>
           </el-input>
-          <svg-icon iconClass="arrow-down-s-line" />
+          <svg-icon icon-class="arrow-down-s-line" />
         </el-button>
       </template>
       <element-icon-selector @handle-icon="handleIcon" />

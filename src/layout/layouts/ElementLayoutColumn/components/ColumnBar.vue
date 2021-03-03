@@ -24,7 +24,7 @@
               <div class="svgIcon">
                 <SvgIcon
                   v-if="item.meta.icon"
-                  :iconClass="item.meta.icon"
+                  :icon-class="item.meta.icon"
                 />
               </div>
               <div class="homeTitle">

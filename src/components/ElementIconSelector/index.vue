@@ -2,7 +2,7 @@
   <div class="icon-selector">
     <el-row :gutter="20">
       <el-col :span="24">
-        <el-form :inline="true" label-width="0" @submit.native.prevent>
+        <el-form :inline="true" label-width="0">
           <el-row>
             <el-col :span="17">
               <el-form-item label="">
@@ -21,7 +21,8 @@
       </el-col>
       <el-col v-for="(item, index) in queryIcon" :key="index" :span="6">
         <el-card shadow="hover" @click="handleIcon(item)">
-          <svg-icon :iconClass="item" />
+          <svg-icon v-if="element === 'svg'" :icon-class="item" />
+          <i v-else :class="item"></i>
         </el-card>
       </el-col>
       <el-col :span="24">
@@ -45,6 +46,13 @@ import { translate } from '@/utils/i18n'
 
 export default {
   name: 'ElementIconSelector',
+  props: {
+    element: {
+      type: String,
+      default: 'svg'
+    }
+  },
+  emits: ['handle-icon'],
   setup(props, { emit }) {
     const queryForm = reactive({
       pageNo: 1,
@@ -72,11 +80,11 @@ export default {
     const fetchData = async() => {
       let icons = []
       if (queryResult.value.length === 0) {
-        const { data } = await getIconList({ item: 'svg' })
+        const { data } = await getIconList({ item: props.element })
         queryResult.value = data
       }
       if (queryForm.title) {
-        queryResult.value.forEach(key => {
+        queryResult.value.forEach((key) => {
           if (key.indexOf(queryForm.title) !== -1) {
             icons.push(key)
           }

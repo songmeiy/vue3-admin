@@ -2,7 +2,7 @@
   <span v-if="theme.showClean">
     <el-tooltip placement="bottom" :effect="theme.themeName === 'white' ? 'dark' : 'light'" :content="translate('layout', '清除缓存')">
       <SvgIcon
-        iconClass="clean"
+        icon-class="clean"
         class="quick-button"
         :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
         @click="clean"

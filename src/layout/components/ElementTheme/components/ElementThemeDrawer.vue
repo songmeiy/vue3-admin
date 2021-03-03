@@ -16,7 +16,7 @@
           label-width="150px"
           label-position="left"
         >
-          <el-divider content-position="left"><SvgIcon :iconClass="'theme'" />{{ translate('theme', '常用设置') }}</el-divider>
+          <el-divider content-position="left"><SvgIcon :icon-class="'theme'" />{{ translate('theme', '常用设置') }}</el-divider>
           <el-form-item>
             <template #label>
               {{ translate('theme', '布局') }}
@@ -25,7 +25,7 @@
                 effect="dark"
                 placement="top"
               >
-                <SvgIcon :iconClass="'tips'" />
+                <SvgIcon :icon-class="'tips'" />
               </el-tooltip>
             </template>
             <el-select v-model="theme.layout" :disabled="device === 'mobile'">
@@ -69,7 +69,7 @@
                 effect="dark"
                 placement="top"
               >
-                <SvgIcon :iconClass="'tips'" />
+                <SvgIcon :icon-class="'tips'" />
               </el-tooltip>
             </template>
             <el-select
@@ -127,7 +127,7 @@
                 effect="dark"
                 placement="top"
               >
-                <SvgIcon :iconClass="'tips'" />
+                <SvgIcon :icon-class="'tips'" />
               </el-tooltip>
             </template>
             <el-switch
@@ -142,7 +142,7 @@
                 effect="dark"
                 placement="top"
               >
-                <SvgIcon :iconClass="'tips'" />
+                <SvgIcon :icon-class="'tips'" />
               </el-tooltip>
             </template>
             <el-select v-model="theme.tabsBarStyle" :disabled="!theme.showTabs">
@@ -177,12 +177,12 @@
                 effect="dark"
                 placement="top"
               >
-                <SvgIcon :iconClass="'tips'" />
+                <SvgIcon :icon-class="'tips'" />
               </el-tooltip>
             </template>
             <el-switch v-model="theme.showBreadcrumbIcon" />
           </el-form-item>
-          <el-divider content-position="left" style="margin-top: 20px"><SvgIcon :iconClass="'theme'" />{{ translate('theme', '其它设置') }}</el-divider>
+          <el-divider content-position="left" style="margin-top: 20px"><SvgIcon :icon-class="'theme'" />{{ translate('theme', '其它设置') }}</el-divider>
           <el-form-item :label="translate('theme', '头部固定')">
             <el-switch v-model="theme.fixedHeader" :disabled="theme.layout === 'common'" />
           </el-form-item>
@@ -210,7 +210,7 @@
         </el-form>
       </el-scrollbar>
       <div class="element-drawer__footer">
-        <el-divider content-position="left" style="margin-top: 20px"><SvgIcon :iconClass="'theme'" />{{ translate('theme', '操作') }}</el-divider>
+        <el-divider content-position="left" style="margin-top: 20px"><SvgIcon :icon-class="'theme'" />{{ translate('theme', '操作') }}</el-divider>
         <el-button type="primary" @click="handleSaveTheme">{{ translate('theme', '保存') }}</el-button>
         <el-button @click="setDefaultTheme">{{ translate('theme', '恢复默认') }}</el-button>
         <el-button @click="randomTheme">{{ translate('theme', '随机换肤') }}</el-button>
@@ -242,7 +242,7 @@ export default {
       const loading = baseColorfullLoading(0)
       // 随机换肤重置移除主题，防止代码更新影响样式
       await $store.dispatch('settings/resetTheme')
-      const themeNameArray = ['default', 'ocean', 'green', 'white']
+      const themeNameArray = ['default', 'red', 'green', 'white']
       theme.value.themeName = _.sample(
         _.pull(themeNameArray, [theme.value.themeName])
       )
@@ -264,7 +264,8 @@ export default {
           'vertical',
           'column',
           'comprehensive',
-          'common'
+          'common',
+          'hide'
         ]
         theme.value.layout = _.sample(_.pull(layoutArray, [theme.value.layout]))
       } else {

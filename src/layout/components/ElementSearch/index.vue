@@ -2,7 +2,7 @@
   <span v-if="theme.showSearch">
     <el-tooltip placement="bottom" :effect="theme.themeName === 'white' ? 'dark' : 'light'" :content="translate('layout', '搜索')">
       <SvgIcon
-        iconClass="search"
+        icon-class="search"
         class="quick-button"
         :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
         @click="openDialog"
@@ -24,7 +24,7 @@
             select-when-unmatched
             @select="handleSelect"
           >
-            <template #prefix><SvgIcon :iconClass="'search'" /></template>
+            <template #prefix><SvgIcon :icon-class="'search'" /></template>
           </el-autocomplete>
         </el-form-item>
       </el-form>

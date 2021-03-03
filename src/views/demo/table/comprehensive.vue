@@ -178,7 +178,16 @@
 <script>
 import { doDelete, getList } from '@/api/table'
 import TableEdit from './components/TableEdit'
-import { computed, getCurrentInstance, onBeforeMount, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import {
+  computed,
+  getCurrentInstance,
+  onActivated,
+  onBeforeMount,
+  onBeforeUnmount,
+  onMounted,
+  reactive,
+  ref
+} from 'vue'
 
 export default {
   name: 'ComprehensiveTable',
@@ -286,6 +295,9 @@ export default {
       }
       return statusMap[status]
     }
+    onActivated(() => {
+      fetchData()
+    })
     onMounted(() => {
       fetchData()
     })

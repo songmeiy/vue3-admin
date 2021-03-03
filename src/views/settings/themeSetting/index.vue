@@ -7,7 +7,7 @@
       :label-position="device === 'mobile' ? 'top' : 'left'"
     >
       <el-divider content-position="left">
-        <SvgIcon :iconClass="'theme'" />
+        <SvgIcon :icon-class="'theme'" />
         {{ translate('theme', '常用设置') }}
       </el-divider>
       <el-form-item>
@@ -18,7 +18,7 @@
             effect="dark"
             placement="top"
           >
-            <SvgIcon :iconClass="'tips'" />
+            <SvgIcon :icon-class="'tips'" />
           </el-tooltip>
         </template>
         <el-switch v-model="theme.showThemeSetting"/>
@@ -31,7 +31,7 @@
             effect="dark"
             placement="top"
           >
-            <SvgIcon :iconClass="'tips'" />
+            <SvgIcon :icon-class="'tips'" />
           </el-tooltip>
         </template>
         <el-select v-model="theme.layout" :disabled="device === 'mobile'">
@@ -75,7 +75,7 @@
             effect="dark"
             placement="top"
           >
-            <SvgIcon :iconClass="'tips'" />
+            <SvgIcon :icon-class="'tips'" />
           </el-tooltip>
         </template>
         <el-select
@@ -131,7 +131,7 @@
             effect="dark"
             placement="top"
           >
-            <SvgIcon :iconClass="'tips'" />
+            <SvgIcon :icon-class="'tips'" />
           </el-tooltip>
         </template>
         <el-switch v-model="theme.uniqueOpened" :disabled="theme.layout === 'horizontal'"/>
@@ -144,7 +144,7 @@
             effect="dark"
             placement="top"
           >
-            <SvgIcon :iconClass="'tips'" />
+            <SvgIcon :icon-class="'tips'" />
           </el-tooltip>
         </template>
         <el-switch
@@ -162,7 +162,7 @@
             effect="dark"
             placement="top"
           >
-            <SvgIcon :iconClass="'tips'" />
+            <SvgIcon :icon-class="'tips'" />
           </el-tooltip>
         </template>
         <el-switch
@@ -178,7 +178,7 @@
             effect="dark"
             placement="top"
           >
-            <SvgIcon :iconClass="'tips'" />
+            <SvgIcon :icon-class="'tips'" />
           </el-tooltip>
         </template>
         <el-select v-model="theme.tabsBarStyle" :disabled="!theme.showTabs">
@@ -213,7 +213,7 @@
             effect="dark"
             placement="top"
           >
-            <SvgIcon :iconClass="'tips'" />
+            <SvgIcon :icon-class="'tips'" />
           </el-tooltip>
         </template>
         <el-switch
@@ -222,7 +222,7 @@
         />
       </el-form-item>
       <el-divider content-position="left" style="margin-top: 20px">
-        <SvgIcon :iconClass="'theme'" />
+        <SvgIcon :icon-class="'theme'" />
         {{ translate('theme', '其它设置') }}
       </el-divider>
       <el-form-item :label="translate('theme', '头部固定')">
@@ -253,7 +253,7 @@
         <el-switch v-model="theme.showFullScreen" />
       </el-form-item>
       <el-divider content-position="left" style="margin-top: 20px">
-        <SvgIcon :iconClass="'theme'" />
+        <SvgIcon :icon-class="'theme'" />
         {{ translate('theme', '操作') }}
       </el-divider>
       <el-button type="primary" @click="handleSaveTheme">

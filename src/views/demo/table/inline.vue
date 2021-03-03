@@ -112,7 +112,7 @@
 
 <script>
 import { getList } from '@/api/table'
-import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
+import { computed, getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
 
 export default {
   name: 'InlineTable',
@@ -159,6 +159,9 @@ export default {
       row.edit = false
       row.originalTitle = row.title
     }
+    onActivated(() => {
+      fetchData()
+    })
     onMounted(() => {
       fetchData()
     })

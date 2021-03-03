@@ -5,7 +5,7 @@
       @click.native="dialogTableVisible = true"
     >
       <SvgIcon
-        :iconClass="'bug'"
+        :icon-class="'bug'"
         :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
       />
     </el-badge>

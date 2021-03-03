@@ -10,17 +10,14 @@ const system = computed(() => store.state.settings.system)
  * @returns {*}
  */
 export function convertRouter(asyncRoutes) {
-  return asyncRoutes.map((route) => {
+  return asyncRoutes.filter((route) => {
     if (route.component) {
       if (route.component === 'Layout') {
-        // eslint-disable-next-line global-require
-        route.component = resolve => require(['../../layout/layouts/index.vue'], resolve)
+        route.component = () => import('@/layout/layouts')
       } else {
         const index = route.component.indexOf('views')
-        const path =
-          index > 0 ? route.component.slice(index) : `views/${route.component}`
-        // eslint-disable-next-line global-require
-        route.component = (resolve) => require([`@/${path}`], resolve)
+        const path = index > 0 ? route.component.slice(index) : `@/views/${route.component}`
+        route.component = () => import(`@/${path}`)
       }
     }
     if (route.children && route.children.length) {

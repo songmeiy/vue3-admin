@@ -6,19 +6,19 @@
         <span class="hidden-xs-only">{{ userInfo.name }}</span>
         <SvgIcon
           class="element-dropdown"
-          :iconClass ="'triangle-open'"
-          :className ="active? 'open' : ''"
+          :icon-class ="'triangle-open'"
+          :class-name ="active? 'open' : ''"
         />
       </div>
     </span>
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item command="personalCenter">
-          <SvgIcon :iconClass="'user'" />
+          <SvgIcon :icon-class="'user'" />
           {{ translate('layout', '个人中心') }}
         </el-dropdown-item>
         <el-dropdown-item command="logout">
-          <SvgIcon :iconClass="'logout'" />
+          <SvgIcon :icon-class="'logout'" />
           {{ translate('layout', '退出登录') }}
         </el-dropdown-item>
       </el-dropdown-menu>

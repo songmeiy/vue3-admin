@@ -18,7 +18,7 @@
               <template #label>
                 <SvgIcon
                   v-if="item.meta.icon"
-                  :iconClass="item.meta.icon"
+                  :icon-class="item.meta.icon"
                   style="min-width: 16px"
                 />
                 {{ translate('router', item.meta.title) }}

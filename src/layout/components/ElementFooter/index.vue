@@ -1,7 +1,7 @@
 <template>
   <footer class="element-footer">
     Copyright
-    <SvgIcon :iconClass="'copyright'" />
+    <SvgIcon :icon-class="'copyright'" />
     {{ system.websiteTitle }} {{ fullYear }} by {{ system.copyright }}
   </footer>
 </template>

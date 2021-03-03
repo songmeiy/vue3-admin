@@ -21,7 +21,7 @@
               :timestamp="item.timestamp"
             >
               <template v-if="!item.color" #dot>
-                <svg-icon v-if="item.icon" :iconClass="item.icon" />
+                <svg-icon v-if="item.icon" :icon-class="item.icon" />
                 <span
                   v-if="item.waver"
                   class="element-dot"
@@ -62,7 +62,7 @@
               :timestamp="item.timestamp"
             >
               <template v-if="!item.color" #dot>
-                <svg-icon v-if="item.icon" :iconClass="item.icon" />
+                <svg-icon v-if="item.icon" :icon-class="item.icon" />
                 <span
                   v-if="item.waver"
                   class="element-dot"

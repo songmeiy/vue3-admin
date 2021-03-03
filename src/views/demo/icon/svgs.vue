@@ -22,7 +22,7 @@
         :xs="6"
       >
         <el-card shadow="hover" @click.native="handleCopyIcon(item, $event)">
-          <SvgIcon :iconClass="item" />
+          <SvgIcon :icon-class="item" />
         </el-card>
         <div class="icon-text" @click="handleCopyText(item, $event)">
           {{ item }}
@@ -48,7 +48,7 @@
 <script>
 import { getIconList } from '@/api/icon'
 import clip from '@/utils/clipboard'
-import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
+import { computed, getCurrentInstance, onMounted, reactive, ref, onActivated } from 'vue'
 import { translate } from '@/utils/i18n'
 export default {
   name: 'Svgs',
@@ -100,6 +100,9 @@ export default {
     const handleCopyIcon = (item, event) => {
       clip(`<SvgIcon :iconClass="'${item}'" />`, event)
     }
+    onActivated(() => {
+      fetchData()
+    })
     onMounted(() => {
       fetchData()
     })

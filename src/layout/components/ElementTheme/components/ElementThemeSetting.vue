@@ -3,19 +3,19 @@
     <ul v-if="theme.showThemeSetting" class="element-theme-setting">
       <li @click="handleOpenTheme">
         <a>
-          <SvgIcon iconClass="theme" />
+          <SvgIcon icon-class="theme" />
           <p>{{ translate('theme', '主题配置') }}</p>
         </a>
       </li>
       <li @click="randomTheme">
         <a>
-          <SvgIcon iconClass="random" />
+          <SvgIcon icon-class="random" />
           <p>{{ translate('theme', '随机换肤') }}</p>
         </a>
       </li>
       <li @click="removeLocalStorage">
         <a>
-          <SvgIcon iconClass="clean" />
+          <SvgIcon icon-class="clean" />
           <p>{{ translate('theme', '清理缓存') }}</p>
         </a>
       </li>

@@ -13,7 +13,10 @@ module.exports = {
     __dirname: true
   },
   extends: [
-    'plugin:vue/recommended',
+    'plugin:vue/vue3-essential',
+    'plugin:vue/vue3-strongly-recommended',
+    'plugin:vue/vue3-recommended',
+    'plugin:prettier/recommended',
     'eslint:recommended',
     '@vue/prettier'
   ], // 扩展使用 vue 检查规则和eslint推荐规则
@@ -43,7 +46,7 @@ module.exports = {
     'eqeqeq': ['error', 'always', { null: 'ignore' }], // 强制使用全等
     'generator-star-spacing': [2, { before: true, after: true }], // 生成器中'*'两侧都要有间距
     'global-require': 1, // 所有调用require()都位于模块的顶层
-    'indent': [2, 2, { SwitchCase: 2 }], // 缩进风格
+    // 'indent': [2, 2, { SwitchCase: 2 }], // 缩进风格
     'key-spacing': [2, { beforeColon: false, afterColon: true }], // 强制在对象字面量属性中的键和值之间保持一致的间距
     'keyword-spacing': [2, { before: true, after: true }], // 关键字如if/function等的间距
     'new-cap': [2, { newIsCap: true, capIsNew: false }], // 允许在没有new操作符的情况下调用大写启动的函数;（默认）要求new使用大写启动函数调用所有操作符
@@ -132,7 +135,7 @@ module.exports = {
     'space-infix-ops': 2, // 强制二元运算符左右各有一个空格
     'space-unary-ops': [2, { words: true, nonwords: false }], // words: true 如：new，delete，typeof，void，yield 左右必须有空格 // nonwords: false 一元运算符，如：-，+，--，++，!，!!左右不能有空格
     'spaced-comment': [2, 'always', { markers: ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ','] }], // 注释开始后，此规则将强制间距的一致性//或/*
-    'template-curly-spacing': [2, 'never'], // 不允许大括号内的空格
+    // 'template-curly-spacing': [2, 'never'], // 不允许大括号内的空格
     'use-isnan': 2, // 禁止比较时使用NaN，只能用isNaN()
     'valid-typeof': 2, // 必须使用合法的typeof的值
     'wrap-iife': [2, 'any'], // 立即执行函数表达式的小括号风格

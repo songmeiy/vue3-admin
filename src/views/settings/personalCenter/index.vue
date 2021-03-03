@@ -14,10 +14,10 @@
             </div>
             <ul class="personal-center-user-info-list">
               <li>
-                <svg-icon iconClass="ip"></svg-icon>{{ userInfo.last_ip }}
+                <svg-icon icon-class="ip"></svg-icon>{{ userInfo.last_ip }}
               </li>
               <li>
-                <svg-icon iconClass="meditor-time"></svg-icon>{{ userInfo.last_time }}
+                <svg-icon icon-class="meditor-time"></svg-icon>{{ userInfo.last_time }}
               </li>
               <li>
                 <el-divider />
@@ -36,6 +36,9 @@
                 <el-form ref="formRef" :model="userInfo" :rules="rules" label-width="120px" :label-position="device === 'mobile' ? 'top' : 'left'">
                   <el-form-item :label="translate('user', '用户名')" prop="username">
                     <el-input v-model="userInfo.username" disabled></el-input>
+                  </el-form-item>
+                  <el-form-item :label="translate('user', '角色')" prop="role">
+                    <el-input v-model="roles" disabled/>
                   </el-form-item>
                   <el-form-item :label="translate('user', '姓名')" prop="name">
                     <el-input v-model="userInfo.name" />
@@ -66,7 +69,7 @@
             </el-tab-pane>
             <el-tab-pane :label="translate('user', '账号绑定')" name="account">
               <div class="personal-center-item">
-                <svg-icon iconClass="email" style="color: #3492ed" />
+                <svg-icon icon-class="email" style="color: #3492ed" />
                 <div class="personal-center-item-content">
                   <div>{{ translate('user', '绑定邮箱') }}</div>
                   <div class="personal-center-item-content-second">
@@ -98,10 +101,10 @@
     <ElementCropper
       v-if="cropperVisible"
       :action="baseURL + '/user/uploadAvatar'"
-      :imagePath="imagePath"
+      :image-path="imagePath"
       :headers="headers"
       auto-upload
-      fileType="blob"
+      file-type="blob"
       @save="onSave"
       @cancel="onCancel"
       @success="handleAvatarSuccess"
@@ -111,7 +114,7 @@
 </template>
 
 <script>
-import { getCurrentInstance, ref, computed, reactive, toRefs, onMounted } from 'vue'
+import { getCurrentInstance, ref, computed, reactive, toRefs, onMounted, onActivated } from 'vue'
 import { translate } from '@/utils/i18n'
 import { isEmail } from '@/utils/validate'
 import { useI18n } from 'vue-i18n'
@@ -133,6 +136,7 @@ export default {
     const device = computed(() => $store.state.settings.device)
     const userInfo = computed(() => $store.state.user.userInfo)
     const personality = ref(userInfo.value.personality.join(','))
+    const roles = ref(userInfo.value.roles.join(','))
     const avatar = computed(() => $store.state.user.avatar)
     const formRef = ref(null)
     const uploadRef = ref(null)
@@ -151,7 +155,7 @@ export default {
         { required: true, message: translate('user', 'message.user.邮箱不能为空'), trigger: 'blur' },
         {
           validator: async(_rule, value) => {
-            if (userInfo.bindedEmail) return Promise.reject(t('message.user.已绑定的邮箱不能修改'))
+            if (userInfo.value.bindedEmail) return Promise.reject(t('message.user.已绑定的邮箱不能修改'))
             else if (!isEmail(value)) return Promise.reject(t('message.user.请输入正确的邮箱'))
             return Promise.resolve()
           },
@@ -186,6 +190,9 @@ export default {
     const openEmailDialog = () => {
       emailDialogRef.value.open()
     }
+    onActivated(() => {
+      $store.dispatch('user/getUserInfo')
+    })
     onMounted(() => {
       $store.dispatch('user/getUserInfo')
     })
@@ -245,7 +252,8 @@ export default {
       translate,
       tabClick,
       emailDialogRef,
-      baseURL
+      baseURL,
+      roles
     }
   }
 }

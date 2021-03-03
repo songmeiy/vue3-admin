@@ -3,7 +3,7 @@
     <el-popover placement="bottom" trigger="hover" width="300">
       <template #reference>
         <SvgIcon
-          iconClass="notification"
+          icon-class="notification"
           class="quick-button"
           :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
         />
@@ -36,7 +36,7 @@
       </el-tabs>
       <div class="notice-clear" @click="handleClearNotice">
         <el-button type="text">
-          <SvgIcon :iconClass="'close-circle'" />
+          <SvgIcon :icon-class="'close-circle'" />
           {{ translate('layout', '清空消息') }}
         </el-button>
       </div>

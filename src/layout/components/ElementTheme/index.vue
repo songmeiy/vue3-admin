@@ -5,7 +5,7 @@
     :effect="theme.themeName === 'white' ? 'dark' : 'light'"
     :content="translate('theme', '主题')">
     <SvgIcon
-      iconClass="theme"
+      icon-class="theme"
       class="quick-button"
       :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
       @click="handleOpenTheme"

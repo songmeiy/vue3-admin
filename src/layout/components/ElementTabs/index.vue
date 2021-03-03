@@ -19,7 +19,7 @@
         <template #label>
           <SvgIcon
             v-if="item.meta && item.meta.icon && theme.showTabsBarIcon"
-            :iconClass="item.meta.icon"
+            :icon-class="item.meta.icon"
           />
           {{ translate('router', item.meta.title) }}
         </template>
@@ -31,26 +31,26 @@
         {{ translate('layout', '更多') }}
         <SvgIcon
           class="element-dropdown"
-          :iconClass ="'triangle-open'"
-          :className ="active? 'open' : ''"
+          :icon-class ="'triangle-open'"
+          :class-name ="active? 'open' : ''"
         />
       </span>
       <template #dropdown>
         <el-dropdown-menu class="tabs-more">
           <el-dropdown-item command="closeOthersTabs">
-            <SvgIcon :iconClass="'close-line'" />
+            <SvgIcon :icon-class="'close-line'" />
             {{ translate('layout', '关闭其他') }}
           </el-dropdown-item>
           <el-dropdown-item command="closeLeftTabs">
-            <SvgIcon :iconClass="'arrow-left-line'" />
+            <SvgIcon :icon-class="'arrow-left-line'" />
             {{ translate('layout', '关闭左侧') }}
           </el-dropdown-item>
           <el-dropdown-item command="closeRightTabs">
-            <SvgIcon :iconClass="'arrow-right-line'" />
+            <SvgIcon :icon-class="'arrow-right-line'" />
             {{ translate('layout', '关闭右侧') }}
           </el-dropdown-item>
           <el-dropdown-item command="closeAllTabs">
-            <SvgIcon :iconClass="'close-line'" />
+            <SvgIcon :icon-class="'close-line'" />
             {{ translate('layout', '关闭全部') }}
           </el-dropdown-item>
         </el-dropdown-menu>
