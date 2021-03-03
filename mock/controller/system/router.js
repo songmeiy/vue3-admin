@@ -1,7 +1,4 @@
-/**
- * @description router全局配置，如有必要可分文件抽离，其中asyncRoutes只有在intelligence模式下才会用到
- */
-const data = [
+const router = [
   {
     path: '/',
     name: 'Root',
@@ -53,6 +50,7 @@ const data = [
         alwaysShow: false,
         redirect: '',
         meta: {
+          affix: false,
           title: '工作台',
           isCustomSvg: true,
           icon: 'workbench',
@@ -77,6 +75,7 @@ const data = [
     redirect: '/demo/icon/icons',
     alwaysShow: false,
     meta: {
+      affix: false,
       title: '组件',
       isCustomSvg: true,
       icon: 'component',
@@ -98,6 +97,7 @@ const data = [
         alwaysShow: false,
         redirect: '/demo/icon/icons',
         meta: {
+          affix: false,
           title: '图标',
           isCustomSvg: true,
           icon: 'logo',
@@ -119,6 +119,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/icon/svgs',
             meta: {
+              affix: false,
               title: 'SVG图标',
               isCustomSvg: true,
               icon: 'svg',
@@ -141,6 +142,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/icon/elements',
             meta: {
+              affix: false,
               title: 'Element图标',
               isCustomSvg: true,
               icon: 'element',
@@ -163,6 +165,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/icon/iconSelector',
             meta: {
+              affix: false,
               title: '图标选择器',
               isCustomSvg: true,
               icon: 'select',
@@ -187,6 +190,7 @@ const data = [
         hidden: false,
         alwaysShow: false,
         meta: {
+          affix: false,
           title: '表格',
           isCustomSvg: true,
           icon: 'table',
@@ -208,6 +212,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/table/comprehensive',
             meta: {
+              affix: false,
               title: '综合表格',
               isCustomSvg: true,
               icon: 'comprehensive',
@@ -230,6 +235,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/table/custom',
             meta: {
+              affix: false,
               title: '自定义表格',
               isCustomSvg: true,
               icon: 'custom',
@@ -252,6 +258,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/table/inline',
             meta: {
+              affix: false,
               title: '行内编辑表格',
               isCustomSvg: true,
               icon: 'edit-solid',
@@ -274,6 +281,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/table/detail',
             meta: {
+              affix: false,
               title: '详情',
               icon: 'edit-solid',
               isCustomSvg: true,
@@ -298,6 +306,7 @@ const data = [
         component: '@/views/demo/form',
         redirect: '/demo/form/comprehensive',
         meta: {
+          affix: false,
           isCustomSvg: true,
           icon: 'form',
           title: '表单',
@@ -319,6 +328,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/form/comprehensive',
             meta: {
+              affix: false,
               isCustomSvg: true,
               icon: 'comprehensive-form',
               title: '综合表单',
@@ -341,6 +351,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/form/steps',
             meta: {
+              affix: false,
               isCustomSvg: true,
               icon: 'steps',
               title: '分步表单',
@@ -365,6 +376,7 @@ const data = [
         redirect: '',
         component: '@/views/demo/card',
         meta: {
+          affix: false,
           title: '卡片',
           isCustomSvg: true,
           icon: 'card',
@@ -387,6 +399,7 @@ const data = [
         redirect: '',
         component: '@/views/demo/timeline',
         meta: {
+          affix: false,
           title: '时间线',
           isCustomSvg: true,
           icon: 'timeline',
@@ -409,6 +422,7 @@ const data = [
         redirect: '',
         component: '@/views/demo/list',
         meta: {
+          affix: false,
           title: '列表',
           isCustomSvg: true,
           icon: 'stream-list',
@@ -431,6 +445,7 @@ const data = [
         redirect: 'demo/editor/wangEditor',
         component: '@/views/demo/editor',
         meta: {
+          affix: false,
           title: '编辑器',
           isCustomSvg: true,
           icon: 'editor',
@@ -452,6 +467,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/editor/wangEditor',
             meta: {
+              affix: false,
               title: '富文本编辑器',
               isCustomSvg: true,
               icon: 'rich-text',
@@ -474,6 +490,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/editor/markdownEditor',
             meta: {
+              affix: false,
               title: 'MarkDown编辑器',
               isCustomSvg: true,
               icon: 'markdown',
@@ -498,6 +515,7 @@ const data = [
         component: '@/views/demo/excel',
         redirect: '/demo/excel/export',
         meta: {
+          affix: false,
           title: 'Excel',
           isCustomSvg: true,
           icon: 'excel',
@@ -519,6 +537,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/excel/export',
             meta: {
+              affix: false,
               title: '导出表格',
               isCustomSvg: true,
               icon: 'export',
@@ -541,6 +560,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/excel/selected',
             meta: {
+              affix: false,
               title: '导出选中数据',
               isCustomSvg: true,
               icon: 'select',
@@ -563,6 +583,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/excel/merge',
             meta: {
+              affix: false,
               title: '导出合并表格',
               isCustomSvg: true,
               icon: 'merge',
@@ -587,6 +608,7 @@ const data = [
         component: '@/views/demo/ElementPlus',
         redirect: '/demo/ElementPlus/message',
         meta: {
+          affix: false,
           title: 'ElementPlus',
           isCustomSvg: true,
           icon: 'element',
@@ -608,6 +630,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/ElementPlus/notification',
             meta: {
+              affix: false,
               title: '通知',
               isCustomSvg: true,
               icon: 'notification',
@@ -630,6 +653,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/ElementPlus/message',
             meta: {
+              affix: false,
               title: '消息提示',
               isCustomSvg: true,
               icon: 'message',
@@ -652,6 +676,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/ElementPlus/messageBox',
             meta: {
+              affix: false,
               title: 'messageBox',
               isCustomSvg: true,
               icon: 'messageBox',
@@ -674,6 +699,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/ElementPlus/loading',
             meta: {
+              affix: false,
               title: 'loading',
               isCustomSvg: true,
               icon: 'loading',
@@ -698,6 +724,7 @@ const data = [
         component: '@/views/demo/meta',
         redirect: '/demo/meta/button',
         meta: {
+          affix: false,
           title: '路由参数',
           isCustomSvg: true,
           icon: 'router',
@@ -719,6 +746,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/meta/meta',
             meta: {
+              affix: false,
               title: '测试',
               isCustomSvg: true,
               icon: 'show',
@@ -741,6 +769,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/meta/dynamicMeta',
             meta: {
+              affix: false,
               title: '动态Meta',
               roles: ['admin'],
               isCustomSvg: true,
@@ -763,6 +792,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/meta/allHidden',
             meta: {
+              affix: false,
               title: 'Menu&Tag',
               isCustomSvg: true,
               icon: 'router',
@@ -785,6 +815,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/meta/tagHidden',
             meta: {
+              affix: false,
               title: '隐藏Tag',
               isCustomSvg: true,
               icon: 'tag',
@@ -807,6 +838,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/meta/menuHidden',
             meta: {
+              affix: false,
               title: '隐藏Menu',
               isCustomSvg: true,
               icon: 'router',
@@ -831,6 +863,7 @@ const data = [
         redirect: '',
         component: '@/views/demo/dynamicSegment/index',
         meta: {
+          affix: false,
           title: '路由传参',
           isCustomSvg: true,
           icon: 'arrow-left-right-line',
@@ -852,6 +885,7 @@ const data = [
             redirect: '',
             component: '@/views/demo/dynamicSegment/dynamicSegment',
             meta: {
+              affix: false,
               title: '路由传参',
               isCustomSvg: true,
               icon: 'arrow-left-right-line',
@@ -874,6 +908,7 @@ const data = [
             component: '@/views/demo/dynamicSegment/query',
             hidden: true,
             meta: {
+              affix: false,
               title: 'query',
               isCustomSvg: true,
               icon: 'query',
@@ -896,6 +931,7 @@ const data = [
             component: '@/views/demo/dynamicSegment/params',
             hidden: true,
             meta: {
+              affix: false,
               title: 'params',
               isCustomSvg: true,
               icon: 'params',
@@ -918,11 +954,19 @@ const data = [
         component: '@/views/demo/nested',
         redirect: '/demo/nested/nested-1/nested-1-1/nested-1-1-1',
         alwaysShow: true,
+        hidden: false,
         meta: {
+          affix: false,
           title: '路由缓存',
           roles: ['admin'],
+          isCustomSvg: true,
           icon: 'nested',
+          badge: '',
+          dot: false,
+          tabHidden: false,
+          dynamicNewTab: false,
           noKeepAlive: false,
+          activeMenu: false,
           parentName: 'Demo'
         },
         children: [
@@ -932,9 +976,19 @@ const data = [
             component: '@/views/demo/nested/nested1',
             redirect: '/demo/nested/nested-1/nested-1-1/nested-1-1-1',
             alwaysShow: true,
+            hidden: false,
             meta: {
+              affix: false,
               title: '多级路由-1',
+              badge: '',
+              dot: false,
+              roles: ['admin'],
+              isCustomSvg: true,
+              icon: 'nested',
+              tabHidden: false,
+              dynamicNewTab: false,
               noKeepAlive: false,
+              activeMenu: false,
               parentName: 'NestedIndex'
             },
             children: [
@@ -943,33 +997,67 @@ const data = [
                 name: 'Nested11',
                 alwaysShow: true,
                 component: '@/views/demo/nested/nested1/nested1-1',
-                redirect: '/demo/nested/nested-1/nested-1-1/nested-1-1-1',
+                redirect: '',
+                hidden: false,
                 meta: {
+                  affix: false,
                   title: '多级路由-1-1',
+                  badge: '',
+                  dot: false,
+                  roles: ['admin'],
+                  isCustomSvg: true,
+                  icon: 'nested',
+                  tabHidden: false,
+                  dynamicNewTab: false,
                   noKeepAlive: false,
-                  parentName: 'NestedIndex'
+                  activeMenu: false,
+                  parentName: 'Nested1'
                 },
                 children: [
                   {
                     path: 'nested-1-1-1',
                     name: 'Nested111',
-                    meta: {
-                      title: '多级路由-1-1-1',
-                      noKeepAlive: false,
-                      parentName: 'NestedIndex'
-                    },
                     alwaysShow: true,
                     component: '@/views/demo/nested/nested1/nested1-1/nested1-1-1',
+                    redirect: '',
+                    hidden: false,
+                    meta: {
+                      affix: false,
+                      title: '多级路由-1-1-1',
+                      badge: '',
+                      dot: false,
+                      roles: ['admin'],
+                      isCustomSvg: true,
+                      icon: 'nested',
+                      tabHidden: false,
+                      dynamicNewTab: false,
+                      noKeepAlive: false,
+                      activeMenu: false,
+                      parentName: 'Nested11'
+                    },
                     children: [
                       {
                         path: 'nested-1-1-1-1',
                         name: 'Nested1111',
+                        hidden: false,
+                        redirect: '',
+                        alwaysShow: true,
+                        component: '@/views/demo/nested/nested1/nested1-1/nested1-1-1/nested1-1-1-1',
                         meta: {
+                          affix: false,
                           title: '多级路由-1-1-1-1',
+                          badge: '',
+                          dot: false,
+                          roles: ['admin'],
+                          isCustomSvg: true,
+                          icon: 'nested',
+                          tabHidden: false,
+                          dynamicNewTab: false,
                           noKeepAlive: false,
-                          parentName: 'NestedIndex'
+                          activeMenu: false,
+                          parentName: 'Nested111'
                         },
-                        component: '@/views/demo/nested/nested1/nested1-1/nested1-1-1/nested1-1-1-1'
+                        children: []
                       }
                     ]
                   }
@@ -987,6 +1075,7 @@ const data = [
         redirect: '',
         component: '',
         meta: {
+          affix: false,
           title: '外链',
           target: '_blank',
           isCustomSvg: true,
@@ -1012,6 +1101,7 @@ const data = [
     hidden: false,
     alwaysShow: false,
     meta: {
+      affix: false,
       title: '设置',
       icon: 'setting',
       dynamicNewTab: false,
@@ -1027,6 +1117,7 @@ const data = [
         redirect: '',
         component: '@/views/settings/themeSetting',
         meta: {
+          affix: false,
           title: '主题设置',
           isCustomSvg: true,
           icon: 'theme',
@@ -1048,6 +1139,7 @@ const data = [
         redirect: '',
         component: '@/views/settings/systemSetting',
         meta: {
+          affix: false,
           title: '系统设置',
           isCustomSvg: true,
           icon: 'system',
@@ -1069,6 +1161,7 @@ const data = [
         redirect: '',
         component: '@/views/settings/personalCenter',
         meta: {
+          affix: false,
           title: '个人中心',
           isCustomSvg: true,
           icon: 'personal',
@@ -1090,9 +1183,10 @@ const data = [
         redirect: '',
         component: '@/views/settings/roleManagement',
         meta: {
+          affix: false,
           title: '角色权限',
           isCustomSvg: true,
-          icon: 'user',
+          icon: 'jurisdiction',
           roles: ['admin'],
           badge: '',
           dot: false,
@@ -1111,6 +1205,7 @@ const data = [
         redirect: '',
         component: '@/views/settings/roleManagement/roles',
         meta: {
+          affix: false,
           title: '角色管理',
           isCustomSvg: true,
           icon: 'user',
@@ -1132,6 +1227,7 @@ const data = [
         redirect: '',
         component: '@/views/settings/menuManagement',
         meta: {
+          affix: false,
           title: '菜单管理',
           isCustomSvg: true,
           icon: 'menu',
@@ -1155,6 +1251,7 @@ const data = [
     alwaysShow: false,
     redirect: '/about/index',
     meta: {
+      affix: false,
       title: '关于',
       isCustomSvg: true,
       icon: 'about',
@@ -1176,6 +1273,7 @@ const data = [
         redirect: '',
         component: '@/views/about/index',
         meta: {
+          affix: false,
           title: '关于',
           isCustomSvg: true,
           icon: 'about',
@@ -1196,11 +1294,27 @@ module.exports = [
   {
     url: '/system/menuManagement/getRouterList',
     type: 'get',
-    response() {
+    response(config) {
+      const { role } = config.query
+      let data = []
+      const filterRouter = (dataList, role) => {
+        dataList.forEach((item) => {
+          if (item.children && item.children.length > 0) {
+            filterRouter(item.children, role)
+          } else {
+            if (item.meta && item.meta.roles && item.meta.roles.length > 0 && item.meta.roles.indexOf(`${role}`) !== -1) data.push(item)
+          }
+        })
+      }
+      if (role) {
+        filterRouter(router, role)
+      } else {
+        data = router
+      }
       return {
         code: 200,
         message: 'success',
-        data
+        data: data
       }
     }
   },
@@ -1227,61 +1341,12 @@ module.exports = [
   {
     url: '/system/menuManagement/deleteRouter',
     type: 'post',
-    response() {
+    response(config) {
+      const { names } = config.body
       return {
         code: 200,
-        message: '模拟删除成功'
-      }
-    }
-  },
-  {
-    url: '/system/menuManagement/getMenuComponents',
-    type: 'get',
-    response() {
-      return {
-        code: 200,
-        message: 'success',
-        data: [{
-          label: 'Layout',
-          component: '@/layout/layouts'
-        }, {
-          label: 'Home',
-          component: '@/views/home/home'
-        }, {
-          label: 'Workbench',
-          component: '@/views/home/workbench'
-        }, {
-          label: 'Icons',
-          component: '@/views/demo/icon/icons'
-        }]
+        message: '模拟删除' + names + '成功'
       }
     }
   }
 ]
-// 一个标准路由的参数
-// const route = {
-//   hidden: true, // 是否显示在菜单中显示隐藏路由（默认值：false）
-//   menuHidden: false, // 是否显示在菜单中显示隐藏一级路由（默认值：false，除分栏布局有效）
-//   alwaysShow: true, // 当只有一级子路由时是否显示父路由是否显示在菜单中显示路由（默认值：false）
-//   name: 'Demo', // 首字母大写，一定要与vue文件的name对应起来，用于noKeepAlive缓存控制（该项特别重要）
-//   redirect: '', // 当设置 '' 的时候该路由在面包屑导航中不可被点击
-//   meta: {
-//   title: 'title', // 菜单、面包屑、多标签页显示的名称
-//     roles: ['admin', '...'], // 当config/settings.js中rolesControl配置开启时，用于控制角色（简写）
-//     // roles: {
-//     // 'role': ['admin', '...'],
-//     //   'ability': ['READ', 'WRITE', 'DELETE'], // ability: ["READ","WRITE"],
-//     //   'mode': 'allOf' // allOf: 数组内所有角色都拥有，返回True oneOf: 数组内拥有任一角色，返回True(等价第1种数据) except: 不拥有数组内任一角色，返回True(取反)
-//     // },// 当config/settings.js中rolesControl配置开启时，用于控制角色（全写）
-//     isCustomSvg: false, // 新版，是否是自定义svg图标（默认值：false，如果设置true，那么需要把你的svg拷贝到assets/icons下，然后icon字段配置上你的图标名）
-//     icon: '', // 设置该路由的图标
-//     noKeepAlive: true, // 当前路由是否不缓存（默认值：false）
-//     affix: true, // 当前路由是否固定多标签页
-//     badge: 'New', // badge小标签（只支持子级）
-//     tabHidden: true, // 当前路由是否不显示多标签页
-//     activeMenu: '', // 高亮指定菜单
-//     dot: false, // 小圆点
-//     dynamicNewTab: false // 动态传参路由是否新开标签页
-//   },
-//   children: []
-// }

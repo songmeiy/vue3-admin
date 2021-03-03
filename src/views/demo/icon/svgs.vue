@@ -1,6 +1,6 @@
 <template>
   <div class="icon-container">
-    <el-form :inline="true" label-width="0" @submit.native.prevent>
+    <el-form :inline="true" label-width="0">
       <el-form-item >
         <el-input v-model="queryForm.title" :placeholder="translate('component', '图标名称')"/>
         <el-button
@@ -21,7 +21,7 @@
         :xl="2"
         :xs="6"
       >
-        <el-card shadow="hover" @click.native="handleCopyIcon(item, $event)">
+        <el-card shadow="hover" @click="handleCopyIcon(item, $event)">
           <SvgIcon :icon-class="item" />
         </el-card>
         <div class="icon-text" @click="handleCopyText(item, $event)">
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { getIconList } from '@/api/icon'
+import { getIconList } from '@/api/demo'
 import clip from '@/utils/clipboard'
 import { computed, getCurrentInstance, onMounted, reactive, ref, onActivated } from 'vue'
 import { translate } from '@/utils/i18n'

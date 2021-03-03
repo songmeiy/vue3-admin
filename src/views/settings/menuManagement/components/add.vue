@@ -335,7 +335,7 @@ export default {
               return reg.test(value) ? Promise.resolve() : Promise.reject(t('message.menu.一级菜单路径应该以"/"开头'))
             } else {
               const reg = /^[A-Za-z]*$/
-              return reg.test(value) ? Promise.resolve() : Promise.reject(t('message.menu.菜单路径应该以字母开头'))
+              return reg.test(value) ? Promise.resolve() : Promise.reject(t('message.menu.菜单路径为字母开头的英文字符串'))
             }
           }
         }
@@ -380,7 +380,7 @@ export default {
       if (row === 'layout') {
         type.value = 'layout'
         title.value = '添加一级菜单'
-        form.component = '@/layout/layouts'
+        form.component = 'Layout'
       } else if (row === 'menu') {
         title.value = '添加子菜单'
         form.component = ''

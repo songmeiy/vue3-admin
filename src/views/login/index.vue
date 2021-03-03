@@ -44,7 +44,7 @@
       <div class="tips">
         <router-link to="/register">{{ translate('login', '注册账号') }}</router-link>
       </div>
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ translate('login', '登录') }}</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click="handleLogin">{{ translate('login', '登录') }}</el-button>
       <div class="language">
         <element-language />
       </div>

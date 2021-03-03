@@ -1,5 +1,5 @@
 const { mock } = require('mockjs')
-const { handleRandomImage } = require('../utils')
+const { handleRandomImage } = require('../../utils')
 const List = []
 const count = 50
 for (let i = 0; i < count; i++) {

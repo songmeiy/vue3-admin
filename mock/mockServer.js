@@ -12,6 +12,7 @@ const mockDir = path.join(process.cwd(), 'mock')
  */
 const registerRoutes = (app) => {
   let mockLastIndex
+  // eslint-disable-next-line global-require
   const { mocks } = require('./index.js')
   const mocksForServer = mocks.map((route) => {
     return responseFake(route.url, route.type, route.response)
@@ -33,7 +34,6 @@ const registerRoutes = (app) => {
  * @param url
  * @param type
  * @param respond
- * @returns {{response(*=, *=): void, type: (*|string), url: RegExp}}
  */
 const responseFake = (url, type, respond) => {
   return {

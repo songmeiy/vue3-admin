@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/area'
+import { getAreaList } from '@/api/demo'
 import { onMounted, reactive, ref } from 'vue'
 
 export default {
@@ -171,7 +171,7 @@ export default {
     }
     // 获取行政区划
     const fetchData = async() => {
-      const { data } = await getList()
+      const { data } = await getAreaList()
       areaOptions.value = data
     }
     const submitForm = () => {

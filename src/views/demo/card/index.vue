@@ -7,7 +7,6 @@
           :inline="true"
           :model="queryForm"
           label-width="60px"
-          @submit.native.prevent
         >
           <el-form-item label="区域">
             <el-select v-model="queryForm.area" placeholder="请选择活动区域">
@@ -72,7 +71,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getTableList } from '@/api/demo'
 import { computed, getCurrentInstance, onMounted, reactive, ref, onActivated } from 'vue'
 
 export default {
@@ -102,7 +101,7 @@ export default {
     }
     const fetchData = async() => {
       listLoading.value = true
-      const { data, totalCount } = await getList(queryForm)
+      const { data, totalCount } = await getTableList(queryForm)
       list.value = data
       total.value = totalCount
     }

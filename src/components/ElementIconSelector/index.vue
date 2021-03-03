@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { getIconList } from '@/api/icon'
+import { getIconList } from '@/api/demo'
 import { reactive, ref, onMounted } from 'vue'
 import { translate } from '@/utils/i18n'
 

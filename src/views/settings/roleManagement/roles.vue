@@ -58,9 +58,9 @@
         :label="translate('role', '操作')"
       >
         <template #default="{ row }">
-          <el-button v-if="row.children" type="text" @click="handleAdd(row)">{{ translate('role', '添加子角色') }}</el-button>
-          <el-button type="text" @click="handleDelete(row)">{{ translate('role', row.children ? '删除角色组' : '删除角色') }}</el-button>
-          <el-button type="text" @click="handleEdit(row)">{{ translate('role', '修改角色') }}</el-button>
+          <el-button v-if="row.children" type="text" @click="handleAdd(row)">{{ translate('role', '添加') }}</el-button>
+          <el-button type="text" @click="handleDelete(row)">{{ translate('role', row.children ? '删除' : '删除') }}</el-button>
+          <el-button type="text" @click="handleEdit(row)">{{ translate('role', '修改') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

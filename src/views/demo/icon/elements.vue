@@ -27,7 +27,7 @@
         :xl="2"
         :xs="6"
       >
-        <el-card shadow="hover" @click.native="handleCopyIcon(item, $event)">
+        <el-card shadow="hover" @click="handleCopyIcon(item, $event)">
           <i :class="item"></i>
         </el-card>
         <div class="icon-text" @click="handleCopyText(item, $event)">
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { getIconList } from '@/api/icon'
+import { getIconList } from '@/api/demo'
 import clip from '@/utils/clipboard'
 import { computed, getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
 import { translate } from '@/utils/i18n'

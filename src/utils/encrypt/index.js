@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js' // 引用AES源码js
-import { getPublicKey } from '@/api/publicKey'
+import { getPublicKey } from '@/api/crypto'
 
 /**
  * @author WangZeping zepingwong@gmail.com

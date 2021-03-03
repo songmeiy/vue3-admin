@@ -31,7 +31,6 @@
           ref="form"
           :inline="true"
           :model="queryForm"
-          @submit.native.prevent
         >
           <el-form-item>
             <el-input v-model="queryForm.title" placeholder="请输入标题" />
@@ -176,7 +175,7 @@
 </template>
 
 <script>
-import { doDelete, getList } from '@/api/table'
+import { doTableDelete, getTableList } from '@/api/demo'
 import TableEdit from './components/TableEdit'
 import {
   computed,
@@ -230,7 +229,7 @@ export default {
     const handleDelete = (row) => {
       if (row.id) {
         $baseConfirm('你确定要删除当前项吗', '提示', async() => {
-          const { message } = await doDelete({ ids: row.id })
+          const { message } = await doTableDelete({ ids: row.id })
           $baseMessage(message, 'success', false, 'element-hey-message-success')
           await fetchData()
         })
@@ -238,7 +237,7 @@ export default {
         if (selectRows.value.length > 0) {
           const ids = selectRows.value.map((item) => item.id).join()
           $baseConfirm('你确定要删除选中项吗', '提示', async() => {
-            const { message } = await doDelete({ ids: ids })
+            const { message } = await doTableDelete({ ids: ids })
             $baseMessage(message, 'success', false, 'element-hey-message-success')
             await fetchData()
           })
@@ -262,7 +261,7 @@ export default {
     }
     const fetchData = async() => {
       listLoading.value = true
-      const { data, totalCount } = await getList(queryForm)
+      const { data, totalCount } = await getTableList(queryForm)
       list.value = data
       data.forEach((item) => {
         imageList.value.push(item.img)

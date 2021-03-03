@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { doEdit } from '@/api/table'
+import { doTableEdit } from '@/api/demo'
 import { getCurrentInstance, reactive, ref } from 'vue'
 
 export default {
@@ -57,7 +57,7 @@ export default {
     const save = () => {
       formRef.value.validate(async(valid) => {
         if (valid) {
-          const { message } = await doEdit(form)
+          const { message } = await doTableEdit(form)
           $baseMessage(message, 'success', false, 'element-hey-message-success')
           emit('fetchData')
           close()

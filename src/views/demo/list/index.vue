@@ -2,7 +2,7 @@
   <div class="list-container">
     <element-query-form>
       <element-query-form-top-panel :span="24">
-        <el-form :inline="true" :model="queryForm" @submit.native.prevent>
+        <el-form :inline="true" :model="queryForm">
           <el-form-item>
             <el-input
               v-model.trim="queryForm.title"
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getTableList } from '@/api/demo'
 import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
 
 export default {
@@ -87,7 +87,7 @@ export default {
     }
     const fetchData = async() => {
       listLoading.value = true
-      const { data, totalCount } = await getList(queryForm)
+      const { data, totalCount } = await getTableList(queryForm)
       list.value = data
       total.value = totalCount
       listLoading.value = false

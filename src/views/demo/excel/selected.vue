@@ -2,7 +2,7 @@
   <div class="select-excel-container">
     <element-query-form>
       <element-query-form-left-panel>
-        <el-form :inline="true" @submit.native.prevent>
+        <el-form :inline="true">
           <el-form-item>
             <el-input v-model="filename" placeholder="请输出要导出文件的名称" />
           </el-form-item>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getTableList } from '@/api/demo'
 import { getCurrentInstance, onMounted, ref } from 'vue'
 
 export default {
@@ -68,7 +68,7 @@ export default {
     const multipleTableRef = ref(null)
     const fetchData = () => {
       listLoading.value = true
-      getList().then((response) => {
+      getTableList().then((response) => {
         list.value = response.data
         listLoading.value = false
       })

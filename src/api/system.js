@@ -85,3 +85,9 @@ export function editRole(data) {
   })
 }
 /** *******************************role**********************************************/
+export function getSearchList() {
+  return request({
+    url: '/system/search/getSearchList',
+    method: 'get'
+  })
+}

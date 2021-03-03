@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getTableList } from '@/api/demo'
 import { parseTime } from '@/utils'
 import { onMounted, ref } from 'vue'
 
@@ -57,7 +57,7 @@ export default {
     const downloadLoading = ref(false)
     const fetchData = () => {
       listLoading.value = true
-      getList().then((response) => {
+      getTableList().then((response) => {
         list.value = response.data
         listLoading.value = false
       })

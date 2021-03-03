@@ -15,7 +15,7 @@
       width="40%"
       :title="translate('layout', '搜索')"
     >
-      <el-form :model="queryForm" @submit.native.prevent>
+      <el-form :model="queryForm">
         <el-form-item label-width="0">
           <el-autocomplete
             ref="searchRef"
@@ -34,7 +34,7 @@
 
 <script>
 import { ref, computed, reactive, onMounted, getCurrentInstance } from 'vue'
-import { getList } from '@/api/search'
+import { getSearchList } from '@/api/system'
 import { translate } from '@/utils/i18n'
 export default {
   name: 'ElementSearch',
@@ -54,7 +54,7 @@ export default {
       dialogVisible.value = true
     }
     const loadAll = async() => {
-      const { data } = await getList()
+      const { data } = await getSearchList()
       restaurants.value = data
     }
     const querySearchAsync = (queryString, cb) => {

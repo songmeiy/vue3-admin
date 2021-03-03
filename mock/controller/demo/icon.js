@@ -1,6 +1,6 @@
 module.exports = [
   {
-    url: '/develop/Icon/getIconList',
+    url: '/demo/Icon/getIconList',
     type: 'get',
     response(config) {
       const { item } = config.query

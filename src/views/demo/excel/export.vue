@@ -2,7 +2,7 @@
   <div class="export-excel-container">
     <element-query-form>
       <element-query-form-left-panel :span="24">
-        <el-form :inline="true" label-width="80px" @submit.native.prevent>
+        <el-form :inline="true" label-width="80px">
           <el-form-item label="文件名">
             <el-input v-model="filename" placeholder="请输出要导出文件的名称" />
           </el-form-item>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getTableList } from '@/api/demo'
 import { onMounted, ref } from 'vue'
 
 export default {
@@ -78,7 +78,7 @@ export default {
     const options = ['xlsx', 'csv', 'txt']
     const fetchData = () => {
       listLoading.value = true
-      getList().then((response) => {
+      getTableList().then((response) => {
         list.value = response.data
         listLoading.value = false
       })

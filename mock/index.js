@@ -8,7 +8,6 @@ const { handleMockArray } = require('./utils')
 const mocks = []
 const mockArray = handleMockArray()
 mockArray.forEach((item) => {
-  console.log(item)
   const obj = require(item)
   mocks.push(...obj)
 })

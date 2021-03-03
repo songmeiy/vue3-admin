@@ -132,7 +132,7 @@
               </template>
               <el-popover trigger="click" width="300px">
                 <template #reference>
-                  <el-input v-model="form.roles" />
+                  <el-input v-model="form.roles" @click="setTreeSelect"/>
                 </template>
                 <el-tree
                   ref="rolesTreeRef"
@@ -299,7 +299,6 @@ export default {
       path: '',
       hidden: false,
       alwaysShow: false,
-      parentName: '',
       component: '',
       redirect: '',
       affix: false,
@@ -312,7 +311,8 @@ export default {
       tabHidden: false,
       dynamicNewTab: false,
       noKeepAlive: false,
-      activeMenu: false
+      activeMenu: false,
+      parentName: ''
     })
     const formRef = ref(null)
     const title = ref('')
@@ -335,7 +335,7 @@ export default {
               return reg.test(value) ? Promise.resolve() : Promise.reject(t('message.menu.一级菜单路径应该以"/"开头'))
             } else {
               const reg = /^[A-Za-z]*$/
-              return reg.test(value) ? Promise.resolve() : Promise.reject(t('message.menu.菜单路径应该以字母开头'))
+              return reg.test(value) ? Promise.resolve() : Promise.reject(t('message.menu.菜单路径为字母开头的英文字符串'))
             }
           }
         }
@@ -376,7 +376,11 @@ export default {
     const tabClick = (item) => {
       tabName.value = item.props.name
     }
+    const setTreeSelect = () => {
+      rolesTreeRef.value.setCheckedKeys(form.roles.split(','))
+    }
     const open = (row) => {
+      dialogFormVisible.value = true
       if (row.children && row.children.length > 0) {
         type.value = 'layout'
         title.value = '修改一级菜单'
@@ -385,14 +389,22 @@ export default {
       }
       Object.keys(row).forEach((key) => {
         if (key === 'meta') {
-          Object.keys(row.meta).forEach((k) => {
-            form[k] = row.meta[k]
-          })
+          form.affix = row.meta.affix
+          form.title = row.meta.title
+          form.isCustomSvg = row.meta.isCustomSvg
+          form.icon = row.meta.icon
+          form.roles = row.meta.roles.join()
+          form.badge = row.meta.badge
+          form.dot = row.meta.dot
+          form.tabHidden = row.meta.tabHidden
+          form.dynamicNewTab = row.meta.dynamicNewTab
+          form.noKeepAlive = row.meta.noKeepAlive
+          form.activeMenu = row.meta.activeMenu
+          form.parentName = row.meta.parentName
         } else {
           form[key] = row[key]
         }
       })
-      dialogFormVisible.value = true
     }
     const close = () => {
       type.value = ''
@@ -437,6 +449,7 @@ export default {
       submitForm,
       handleIcon,
       tabClick,
+      setTreeSelect,
       open,
       close,
       translate,

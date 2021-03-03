@@ -6,7 +6,7 @@
       type="success"
     />
     <el-row>
-      <el-col :lg="4" :md="8" :sm="24" :xl="4" :xs="24">
+      <el-col :lg="3" :md="8" :sm="24" :xl="3" :xs="24">
         <el-tree
           :data="roleData"
           :default-expanded-keys="['root']"
@@ -15,7 +15,7 @@
           @node-click="handleNodeClick"
         />
       </el-col>
-      <el-col :lg="20" :md="16" :sm="24" :xl="20" :xs="24">
+      <el-col :lg="21" :md="16" :sm="24" :xl="21" :xs="24">
         <element-query-form>
           <element-query-form-top-panel :span="12">
             <el-button icon="el-icon-plus" type="primary" @click="handleAdd('layout')">添加一级菜单</el-button>
@@ -29,11 +29,13 @@
           border
           default-expand-all
           row-key="path"
+          @node-click="handleNodeClick"
         >
           <el-table-column
-            align="center"
+            align="left"
             label="标题"
             prop="meta.title"
+            width="220"
             show-overflow-tooltip
           />
           <el-table-column
@@ -158,6 +160,9 @@ export default {
       children: 'children',
       label: 'role'
     })
+    const queryForm = reactive({
+      role: ''
+    })
     const list = ref([])
     const listLoading = ref(true)
     const handleDelete = (row) => {
@@ -167,7 +172,7 @@ export default {
       } else {
         names = row.name
       }
-      if (row.path) {
+      if (names) {
         $baseConfirm('你确定要删除当前项吗', '提示', async() => {
           const { message } = await deleteRouter({ names: names })
           $baseMessage(message, 'success', false, 'element-hey-message-success')
@@ -181,12 +186,17 @@ export default {
     const handleEdit = (row) => {
       editRef.value.open(row)
     }
-    const handleNodeClick = () => {
-      fetchData()
+    const handleNodeClick = (item) => {
+      queryForm.role = item.role
+      if (!item.children) {
+        fetchData()
+      } else if (item.children.length === 0) {
+        fetchData()
+      }
     }
     const fetchData = async() => {
       listLoading.value = true
-      const { data } = await getRouterList()
+      const { data } = await getRouterList(queryForm)
       list.value = data
       listLoading.value = false
     }

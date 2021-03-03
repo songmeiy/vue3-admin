@@ -6,7 +6,6 @@
           ref="form"
           :inline="true"
           :model="queryForm"
-          @submit.native.prevent
         >
           <el-form-item>
             <el-input v-model="queryForm.title" placeholder="标题" />
@@ -111,7 +110,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getTableList } from '@/api/demo'
 import { computed, getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
 
 export default {
@@ -130,7 +129,7 @@ export default {
 
     const fetchData = async() => {
       listLoading.value = true
-      const { data } = await getList(queryForm)
+      const { data } = await getTableList(queryForm)
       list.value = data.map((v) => {
         v.edit = false
         v.originalTitle = v.title
