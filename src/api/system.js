@@ -8,9 +8,9 @@ export function getRouterList(params) {
   })
 }
 
-export function getMenuComponents() {
+export function getRouterComponents() {
   return request({
-    url: '/system/menuManagement/getMenuComponents',
+    url: '/system/menuManagement/getRouterComponents',
     method: 'get'
   })
 }
@@ -39,14 +39,14 @@ export function deleteRouter(data) {
 /** *******************************settings**********************************************/
 export function getSystemSettings() {
   return request({
-    url: 'system/getSystemSettings',
+    url: '/system/setting/getSystemSettings',
     method: 'get'
   })
 }
 
 export function changeSystemSettings(object) {
   return request({
-    url: 'system/changeSystemSettings',
+    url: '/system/setting/changeSystemSettings',
     method: 'post',
     data: object
   })
@@ -88,6 +88,12 @@ export function editRole(data) {
 export function getSearchList() {
   return request({
     url: '/system/search/getSearchList',
+    method: 'get'
+  })
+}
+export function getNoticeList() {
+  return request({
+    url: '/system/notice/getNoticeList',
     method: 'get'
   })
 }

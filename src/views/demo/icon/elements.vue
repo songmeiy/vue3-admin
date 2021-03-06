@@ -52,11 +52,10 @@
 </template>
 
 <script>
-import { getIconList } from '@/api/demo'
 import clip from '@/utils/clipboard'
 import { computed, getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
 import { translate } from '@/utils/i18n'
-
+import { element } from '@/components/icons'
 export default {
   name: 'ElementIcons',
   setup() {
@@ -85,9 +84,8 @@ export default {
     const fetchData = async() => {
       let icons = []
       if (queryResult.value.length === 0) {
-        const { data } = await getIconList({ item: 'element' })
-        queryResult.value = data
-        total.value = data.length
+        queryResult.value = element
+        total.value = element.length
       }
       if (queryForm.title) {
         queryResult.value.forEach(key => {

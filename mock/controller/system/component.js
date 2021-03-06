@@ -13,7 +13,7 @@ const data = [{
 }]
 module.exports = [
   {
-    url: '/system/menuManagement/getMenuComponents',
+    url: '/system/menuManagement/getRouterComponents',
     type: 'get',
     response() {
       return {

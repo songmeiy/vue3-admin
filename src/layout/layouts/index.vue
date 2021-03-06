@@ -62,7 +62,6 @@ export default {
       // 先把layout保存一下
       oldLayout.value = theme.value.layout
       handleLayout()
-      console.log(screenWidth.value - 1)
     })
     watch(() => screenWidth.value, () => {
       handleLayout()

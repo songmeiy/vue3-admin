@@ -271,7 +271,7 @@
 <script>
 import ElementIconSelector from '@/components/ElementIconSelector'
 import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
-import { getMenuComponents, editRouter, getRolesList, getRouterList } from '@/api/system'
+import { getRouterComponents, editRouter, getRolesList, getRouterList } from '@/api/system'
 import { translate } from '@/utils/i18n'
 import { isStartWithCapitalLetter } from '@/utils/validate'
 import { useI18n } from 'vue-i18n'
@@ -428,7 +428,7 @@ export default {
       })
     }
     onMounted(async() => {
-      const selectComponentsResponse = await getMenuComponents()
+      const selectComponentsResponse = await getRouterComponents()
       selectComponents.value = selectComponentsResponse.data
       const selectRolesResponse = await getRolesList()
       selectRoles.value = selectRolesResponse.data

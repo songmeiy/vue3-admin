@@ -18,14 +18,20 @@ const path = require('path')
 const resolve = (dir) => {
   return path.join(__dirname, dir)
 }
+const str =
+  '\u0076\u0075\u0065\u002d\u0070\u006c\u0075\u0067\u0069\u006e\u002d\u0072\u0065\u006c\u0079'
 const Webpack = require('webpack')
 const WebpackBar = require('webpackbar')
+const { version, author, devDependencies } = require('./package.json')
+if (devDependencies[unescape(str.replace(/\\u/g, '%u'))]) process.env.VUE_APP_RELY = 'success'
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = ['html', 'js', 'css', 'svg']
 const dayjs = require('dayjs')
 const dateTime = dayjs().format('YYYY-M-D HH:mm:ss')
 const FileManagerPlugin = require('filemanager-webpack-plugin')
-
+process.env.VUE_APP_AUTHOR = author
+process.env.VUE_APP_UPDATE_TIME = dateTime
+process.env.VUE_APP_VERSION = version
 const mockServer = () => {
   if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line global-require

@@ -24,10 +24,8 @@
           >
             <div>
               <div class="svgIcon">
-                <svg-icon
-                  v-if="item.meta.icon"
-                  :icon-class="item.meta.icon"
-                />
+                <SvgIcon v-if="item.meta.isCustomSvg && item.meta.icon" :icon-class="item.meta.icon" />
+                <i v-else-if="item.meta.icon" :class="item.meta.icon" />
               </div>
               <div class="homeTitle">
                 {{ translate('router', item.meta.title) }}

@@ -43,10 +43,11 @@ module.exports = [
   {
     url: '/system/rolesManagement/deleteRole',
     type: 'post',
-    response() {
+    response(config) {
+      const { roles } = config.body
       return {
         code: 200,
-        message: '模拟删除成功'
+        message: '模拟删除角色' + roles + '成功'
       }
     }
   },

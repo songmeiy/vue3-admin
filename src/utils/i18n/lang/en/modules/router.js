@@ -62,7 +62,11 @@ export default {
   'Excel': 'Excel',
   '导出选中数据': 'Export selected data',
   '导出合并表格': 'Export MergeHeader Excel',
-  '角色权限': 'Roles',
   '外链': 'External link',
-  '列表': 'List'
+  '列表': 'List',
+  '角色权限': 'Role jurisdiction',
+  '角色管理': 'Role management',
+  '卡片': 'Card',
+  '树形表格': 'Tree table',
+  '菜单管理': 'Menu management'
 }

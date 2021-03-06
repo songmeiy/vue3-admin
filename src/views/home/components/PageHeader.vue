@@ -1,5 +1,5 @@
 <template>
-  <div class="about-container">
+  <el-col :span="24">
     <el-card class="page-header" shadow="never">
       <el-avatar :src="userInfo.avatar" class="page-header-avatar" />
       <div class="page-header-tip">
@@ -10,36 +10,23 @@
       </div>
       <div class="page-header-avatar-list">
         <element-avatar-list :avatar-list="avatatList" />
-        <p>participants</p>
+        <p>{{ translate('home', '参与开发') }}</p>
       </div>
     </el-card>
-    <el-card class="page-header" shadow="never">
-      <div class="page-header-tip">
-        <p class="page-header-tip-description">我不是个专业码农，刚刚开始接触Vue3.0，感谢过程中众多大佬和大佬们的代码的帮助，写代码没有bug是不可能的，bug是永远也改不完的，如果你发现了一些问题，那么尽管可以联系我。</p>
-        <p class="page-header-tip-description">如果你喜欢我写的东西，或者我的网站给你带来了帮助，那将是我最大的荣幸。</p>
-      </div>
-    </el-card>
-    <el-card class="page-header" shadow="never">
-      <div class="page-header-tip">
-        <p class="page-header-tip-description">如果你愿意的话，可以请我喝杯奶茶吗？</p>
-        <img :class="{ 'mobile': device === 'mobile' }" src="../../assets/20210225.jpg" alt="">
-      </div>
-    </el-card>
-  </div>
+  </el-col>
 </template>
 
 <script>
 import { getList } from '@/api/about'
 import ElementAvatarList from '@/components/ElementAvatarList'
 import { computed, getCurrentInstance, onMounted, ref } from 'vue'
+import { translate } from '@/utils/i18n'
 
 export default {
-  name: 'AboutIndex',
   components: { ElementAvatarList },
   setup() {
     const { $store } = getCurrentInstance().appContext.config.globalProperties
     const userInfo = computed(() => $store.state.user.userInfo)
-    const device = computed(() => $store.state.settings.device)
     const description = ref('')
     const avatatList = [
       {
@@ -69,10 +56,10 @@ export default {
     })
     return {
       avatatList,
-      description,
       userInfo,
-      device,
-      handleTips
+      description,
+      handleTips,
+      translate
     }
   }
 }

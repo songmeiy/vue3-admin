@@ -1,6 +1,7 @@
 export default {
   '角色名称': 'Role name',
   '添加角色组': 'Add role group',
+  '添加组': 'Add group',
   '添加角色': 'Add role',
   '角色组': 'Role group',
   '备注': 'Label',

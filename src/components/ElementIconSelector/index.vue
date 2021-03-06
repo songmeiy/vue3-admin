@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import { getIconList } from '@/api/demo'
 import { reactive, ref, onMounted } from 'vue'
 import { translate } from '@/utils/i18n'
+import { svg, element } from '@/components/icons'
 
 export default {
   name: 'ElementIconSelector',
@@ -61,8 +61,8 @@ export default {
     })
     const queryIcon = ref([])
     const queryResult = ref([]) // 全部icon，缓存一下，前端进行分页操作
-    const layout = ref('total, prev, next')
-    const icon = ref('24-hours-fill')
+    const layout = 'total, prev, next'
+    const icon = ref('bug')
     const total = ref(0)
     const background = true
     const handleSizeChange = (val) => {
@@ -80,8 +80,8 @@ export default {
     const fetchData = async() => {
       let icons = []
       if (queryResult.value.length === 0) {
-        const { data } = await getIconList({ item: props.element })
-        queryResult.value = data
+        if (props.element === 'svg') queryResult.value = svg
+        else queryResult.value = element
       }
       if (queryForm.title) {
         queryResult.value.forEach((key) => {

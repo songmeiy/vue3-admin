@@ -1,6 +1,6 @@
 module.exports = [
   {
-    url: '/system/getSystemSettings',
+    url: '/system/setting/getSystemSettings',
     type: 'get',
     response() {
       return {
@@ -25,7 +25,7 @@ module.exports = [
     }
   },
   {
-    url: '/system/changeSystemSettings',
+    url: '/system/setting/changeSystemSettings',
     type: 'post',
     response() {
       const data = {}

@@ -48,10 +48,9 @@ export function doTableDelete(data) {
   })
 }
 
-export function getIconList(params) {
+export function getTreeData() {
   return request({
-    url: '/demo/Icon/getIconList',
-    method: 'get',
-    params
+    url: '/demo/table/getTreeData',
+    method: 'get'
   })
 }

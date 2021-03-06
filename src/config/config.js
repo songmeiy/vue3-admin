@@ -3,7 +3,6 @@
  **/
 const config = {
   // 是否开启右侧悬浮窗
-  showThemeSetting: false,
-  authentication: 'all'
+  showThemeSetting: false
 }
 module.exports = config

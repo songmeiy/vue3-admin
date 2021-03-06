@@ -205,6 +205,29 @@ const router = [
         },
         children: [
           {
+            path: 'tree',
+            name: 'TreeTable',
+            hidden: false,
+            alwaysShow: false,
+            redirect: '',
+            component: '@/views/demo/table/tree',
+            meta: {
+              affix: false,
+              title: '树形表格',
+              isCustomSvg: true,
+              icon: 'tree',
+              roles: [],
+              badge: '',
+              dot: false,
+              tabHidden: false,
+              dynamicNewTab: false,
+              noKeepAlive: false,
+              activeMenu: false,
+              parentName: 'TableIndex'
+            },
+            children: []
+          },
+          {
             path: 'comprehensive',
             name: 'ComprehensiveTable',
             hidden: false,
@@ -1103,9 +1126,15 @@ const router = [
     meta: {
       affix: false,
       title: '设置',
+      isCustomSvg: true,
       icon: 'setting',
+      roles: [],
+      badge: '',
+      dot: false,
+      tabHidden: false,
       dynamicNewTab: false,
       noKeepAlive: false,
+      activeMenu: false,
       parentName: ''
     },
     children: [
@@ -1345,7 +1374,7 @@ module.exports = [
       const { names } = config.body
       return {
         code: 200,
-        message: '模拟删除' + names + '成功'
+        message: '模拟删除路由' + names + '成功'
       }
     }
   }

@@ -126,6 +126,29 @@ const demo = {
       },
       children: [
         {
+          path: 'tree',
+          name: 'TreeTable',
+          hidden: false,
+          alwaysShow: false,
+          redirect: '',
+          component: () => import('@/views/demo/table/tree'),
+          meta: {
+            affix: false,
+            title: '树形表格',
+            isCustomSvg: true,
+            icon: 'tree',
+            roles: [],
+            badge: '',
+            dot: false,
+            tabHidden: false,
+            dynamicNewTab: false,
+            noKeepAlive: false,
+            activeMenu: false,
+            parentName: 'TableIndex'
+          },
+          children: []
+        },
+        {
           path: 'comprehensive',
           name: 'ComprehensiveTable',
           hidden: false,

@@ -8,9 +8,15 @@ const settings = {
   alwaysShow: false,
   meta: {
     title: '设置',
+    isCustomSvg: true,
     icon: 'setting',
+    roles: [],
+    badge: '',
+    dot: false,
+    tabHidden: false,
     dynamicNewTab: false,
-    noKeepAlive: false
+    noKeepAlive: false,
+    activeMenu: false
   },
   children: [
     {
@@ -83,7 +89,7 @@ const settings = {
       meta: {
         title: '角色权限',
         isCustomSvg: true,
-        icon: 'user',
+        icon: 'jurisdiction',
         roles: ['admin'],
         badge: '',
         dot: false,

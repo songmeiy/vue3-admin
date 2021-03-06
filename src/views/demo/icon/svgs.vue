@@ -46,10 +46,10 @@
 </template>
 
 <script>
-import { getIconList } from '@/api/demo'
 import clip from '@/utils/clipboard'
 import { computed, getCurrentInstance, onMounted, reactive, ref, onActivated } from 'vue'
 import { translate } from '@/utils/i18n'
+import { svg } from '@/components/icons'
 export default {
   name: 'Svgs',
   setup() {
@@ -78,9 +78,8 @@ export default {
     const fetchData = async() => {
       let icons = []
       if (queryResult.value.length === 0) {
-        const { data } = await getIconList({ item: 'svg' })
-        queryResult.value = data
-        total.value = data.length
+        queryResult.value = svg
+        total.value = svg.length
       }
       if (queryForm.title) {
         queryResult.value.forEach(key => {

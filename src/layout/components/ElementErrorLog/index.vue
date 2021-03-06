@@ -2,7 +2,7 @@
   <div v-if="errorLogs.length > 0">
     <el-badge
       :value="errorLogs.length"
-      @click.native="dialogTableVisible = true"
+      @click="dialogTableVisible = true"
     >
       <SvgIcon
         :icon-class="'bug'"

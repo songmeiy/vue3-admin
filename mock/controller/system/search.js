@@ -14,7 +14,7 @@ const data = [
 ]
 module.exports = [
   {
-    url: '/system/search/getList',
+    url: '/system/search/getSearchList',
     type: 'get',
     response: () => {
       return {

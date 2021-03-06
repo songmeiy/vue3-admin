@@ -6,7 +6,7 @@
       type="success"
     />
     <el-row>
-      <el-col :lg="3" :md="8" :sm="24" :xl="3" :xs="24">
+      <el-col :lg="3" :md="4" :sm="24" :xl="3" :xs="24">
         <el-tree
           :data="roleData"
           :default-expanded-keys="['root']"
@@ -15,22 +15,31 @@
           @node-click="handleNodeClick"
         />
       </el-col>
-      <el-col :lg="21" :md="16" :sm="24" :xl="21" :xs="24">
+      <el-col :lg="21" :md="20" :sm="24" :xl="21" :xs="24">
         <element-query-form>
-          <element-query-form-top-panel :span="12">
-            <el-button icon="el-icon-plus" type="primary" @click="handleAdd('layout')">添加一级菜单</el-button>
-            <el-button icon="el-icon-plus" type="primary" @click="handleAdd('menu')">添加菜单</el-button>
-          </element-query-form-top-panel>
+          <element-query-form-left-panel>
+            <el-form inline>
+              <el-form-item>
+                <el-button icon="el-icon-plus" type="primary" @click="handleAdd('layout')">添加一级菜单</el-button>
+                <el-button icon="el-icon-plus" type="primary" @click="handleAdd('menu')">添加菜单</el-button>
+                <el-button icon="el-icon-delete" type="danger" @click="handleDelete">删除</el-button>
+              </el-form-item>
+            </el-form>
+          </element-query-form-left-panel>
         </element-query-form>
         <el-table
+          ref="tableRef"
           v-loading="listLoading"
           :data="list"
           :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
           border
           default-expand-all
-          row-key="path"
-          @node-click="handleNodeClick"
+          row-key="name"
+          @select="rowSelect"
+          @select-all="selectAll"
+          @selection-change="setSelectRows"
         >
+          <el-table-column align="center" type="selection" width="55" />
           <el-table-column
             align="left"
             label="标题"
@@ -154,30 +163,60 @@ export default {
   setup() {
     const editRef = ref(null)
     const addRef = ref(null)
+    const tableRef = ref(null)
+    const selectRows = ref('')
     const { $baseConfirm, $baseMessage } = getCurrentInstance().appContext.config.globalProperties
     const roleData = ref([])
     const defaultProps = reactive({
       children: 'children',
       label: 'role'
     })
+    const setSelectRows = (val) => {
+      selectRows.value = val
+    }
     const queryForm = reactive({
       role: ''
     })
     const list = ref([])
     const listLoading = ref(true)
     const handleDelete = (row) => {
-      let names = ''
-      if (row.children) {
-        names = row.name + ',' + row.children.map((item) => item.name).join()
+      if (row.name) {
+        let names = row.name
+        if (row.children) {
+          row.children.forEach((value) => {
+            names = names + ',' + value.name
+          })
+          $baseConfirm('删除父级菜单会同时删除子菜单，你确定要删除当前项吗', '提示', async() => {
+            const { message } = await deleteRouter({ names: names })
+            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await fetchData()
+          })
+        } else {
+          $baseConfirm('你确定要删除当前项吗', '提示', async() => {
+            const { message } = await deleteRouter({ names: names })
+            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await fetchData()
+          })
+        }
       } else {
-        names = row.name
-      }
-      if (names) {
-        $baseConfirm('你确定要删除当前项吗', '提示', async() => {
-          const { message } = await deleteRouter({ names: names })
-          $baseMessage(message, 'success', false, 'element-hey-message-success')
-          await fetchData()
-        })
+        if (selectRows.value.length > 0) {
+          let names = selectRows.value.map((item) => item.name).join()
+          selectRows.value.map((item) => {
+            if (item.children && item.children.length > 0) {
+              item.children.forEach((value) => {
+                names = names + ',' + value.name
+              })
+            }
+          })
+          $baseConfirm('你确定要删除选中项吗', '提示', async() => {
+            const { message } = await deleteRouter({ names: names })
+            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await fetchData()
+          })
+        } else {
+          $baseMessage('未选中任何行', 'error', false, 'element-hey-message-error')
+          return false
+        }
       }
     }
     const handleAdd = (type) => {
@@ -200,6 +239,53 @@ export default {
       list.value = data
       listLoading.value = false
     }
+    const rowSelect = (selection, row) => {
+      if (!row) return
+      if (row.children) {
+        if (!row.isChecked) {
+          row.children.map((item) => {
+            tableRef.value.toggleRowSelection(item, true) // 切换该子节点选中状态
+            /*
+            方法名                    说明                                      参数
+                                 用于多选表格，切换某一行的选中状态，         row, selected
+            toggleRowSelection   如果使用了第二个参数，则是设置这一行
+                                 选中与否（selected 为 true 则选中）
+             */
+            item.isChecked = true
+          })
+          row.isChecked = true // 当前行isChecked标志元素切换为false
+        } else {
+          row.children.map((item) => {
+            tableRef.value.toggleRowSelection(item, false) // 切换该子节点选中状态
+            item.isChecked = false
+          })
+          row.isChecked = false // 当前行isChecked标志元素切换为false
+        }
+      }
+    }
+    const selectAll = () => {
+      tableRef.value.data.map((items) => {
+        if (items.children) {
+          if (!items.isChecked) { // 若遍历出来的行未选中
+            tableRef.value.toggleRowSelection(items, true) // 行变为选中状态
+            items.isChecked = true // 更新标志参数
+            items.children.map((item) => { // 遍历子节点并改变状态与标志参数
+              tableRef.value.toggleRowSelection(item, true)
+              item.isChecked = true
+            })
+          } else { // 选中状态同理
+            tableRef.value.toggleRowSelection(items, false)
+            items.isChecked = false
+            items.children.map((item) => {
+              tableRef.value.toggleRowSelection(item, false)
+              item.isChecked = false
+            })
+          }
+        } else {
+          items.isChecked = !items.isChecked
+        }
+      })
+    }
     onActivated(() => {
       fetchData()
     })
@@ -211,14 +297,18 @@ export default {
     return {
       addRef,
       editRef,
+      tableRef,
       roleData,
       defaultProps,
       list,
       listLoading,
+      rowSelect,
+      selectAll,
       fetchData,
       handleDelete,
       handleEdit,
       handleAdd,
+      setSelectRows,
       handleNodeClick
     }
   }

@@ -13,9 +13,8 @@ import { translate } from '@/utils/i18n'
 // SvgIcon 注册
 import SvgIcon from '@/components/ElementSvgIcon'
 const req = require.context('../assets/icons', false, /\.svg$/)
-const requireAll = requireContext => requireContext.keys().map(requireContext)
+const requireAll = (requireContext) => requireContext.keys().map(requireContext)
 requireAll(req)
-
 // 暴露接口
 export default (app) => {
   app.config.globalProperties.$baseToken = baseToken

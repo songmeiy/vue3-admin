@@ -85,13 +85,13 @@ module.exports = [
         data: {
           ...info,
           'avatar|1': [
-            'https://zepingwong.github.io/image/avatar-1.png',
-            'https://zepingwong.github.io/image/avatar-2.png',
-            'https://zepingwong.github.io/image/avatar-3.png',
-            'https://zepingwong.github.io/image/avatar-4.png',
-            'https://zepingwong.github.io/image/avatar-5.png',
-            'https://zepingwong.github.io/image/avatar-6.png',
-            'https://zepingwong.github.io/image/avatar-7.png'
+            'https://zepingwong.github.io/static/image/avatar-1.png',
+            'https://zepingwong.github.io/static/image/avatar-2.png',
+            'https://zepingwong.github.io/static/image/avatar-3.png',
+            'https://zepingwong.github.io/static/image/avatar-4.png',
+            'https://zepingwong.github.io/static/image/avatar-5.png',
+            'https://zepingwong.github.io/static/image/avatar-6.png',
+            'https://zepingwong.github.io/static/image/avatar-7.png'
           ]
         }
       }

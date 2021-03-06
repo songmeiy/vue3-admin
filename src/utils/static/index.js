@@ -3,11 +3,10 @@
  * @description 导入所有 controller 模块，浏览器环境中自动输出controller文件夹下Mock接口，请勿修改。
  */
 import Mock from 'mockjs'
-import { paramObj } from '@/utils/index'
+import { paramObj } from '@/utils'
 
 const mocks = []
-const files = require.context('../../../mock/controller', false, /\.js$/)
-
+const files = require.context('../../../mock/controller', true, /\.js$/)
 files.keys().forEach((key) => {
   mocks.push(...files(key))
 })
@@ -26,7 +25,7 @@ export function mockXHR() {
     this.proxy_send(...arguments)
   }
 
-  function XHRHttpRequst(respond) {
+  function XHRHttpRequest(respond) {
     return function(options) {
       let result
       if (respond instanceof Function) {
@@ -47,7 +46,7 @@ export function mockXHR() {
     Mock.mock(
       new RegExp(item.url),
       item.type || 'get',
-      XHRHttpRequst(item.response)
+      XHRHttpRequest(item.response)
     )
   })
 }

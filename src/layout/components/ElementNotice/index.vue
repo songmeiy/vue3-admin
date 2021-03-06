@@ -46,7 +46,7 @@
 
 <script>
 import { translate } from '@/utils/i18n'
-import { getList } from '@/api/notice'
+import { getNoticeList } from '@/api/system'
 import { computed, onMounted, ref, getCurrentInstance } from 'vue'
 export default {
   name: 'ElementNotice',
@@ -67,7 +67,7 @@ export default {
       )
     }
     const fetchData = async() => {
-      const { data } = await getList()
+      const { data } = await getNoticeList()
       badge.value = data.length === 0 ? null : data.length
       list.value = data
     }

@@ -1,8 +1,10 @@
 <template>
   <footer class="element-footer">
-    Copyright
+    Copyright&ensp;
     <SvgIcon :icon-class="'copyright'" />
-    {{ system.websiteTitle }} {{ fullYear }} by {{ system.copyright }}
+    <span>{{ system.websiteTitle }}&ensp;</span>
+    <span>{{ fullYear }}&ensp;</span>
+    <span v-if="device !== 'mobile'"> by&ensp;{{ system.copyright }}</span>
   </footer>
 </template>
 
@@ -13,9 +15,11 @@ export default {
   data() {
     const { $store } = getCurrentInstance().appContext.config.globalProperties
     const system = computed(() => $store.state.settings.system)
+    const device = computed(() => $store.state.settings.device)
     return {
       fullYear: new Date().getFullYear(),
-      system
+      system,
+      device
     }
   }
 }
