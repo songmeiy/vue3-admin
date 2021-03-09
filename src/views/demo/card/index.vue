@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { getTableList } from '@/api/demo'
+import { getList } from '@/api/demo/table'
 import { computed, getCurrentInstance, onMounted, reactive, ref, onActivated } from 'vue'
 
 export default {
@@ -101,7 +101,7 @@ export default {
     }
     const fetchData = async() => {
       listLoading.value = true
-      const { data, totalCount } = await getTableList(queryForm)
+      const { data, totalCount } = await getList(queryForm)
       list.value = data
       total.value = totalCount
     }

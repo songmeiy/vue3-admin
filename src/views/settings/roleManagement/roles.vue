@@ -1,27 +1,44 @@
 <template>
   <div class="roles-management-container">
-    <element-query-form>
-      <element-query-form-left-panel>
-        <el-form
-          ref="form"
-          :inline="true"
-          :model="queryForm"
-          label-width="0"
-        >
-          <el-form-item>
-            <el-input v-model="queryForm.role" :placeholder="translate('role', '角色名称')" />
-          </el-form-item>
-          <el-form-item>
-            <el-button icon="el-icon-search" type="primary" @click="handleQuery">{{ translate('role', '查询') }}</el-button>
-            <el-button icon="el-icon-delete" type="danger" @click="handleDelete">{{ translate('role', '删除') }}</el-button>
-            <el-button icon="el-icon-plus" type="primary" @click="handleAdd('group')">{{ translate('role', '添加组') }}</el-button>
-            <el-button icon="el-icon-plus" type="primary" @click="handleAdd('role')">{{ translate('role', '添加角色') }}</el-button>
-          </el-form-item>
-        </el-form>
-      </element-query-form-left-panel>
-    </element-query-form>
+    <el-form
+      ref="form"
+      :inline="true"
+      :model="queryForm"
+      label-width="0"
+    >
+      <el-form-item class="query-input">
+        <el-input v-model="queryForm.role" :placeholder="translate('role', '角色名称')" />
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          :icon="device === 'mobile' ? '' : 'el-icon-search'"
+          type="primary"
+          :size="device === 'mobile' ? 'mini' : 'small'"
+          @click="handleQuery"
+        >{{ translate('role', '查询') }}</el-button>
+        <el-button
+          :icon="device === 'mobile' ? '' : 'el-icon-delete'"
+          type="danger"
+          :size="device === 'mobile' ? 'mini' : 'small'"
+          @click="handleDelete"
+        >{{ translate('role', '删除') }}</el-button>
+        <el-button
+          :icon="device === 'mobile' ? '' : 'el-icon-plus'"
+          type="primary"
+          :size="device === 'mobile' ? 'mini' : 'small'"
+          @click="handleAdd('group')"
+          >{{ translate('role', '添加组') }}</el-button>
+        <el-button
+          :icon="device === 'mobile' ? '' : 'el-icon-plus'"
+          type="primary"
+          :size="device === 'mobile' ? 'mini' : 'small'"
+          @click="handleAdd('role')"
+        >{{ translate('role', '添加') }}</el-button>
+      </el-form-item>
+    </el-form>
     <el-table
       ref="tableRef"
+      v-loading="listLoading"
       :data="tableData"
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       border
@@ -54,7 +71,7 @@
         width="auto"
       />
       <el-table-column
-        align="center"
+        align="left"
         width="140px"
         :label="translate('role', '操作')"
       >
@@ -65,39 +82,55 @@
         </template>
       </el-table-column>
     </el-table>
-    <edit-dialog ref="editRef" @fetch-data="fetchData"></edit-dialog>
-    <add-dialog ref="addRef" @fetch-data="fetchData"></add-dialog>
+    <el-pagination
+      :current-page="queryForm.pageNo"
+      :layout="device === 'mobile'? 'total, prev, next' : 'total, sizes, prev, pager, next, jumper' "
+      :page-sizes="[5, 10, 30, 50]"
+      :page-size="queryForm.pageSize"
+      :total="total"
+      background
+      @current-change="handleCurrentChange"
+      @size-change="handleSizeChange"
+    />
+    <role-management-edit ref="editRef" @fetch-data="fetchData"></role-management-edit>
+    <role-management-add ref="addRef" @fetch-data="fetchData"></role-management-add>
   </div>
 </template>
 
 <script>
-import EditDialog from './components/edit'
-import AddDialog from './components/add'
-import { getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
-import { getRolesList, deleteRole } from '@/api/system'
+import RoleManagementEdit from './components/edit'
+import RoleManagementAdd from './components/add'
+import { computed, getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
+import { getList, doDelete } from '@/api/system/role'
 import { filterRoles } from '@/utils/roles'
 import { translate } from '@/utils/i18n'
 export default {
   name: 'RolesManagement',
   components: {
-    EditDialog,
-    AddDialog
+    RoleManagementEdit,
+    RoleManagementAdd
   },
   setup() {
-    const { $baseMessage, $baseConfirm } = getCurrentInstance().appContext.config.globalProperties
+    const { $baseMessage, $baseConfirm, $store } = getCurrentInstance().appContext.config.globalProperties
+    const device = computed(() => $store.state.settings.device)
     const editRef = ref(null)
     const addRef = ref(null)
     const tableRef = ref(null)
     const selectRows = ref('')
+    const total = ref(0)
+    const listLoading = ref(true)
     const queryForm = reactive({
       role: '',
       pageNo: 1,
-      pageSize: 20
+      pageSize: 5
     })
     const tableData = ref([])
     const fetchData = async() => {
-      const { data } = await getRolesList(queryForm)
+      listLoading.value = true
+      const { data, totalCount } = await getList(queryForm)
       tableData.value = await filterRoles(data)
+      total.value = totalCount
+      listLoading.value = false
     }
     const handleDelete = (row) => {
       if (row.role) {
@@ -107,14 +140,12 @@ export default {
             roles = roles + ',' + value.role
           })
           $baseConfirm('message.role.删除角色组将会同时删除子角色，及路由权限中该角色的路由权限，是否确认删除', 'message.role.提示', async() => {
-            const { message } = await deleteRole({ roles: roles })
-            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await doDelete({ roles: roles })
             await fetchData()
           })
         } else {
           $baseConfirm('message.role.你确定要删除当前项吗', 'message.role.提示', async() => {
-            const { message } = await deleteRole({ roles: roles })
-            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await doDelete({ roles: roles })
             await fetchData()
           })
         }
@@ -129,8 +160,7 @@ export default {
             }
           })
           $baseConfirm('你确定要删除选中项吗', '提示', async() => {
-            const { message } = await deleteRole({ roles: roles })
-            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await doDelete({ roles: roles })
             await fetchData()
           })
         } else {
@@ -193,6 +223,14 @@ export default {
     const setSelectRows = (val) => {
       selectRows.value = val
     }
+    const handleSizeChange = (val) => {
+      queryForm.pageSize = val
+      fetchData()
+    }
+    const handleCurrentChange = (val) => {
+      queryForm.pageNo = val
+      fetchData()
+    }
     onActivated(() => {
       fetchData()
     })
@@ -200,11 +238,14 @@ export default {
       fetchData()
     })
     return {
+      total,
       queryForm,
       editRef,
       addRef,
       tableRef,
       tableData,
+      device,
+      listLoading,
       handleDelete,
       handleAdd,
       handleEdit,
@@ -213,12 +254,18 @@ export default {
       translate,
       rowSelect,
       selectAll,
-      setSelectRows
+      setSelectRows,
+      handleSizeChange,
+      handleCurrentChange
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.roles-management-container {
+  .el-form {
+    text-align: right;
+  }
+}
 </style>

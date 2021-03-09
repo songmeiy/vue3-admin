@@ -2,7 +2,7 @@
   <el-badge v-if="theme.showNotice" :value="badge">
     <el-popover placement="bottom" trigger="hover" width="300">
       <template #reference>
-        <SvgIcon
+        <svg-icon
           icon-class="notification"
           class="quick-button"
           :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
@@ -36,7 +36,7 @@
       </el-tabs>
       <div class="notice-clear" @click="handleClearNotice">
         <el-button type="text">
-          <SvgIcon :icon-class="'close-circle'" />
+          <svg-icon :icon-class="'close-circle'" />
           {{ translate('layout', '清空消息') }}
         </el-button>
       </div>
@@ -46,7 +46,7 @@
 
 <script>
 import { translate } from '@/utils/i18n'
-import { getNoticeList } from '@/api/system'
+import { getList } from '@/api/system/notice'
 import { computed, onMounted, ref, getCurrentInstance } from 'vue'
 export default {
   name: 'ElementNotice',
@@ -59,15 +59,10 @@ export default {
     const handleClearNotice = () => {
       badge.value = null
       list.value = []
-      $baseMessage(
-        '清空消息成功',
-        'success',
-        false,
-        'element-hey-message-success'
-      )
+      $baseMessage('清空消息成功', 'success', false, 'element-hey-message-success')
     }
     const fetchData = async() => {
-      const { data } = await getNoticeList()
+      const { data } = await getList()
       badge.value = data.length === 0 ? null : data.length
       list.value = data
     }

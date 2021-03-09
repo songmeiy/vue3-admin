@@ -6,14 +6,14 @@
       :label-position="device === 'mobile' ? 'top' : 'left'"
     >
       <el-divider content-position="left">
-        <SvgIcon :icon-class="'system'" />
+        <svg-icon :icon-class="'system'" />
         {{ translate('system', '通用设置') }}
         <el-tooltip
           :content="translate('system', `这些设置由后台控制，会对全局产生影响，请谨慎操作`)"
           effect="dark"
           placement="top"
         >
-          <SvgIcon :icon-class="'tips'" />
+          <svg-icon :icon-class="'tips'" />
         </el-tooltip>
       </el-divider>
       <el-form-item :label="translate('system', '网站标题')">
@@ -101,12 +101,12 @@
             effect="dark"
             placement="top"
           >
-            <SvgIcon :icon-class="'tips'" />
+            <svg-icon :icon-class="'tips'" />
           </el-tooltip>
         </template>
         <el-switch v-model="system.titleReverse" @change="handleChangeSettings('titleReverse', system.titleReverse)"></el-switch>
       </el-form-item>
-      <el-divider content-position="left"><SvgIcon :icon-class="'system'" />{{ translate('system', '国际化') }}</el-divider>
+      <el-divider content-position="left"><svg-icon :icon-class="'system'" />{{ translate('system', '国际化') }}</el-divider>
       <el-form-item :label="translate('system', '选择语言')">
         <el-radio-group v-model="system.language" size="small" @change="handleChangeLanguage">
           <el-radio label="zh-cn" border>简体中文</el-radio>
@@ -142,7 +142,7 @@ export default {
       if (settingItem === 'loginInterception') {
         await $store.dispatch('settings/changeSystemSetting', item)
         await $store.dispatch('user/resetAll')
-        await $store.dispatch('settings/initialSystemSettings')
+        await $store.dispatch('settings/getSystemSettings')
         await $router.push('/login')
       } else {
         await $store.dispatch('settings/changeSystemSetting', item)
@@ -161,10 +161,10 @@ export default {
       messageDuration.value--
     }
     onActivated(() => {
-      $store.dispatch('settings/initialSystemSettings')
+      $store.dispatch('settings/getSystemSettings')
     })
     onDeactivated(() => {
-      $store.dispatch('settings/initialSystemSettings')
+      $store.dispatch('settings/getSystemSettings')
     })
     return {
       system,

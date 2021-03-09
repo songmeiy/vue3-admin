@@ -151,7 +151,8 @@
 
 <script>
 import { getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
-import { getRolesList, getRouterList, deleteRouter } from '@/api/system'
+import { getList as getRolesList } from '@/api/system/role'
+import { doDelete, getList as getRouterList } from '@/api/system/router'
 import MenuManagementEdit from './components/edit'
 import MenuManagementAdd from './components/add'
 export default {
@@ -187,14 +188,12 @@ export default {
             names = names + ',' + value.name
           })
           $baseConfirm('删除父级菜单会同时删除子菜单，你确定要删除当前项吗', '提示', async() => {
-            const { message } = await deleteRouter({ names: names })
-            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await doDelete({ names: names })
             await fetchData()
           })
         } else {
           $baseConfirm('你确定要删除当前项吗', '提示', async() => {
-            const { message } = await deleteRouter({ names: names })
-            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await doDelete({ names: names })
             await fetchData()
           })
         }
@@ -209,8 +208,7 @@ export default {
             }
           })
           $baseConfirm('你确定要删除选中项吗', '提示', async() => {
-            const { message } = await deleteRouter({ names: names })
-            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await doDelete({ names: names })
             await fetchData()
           })
         } else {

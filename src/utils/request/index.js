@@ -49,6 +49,7 @@ const handleData = async({ config, data, status, statusText }) => {
   let code = data && data[statusName] ? data[statusName] : status
   // 若code属于操作正常code，则status修改为200
   if (codeVerificationArray.includes(code)) code = 200
+  const msg = data && data[messageName] ? data[messageName] : ''
   switch (code) {
       case 200:
       // 业务层级错误处理，以下是假定restful有一套统一输出格式(指不管成功与否都有相应的数据格式)情况下进行处理
@@ -58,9 +59,12 @@ const handleData = async({ config, data, status, statusText }) => {
       // 修改返回内容为 `data` 内容，对于绝大多数场景已经无须再关心业务状态码(code)和消息(msg)
       // return data.data ? data.data : data.msg
       // 或者依然保持完整的格式
+        if (msg) {
+          baseMessage(msg, 'success', false, 'element-hey-message-success')
+        }
         return data
       case 401:
-        await store.dispatch('resetAll')
+        await store.dispatch('user/resetAll')
         await router.push({ path: '/login', replace: true })
         break
       case 403:
@@ -71,14 +75,8 @@ const handleData = async({ config, data, status, statusText }) => {
         break
   }
   // 异常处理
-  // 若data.msg存在，覆盖默认提醒消息
-  const message = `${config.url} 后端接口 ${code} 异常：${
-    !data
-      ? CODE_MESSAGE[code]
-      : !data[messageName]
-        ? statusText
-        : data[messageName]
-  }`
+  // 若data.message存在，覆盖默认提醒消息
+  const message = `${config.url} 后端接口 ${code} 异常：${!data ? CODE_MESSAGE[code] : !data[messageName] ? statusText : data[messageName]}`
   baseMessage(message, 'error', false, 'element-hey-message-error')
   return Promise.reject(message)
 }
@@ -109,11 +107,9 @@ instance.interceptors.request.use((config) => {
     loadingInstance = baseLoading(0)
   }
   return config
-},
-(error) => {
+}, (error) => {
   return Promise.reject(error)
-}
-)
+})
 
 /**
  * @description axios响应拦截器

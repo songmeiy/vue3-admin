@@ -1,7 +1,7 @@
 <template>
   <span v-if="theme.showSearch">
     <el-tooltip placement="bottom" :effect="theme.themeName === 'white' ? 'dark' : 'light'" :content="translate('layout', '搜索')">
-      <SvgIcon
+      <svg-icon
         icon-class="search"
         class="quick-button"
         :class="{ ['quick-button-' + theme.layout+ '-' +theme.themeName]: true }"
@@ -24,7 +24,7 @@
             select-when-unmatched
             @select="handleSelect"
           >
-            <template #prefix><SvgIcon :icon-class="'search'" /></template>
+            <template #prefix><svg-icon :icon-class="'search'" /></template>
           </el-autocomplete>
         </el-form-item>
       </el-form>
@@ -34,7 +34,7 @@
 
 <script>
 import { ref, computed, reactive, onMounted, getCurrentInstance } from 'vue'
-import { getSearchList } from '@/api/system'
+import { getList } from '@/api/system/search'
 import { translate } from '@/utils/i18n'
 export default {
   name: 'ElementSearch',
@@ -54,7 +54,7 @@ export default {
       dialogVisible.value = true
     }
     const loadAll = async() => {
-      const { data } = await getSearchList()
+      const { data } = await getList()
       restaurants.value = data
     }
     const querySearchAsync = (queryString, cb) => {

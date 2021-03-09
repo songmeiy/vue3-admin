@@ -6,7 +6,7 @@ for (let i = 0; i < count; i++) {
 }
 module.exports = [
   {
-    url: '/{{name}}/getList',
+    url: '/{{folderName}}/{{filename}}/getList',
     type: 'get',
     response: (config) => {
       const { title, pageNo = 1, pageSize = 20 } = config.query

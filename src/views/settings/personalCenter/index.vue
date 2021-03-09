@@ -118,7 +118,7 @@ import { getCurrentInstance, ref, computed, reactive, toRefs, onMounted, onActiv
 import { translate } from '@/utils/i18n'
 import { isEmail } from '@/utils/validate'
 import { useI18n } from 'vue-i18n'
-import { editInfo } from '@/api/user'
+import { doEdit } from '@/api/user/info'
 import EmailDialog from './components/email'
 import ElementCropper from '@/components/ElementCropper'
 import defaultConfig from '@/config'
@@ -172,7 +172,7 @@ export default {
     const onSubmit = () => {
       formRef.value.validate(async(valid) => {
         if (!valid) return
-        await editInfo({
+        await doEdit({
           username: userInfo.value.username,
           name: userInfo.value.name,
           email: userInfo.value.email,
@@ -180,8 +180,6 @@ export default {
           description: userInfo.value.description,
           personality: personality.value
         })
-        $baseMessage('message.user.保存成功', 'success', false, 'element-hey-message-success')
-        // userInfo.value.personality = personality.value.split(',')
       })
     }
     const tabClick = (item) => {
@@ -211,11 +209,11 @@ export default {
       state.cropperVisible = true
     }
     const handleAvatarSuccess = () => {
-      $baseMessage('message.user.上传成功', 'success', false, 'element-hey-message-success')
+      $baseMessage('message.user.模拟上传成功', 'success', false, 'element-hey-message-success')
       $store.dispatch('user/getUserInfo')
     }
     const handleAvatarFail = (res) => {
-      $baseMessage('message.user.上传失败', 'error', false, 'element-hey-message-error')
+      $baseMessage('message.user.模拟上传失败', 'error', false, 'element-hey-message-error')
       $store.dispatch('errorLog/addErrorLog', res.message)
     }
     const onSave = (res) => {

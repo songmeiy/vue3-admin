@@ -4,13 +4,12 @@ const data = {
 
 module.exports = [
   {
-    url: '/description/getList',
+    url: '/system/about/getList',
     type: 'get',
     response: () => {
       return {
         code: 200,
-        message: 'success',
-        data
+        data: data
       }
     }
   }

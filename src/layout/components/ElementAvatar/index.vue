@@ -42,15 +42,12 @@ export default {
             logout()
             break
           case 'personalCenter':
-            personalCenter()
+            $router.push({ name: 'PersonalCenter' })
             break
       }
     }
     const handleVisibleChange = (val) => {
       active.value = val
-    }
-    const personalCenter = () => {
-      $router.push('/setting/personalCenter')
     }
     const logout = async() => {
       await $store.dispatch('user/logout')

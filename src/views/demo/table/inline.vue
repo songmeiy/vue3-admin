@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { getTableList } from '@/api/demo'
+import { getList, doEdit } from '@/api/demo/table'
 import { computed, getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
 
 export default {
@@ -129,7 +129,7 @@ export default {
 
     const fetchData = async() => {
       listLoading.value = true
-      const { data } = await getTableList(queryForm)
+      const { data } = await getList(queryForm)
       list.value = data.map((v) => {
         v.edit = false
         v.originalTitle = v.title
@@ -154,7 +154,8 @@ export default {
       row.title = row.originalTitle
       row.edit = false
     }
-    const confirmEdit = (row) => {
+    const confirmEdit = async(row) => {
+      await doEdit(row)
       row.edit = false
       row.originalTitle = row.title
     }

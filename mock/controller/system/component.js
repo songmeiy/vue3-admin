@@ -13,12 +13,11 @@ const data = [{
 }]
 module.exports = [
   {
-    url: '/system/menuManagement/getRouterComponents',
+    url: '/system/components/getList',
     type: 'get',
     response() {
       return {
         code: 200,
-        message: 'success',
         data: data
       }
     }

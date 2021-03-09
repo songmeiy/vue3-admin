@@ -2,7 +2,8 @@
  * @author WangZeping zepingwong@gmail.com
  * @description 登录、获取用户信息、退出登录、清除accessToken逻辑，不建议修改
  */
-import { getMyInfo, login, logout } from '@/api/user'
+import { doLogin, doLogout } from '@/api/user/login'
+import { getMyInfo } from '@/api/user/info'
 import {
   getAccessToken,
   removeAccessToken,
@@ -83,7 +84,7 @@ const actions = {
    */
   async login({ commit, dispatch }, userInfo) {
     if (system.value.loginInterception) {
-      const { data } = await login(userInfo)
+      const { data } = await doLogin(userInfo)
       const accessToken = data[tokenName]
       if (accessToken) {
         await commit('setAccessToken', accessToken)
@@ -136,7 +137,7 @@ const actions = {
    * @param {*} { dispatch }
    */
   async logout({ dispatch }) {
-    await logout(state.accessToken)
+    await doLogout(state.accessToken)
     await dispatch('resetAll')
   },
   /**

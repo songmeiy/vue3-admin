@@ -73,7 +73,7 @@ export default {
       $store.dispatch('tabs/changeTabsMeta', meta)
     }
     const handleBadge = (name) => {
-      badge.value = badge.value + 1
+      badge.value = badge.value * 1 + 1
       changeMenuMeta({
         name,
         meta: { badge }
@@ -84,7 +84,6 @@ export default {
       changeMenuMeta({ name, meta })
     }
     const handleMeta = (name, meta) => {
-      console.log(meta)
       if (meta.title) getPageTitle(meta.title)
       changeMenuMeta({ name, meta })
       changeTabsMeta({ name, meta })

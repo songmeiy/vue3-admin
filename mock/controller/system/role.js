@@ -1,47 +1,48 @@
+const roles = [
+  {
+    id: 1,
+    role: 'User',
+    label: '用户组',
+    parentRole: '',
+    children: [{
+      id: 2,
+      role: 'admin',
+      label: '管理员',
+      parentRole: 'User'
+    }, {
+      id: 3,
+      role: 'editor',
+      label: 'editor',
+      parentRole: 'User'
+    }]
+  },
+  {
+    id: 4,
+    role: 'Develop',
+    label: '测试组',
+    parentRole: '',
+    children: [{
+      id: 5,
+      role: 'test',
+      label: '测试用户',
+      parentRole: 'Develop'
+    }]
+  }
+]
 module.exports = [
   {
-    url: '/system/rolesManagement/getRolesList',
+    url: '/system/role/getList',
     type: 'get',
     response() {
       return {
         code: 200,
-        message: 'success',
-        data: [
-          {
-            id: 1,
-            role: 'User',
-            label: '用户组',
-            parentRole: '',
-            children: [{
-              id: 2,
-              role: 'admin',
-              label: '管理员',
-              parentRole: 'User'
-            }, {
-              id: 3,
-              role: 'editor',
-              label: 'editor',
-              parentRole: 'User'
-            }]
-          },
-          {
-            id: 4,
-            role: 'Develop',
-            label: '测试组',
-            parentRole: '',
-            children: [{
-              id: 5,
-              role: 'test',
-              label: '测试用户',
-              parentRole: 'Develop'
-            }]
-          }
-        ]
+        totalCount: roles.length,
+        data: roles
       }
     }
   },
   {
-    url: '/system/rolesManagement/deleteRole',
+    url: '/system/role/doDelete',
     type: 'post',
     response(config) {
       const { roles } = config.body
@@ -52,7 +53,7 @@ module.exports = [
     }
   },
   {
-    url: '/system/rolesManagement/addRole',
+    url: '/system/role/doAdd',
     type: 'post',
     response() {
       return {
@@ -62,7 +63,7 @@ module.exports = [
     }
   },
   {
-    url: '/system/rolesManagement/editRole',
+    url: '/system/role/doEdit',
     type: 'post',
     response() {
       return {

@@ -44,7 +44,7 @@ const userInfo = {
 }
 module.exports = [
   {
-    url: '/user/editInfo',
+    url: '/user/info/doEdit',
     type: 'post',
     response() {
       return {
@@ -66,11 +66,11 @@ module.exports = [
     }
   },
   {
-    url: '/user/getMyInfo',
+    url: '/user/info/getMyInfo',
     type: 'get',
     response(config) {
       let info = {}
-      let message = 'success'
+      let message = ''
       let code = 200
       const { accessToken } = config.query
       if (accessToken !== 'admin-accessToken' && accessToken !== 'editor-accessToken' && accessToken !== 'test-accessToken') {

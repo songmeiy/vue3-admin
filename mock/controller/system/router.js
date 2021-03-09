@@ -1321,7 +1321,7 @@ const router = [
 ]
 module.exports = [
   {
-    url: '/system/menuManagement/getRouterList',
+    url: '/system/router/getList',
     type: 'get',
     response(config) {
       const { role } = config.query
@@ -1342,13 +1342,12 @@ module.exports = [
       }
       return {
         code: 200,
-        message: 'success',
         data: data
       }
     }
   },
   {
-    url: '/system/menuManagement/addRouter',
+    url: '/system/router/doAdd',
     type: 'post',
     response() {
       return {
@@ -1358,7 +1357,7 @@ module.exports = [
     }
   },
   {
-    url: '/system/menuManagement/editRouter',
+    url: '/system/router/doEdit',
     type: 'post',
     response() {
       return {
@@ -1368,7 +1367,7 @@ module.exports = [
     }
   },
   {
-    url: '/system/menuManagement/deleteRouter',
+    url: '/system/router/doDelete',
     type: 'post',
     response(config) {
       const { names } = config.body

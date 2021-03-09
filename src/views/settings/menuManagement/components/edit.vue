@@ -28,7 +28,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-input v-model="form.name" autocomplete="off" />
@@ -43,7 +43,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-input v-model="form.path" autocomplete="off" />
@@ -58,7 +58,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-select v-model="form.parentName" :disabled="type === 'layout' || type === 'menu'">
@@ -75,7 +75,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-select v-model="form.component" :disabled="type === 'layout'">
@@ -92,7 +92,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-input v-model="form.redirect" />
@@ -107,7 +107,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-input v-model="form.title" />
@@ -127,7 +127,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-popover trigger="click" width="300px">
@@ -156,7 +156,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-popover
@@ -192,7 +192,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-switch v-model="form.hidden" />
@@ -207,7 +207,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-switch v-model="form.affix" />
@@ -222,7 +222,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-switch v-model="form.noKeepAlive" />
@@ -237,7 +237,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-switch v-model="form.alwaysShow" />
@@ -252,7 +252,7 @@
                   effect="dark"
                   placement="top"
                 >
-                  <SvgIcon :icon-class="'tips'" />
+                  <svg-icon :icon-class="'tips'" />
                 </el-tooltip>
               </template>
               <el-switch v-model="form.tabHidden" />
@@ -271,7 +271,9 @@
 <script>
 import ElementIconSelector from '@/components/ElementIconSelector'
 import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
-import { getRouterComponents, editRouter, getRolesList, getRouterList } from '@/api/system'
+import { getList as getComponentsList } from '@/api/system/components'
+import { getList as getRolesList } from '@/api/system/role'
+import { getList as getRouterList, doEdit } from '@/api/system/router'
 import { translate } from '@/utils/i18n'
 import { isStartWithCapitalLetter } from '@/utils/validate'
 import { useI18n } from 'vue-i18n'
@@ -281,7 +283,7 @@ export default {
   components: { ElementIconSelector },
   emits: ['fetch-data'],
   setup(props, { emit }) {
-    const { $baseMessage, $store } = getCurrentInstance().appContext.config.globalProperties
+    const { $store } = getCurrentInstance().appContext.config.globalProperties
     const device = computed(() => $store.state.settings.device)
     const selectComponents = ref('')
     const selectRoles = ref([])
@@ -415,8 +417,7 @@ export default {
     const submitForm = () => {
       formRef.value.validate(async(valid) => {
         if (!valid) return
-        const { message } = await editRouter(form)
-        $baseMessage(message, 'success', false, 'element-hey-message-success')
+        await doEdit(form)
         emit('fetch-data')
         close()
       })
@@ -428,7 +429,7 @@ export default {
       })
     }
     onMounted(async() => {
-      const selectComponentsResponse = await getRouterComponents()
+      const selectComponentsResponse = await getComponentsList()
       selectComponents.value = selectComponentsResponse.data
       const selectRolesResponse = await getRolesList()
       selectRoles.value = selectRolesResponse.data

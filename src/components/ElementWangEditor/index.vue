@@ -68,7 +68,8 @@ export default {
   },
   emits: ['initContent', 'changeContent'],
   setup(props, { emit }) {
-    const { baseURL } = defaultConfig
+    let { baseURL } = defaultConfig
+    if (baseURL === '/') baseURL = ''
     const { $baseAlert, $baseMessage } = getCurrentInstance().appContext.config.globalProperties
     const {
       imgConfig,
@@ -105,7 +106,7 @@ export default {
       instance.config.uploadImgHooks = {
         // 上传图片之前
         before: function() {
-          // console.log(xhr);
+          // console.log(xhr)
           // 可阻止图片上传
           return {
             prevent: false,
@@ -115,22 +116,22 @@ export default {
         // 图片上传并返回了结果，图片插入已成功
         success: function() {
           imgsrc = getSrc(instance.txt.html())
-          // console.log('success', xhr);
+          // console.log('success', xhr)
         },
         // 图片上传并返回了结果，但图片插入时出错了
         fail: function(xhr, editor, resData) {
-          $baseAlert('图片插入出错了' + resData, '错误')
-          // console.log('fail', resData);
+          // $baseAlert('图片插入出错了' + resData.message, '错误')
+          console.log('fail', resData)
         },
         // 上传图片出错，一般为 http 请求的错误
         error: function(xhr, editor, resData) {
           $baseAlert('图片上传错误' + resData, '错误')
-          // console.log('error', xhr, resData);
+          console.log('error', xhr, resData)
         },
         // 上传图片超时
         timeout: function() {
           $baseAlert('操作超时', '错误')
-          // console.log('timeout');
+          // console.log('timeout')
         }
       }
       Object.assign(instance.config, {

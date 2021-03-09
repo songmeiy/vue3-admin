@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { bindEmail, bindEmailSend } from '@/api/user'
+import { bindingEmailSend } from '@/api/user/email'
 import { computed, getCurrentInstance, reactive, ref, onBeforeUnmount } from 'vue'
 import { translate } from '@/utils/i18n'
 import { isEmail } from '@/utils/validate'
@@ -31,7 +31,7 @@ export default {
   setup() {
     const dialogFormVisible = ref(false)
     const { t } = useI18n()
-    const { $store, $baseMessage } = getCurrentInstance().appContext.config.globalProperties
+    const { $store } = getCurrentInstance().appContext.config.globalProperties
     const userInfo = computed(() => $store.state.user.userInfo)
     const emailForm = reactive({
       email: userInfo.value.email
@@ -51,10 +51,6 @@ export default {
       ]
     })
     const emailFormRef = ref(null)
-    const submitForm = async() => {
-      await bindEmail(emailForm.value)
-      $baseMessage('message.user.邮件已发送', 'success', false, 'element-hey-message-success')
-    }
     const open = () => {
       dialogFormVisible.value = true
     }
@@ -70,7 +66,7 @@ export default {
       jumpTime.value = 60
       emailFormRef.value.validate(async(valid) => {
         if (!valid) return
-        await bindEmailSend(emailForm)
+        await bindingEmailSend(emailForm)
       })
       timer.value = setInterval(() => {
         if (jumpTime.value) {
@@ -87,7 +83,6 @@ export default {
       emailFormRef,
       jumpTime,
       sendEmail,
-      submitForm,
       open,
       cancel,
       translate

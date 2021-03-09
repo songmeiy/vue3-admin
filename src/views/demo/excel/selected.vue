@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { getTableList } from '@/api/demo'
+import { getList } from '@/api/demo/table'
 import { getCurrentInstance, onMounted, ref } from 'vue'
 
 export default {
@@ -68,7 +68,7 @@ export default {
     const multipleTableRef = ref(null)
     const fetchData = () => {
       listLoading.value = true
-      getTableList().then((response) => {
+      getList().then((response) => {
         list.value = response.data
         listLoading.value = false
       })

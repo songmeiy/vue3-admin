@@ -12,7 +12,7 @@ export default {
   setup() {
     const { $store } = getCurrentInstance().appContext.config.globalProperties
     onBeforeMount(() => {
-      $store.dispatch('settings/initialSystemSettings')
+      $store.dispatch('settings/getSystemSettings')
     })
   }
 }

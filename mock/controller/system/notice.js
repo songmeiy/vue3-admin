@@ -28,13 +28,12 @@ const data = [
 ]
 module.exports = [
   {
-    url: '/system/notice/getNoticeList',
+    url: '/system/notice/getList',
     type: 'get',
     response: () => {
       return {
         code: 200,
-        message: 'success',
-        data
+        data: data
       }
     }
   }

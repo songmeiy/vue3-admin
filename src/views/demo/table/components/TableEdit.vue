@@ -22,14 +22,13 @@
 </template>
 
 <script>
-import { doTableEdit } from '@/api/demo'
-import { getCurrentInstance, reactive, ref } from 'vue'
+import { doEdit } from '@/api/demo/table'
+import { reactive, ref } from 'vue'
 
 export default {
   name: 'TableEdit',
   emits: ['fetchData'],
   setup(props, { emit }) {
-    const { $baseMessage } = getCurrentInstance().appContext.config.globalProperties
     const form = ref({
       title: '',
       author: ''
@@ -57,8 +56,7 @@ export default {
     const save = () => {
       formRef.value.validate(async(valid) => {
         if (valid) {
-          const { message } = await doTableEdit(form)
-          $baseMessage(message, 'success', false, 'element-hey-message-success')
+          await doEdit(form)
           emit('fetchData')
           close()
         } else {

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/about'
+import { getList } from '@/api/system/about'
 import ElementAvatarList from '@/components/ElementAvatarList'
 import { computed, getCurrentInstance, onMounted, ref } from 'vue'
 

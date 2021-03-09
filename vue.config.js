@@ -1,4 +1,5 @@
 const {
+  // baseURL,
   publicPath,
   assetsDir,
   outputDir,
@@ -56,6 +57,16 @@ module.exports = {
       warnings: true,
       errors: true
     },
+    // proxy: {
+    //   [baseURL]: {
+    //     target: 'http://127.0.0.1',
+    //     ws: true,
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       ['^' + baseURL]: ''
+    //     }
+    //   }
+    // }
     after: mockServer()
   },
   configureWebpack() {

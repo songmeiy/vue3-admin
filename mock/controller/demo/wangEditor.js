@@ -21,7 +21,6 @@ module.exports = [
     response() {
       return {
         code: 200,
-        errno: 0,
         message: '模拟删除成功',
         data: {}
       }

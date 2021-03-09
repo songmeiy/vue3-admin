@@ -1,11 +1,10 @@
 module.exports = [
   {
-    url: '/system/setting/getSystemSettings',
+    url: '/system/settings/getList',
     type: 'get',
     response() {
       return {
         code: 200,
-        message: 'success',
         data: {
           websiteTitle: 'vue3-admin',
           allowRegister: true,
@@ -25,7 +24,7 @@ module.exports = [
     }
   },
   {
-    url: '/system/setting/changeSystemSettings',
+    url: '/system/settings/doEdit',
     type: 'post',
     response() {
       const data = {}

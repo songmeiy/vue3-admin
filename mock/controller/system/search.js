@@ -14,13 +14,12 @@ const data = [
 ]
 module.exports = [
   {
-    url: '/system/search/getSearchList',
+    url: '/system/search/getList',
     type: 'get',
     response: () => {
       return {
         code: 200,
-        message: 'success',
-        data
+        data: data
       }
     }
   }

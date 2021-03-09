@@ -95,7 +95,8 @@
 </template>
 
 <script>
-import { getAreaList } from '@/api/demo'
+import { getList } from '@/api/demo/area'
+import { doAdd } from '@/api/demo/form'
 import { onMounted, reactive, ref } from 'vue'
 
 export default {
@@ -171,18 +172,13 @@ export default {
     }
     // 获取行政区划
     const fetchData = async() => {
-      const { data } = await getAreaList()
+      const { data } = await getList()
       areaOptions.value = data
     }
     const submitForm = () => {
-      formRef.value.validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          // eslint-disable-next-line no-console
-          console.log('error submit!!')
-          return false
-        }
+      formRef.value.validate(async(valid) => {
+        if (!valid) return
+        await doAdd(form)
       })
     }
     const resetForm = () => {

@@ -175,7 +175,7 @@
 </template>
 
 <script>
-import { doTableDelete, getTableList } from '@/api/demo'
+import { doDelete, getList } from '@/api/demo/table'
 import TableEdit from './components/TableEdit'
 import {
   computed,
@@ -202,7 +202,7 @@ export default {
     const imageList = ref([])
     const listLoading = ref(true)
     const total = ref(0)
-    const selectRows = ref('')
+    const selectRows = ref([])
     const editRef = ref(null)
     const tableSortRef = ref(null)
     const queryForm = reactive({
@@ -229,16 +229,14 @@ export default {
     const handleDelete = (row) => {
       if (row.id) {
         $baseConfirm('你确定要删除当前项吗', '提示', async() => {
-          const { message } = await doTableDelete({ ids: row.id })
-          $baseMessage(message, 'success', false, 'element-hey-message-success')
+          await doDelete({ ids: row.id })
           await fetchData()
         })
       } else {
         if (selectRows.value.length > 0) {
           const ids = selectRows.value.map((item) => item.id).join()
           $baseConfirm('你确定要删除选中项吗', '提示', async() => {
-            const { message } = await doTableDelete({ ids: ids })
-            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await doDelete({ ids: ids })
             await fetchData()
           })
         } else {
@@ -261,7 +259,7 @@ export default {
     }
     const fetchData = async() => {
       listLoading.value = true
-      const { data, totalCount } = await getTableList(queryForm)
+      const { data, totalCount } = await getList(queryForm)
       list.value = data
       data.forEach((item) => {
         imageList.value.push(item.img)

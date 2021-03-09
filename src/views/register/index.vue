@@ -37,12 +37,12 @@ import { computed, getCurrentInstance, reactive, ref } from 'vue'
 import { translate } from '@/utils/i18n'
 import { isUsername, isPassword, isEmail } from '@/utils/validate'
 import { useI18n } from 'vue-i18n'
-import { register } from '@/api/user'
+import { doRegister } from '@/api/user/register'
 
 export default {
   name: 'Register',
   setup() {
-    const { $store, $baseMessage } = getCurrentInstance().appContext.config.globalProperties
+    const { $store } = getCurrentInstance().appContext.config.globalProperties
     const system = computed(() => $store.state.settings.system)
     const loading = ref(false)
     const { t } = useI18n()
@@ -99,8 +99,7 @@ export default {
     const handleRegister = () => {
       registerFormRef.value.validate(async(valid) => {
         if (!valid) return
-        const { message } = await register(registerForm)
-        $baseMessage(message, 'success', false, 'element-hey-message-success')
+        doRegister(registerForm)
       })
     }
     return {

@@ -37,7 +37,7 @@ router.beforeEach(async(to, from, next) => {
       } else {
         // 这里是刷新动作之后
         try {
-          await store.dispatch('settings/initialSystemSettings')
+          await store.dispatch('settings/getSystemSettings')
           await store.dispatch('user/getUserInfo')
           await store.dispatch('routes/setRoutes')
           next({ path: '/', replace: true })

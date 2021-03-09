@@ -61,7 +61,7 @@ import { translate } from '@/utils/i18n'
 export default {
   name: 'Login',
   setup() {
-    const { $router, $store } = getCurrentInstance().appContext.config.globalProperties
+    const { $store } = getCurrentInstance().appContext.config.globalProperties
     const system = computed(() => $store.state.settings.system)
     const $route = useRoute()
     const passwordType = ref('password')
@@ -74,7 +74,7 @@ export default {
     const loginFormRef = ref(null)
     const loginForm = reactive({
       username: 'admin',
-      password: '111111'
+      password: '1999.331'
     })
     const loginRules = reactive({
       username: [{ required: true, message: translate('login', '用户名不能为空'), trigger: 'blur' }],
@@ -97,8 +97,9 @@ export default {
         if (!valid) return
         loading.value = true
         await $store.dispatch('user/login', loginForm)
-        $router.push({ path: redirect.value || '/', query: otherQuery.value })
-        loading.value = false
+        setTimeout(() => {
+          loading.value = false
+        }, 2000)
       })
     }
     const getOtherQuery = (query) => {

@@ -37,14 +37,14 @@
 <script>
 import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
 import { translate } from '@/utils/i18n'
-import { getRolesList, editRole } from '@/api/system'
+import { getList, doEdit } from '@/api/system/role'
 import { isStartWithCapitalLetter, isStartWithSmallLetter } from '@/utils/validate'
 import { useI18n } from 'vue-i18n'
 export default {
   name: 'RoleManagementEdit',
   emits: ['fetch-data'],
   setup(props, { emit }) {
-    const { $store, $baseMessage } = getCurrentInstance().appContext.config.globalProperties
+    const { $store } = getCurrentInstance().appContext.config.globalProperties
     const device = computed(() => $store.state.settings.device)
     const type = ref('')
     const title = ref('')
@@ -96,14 +96,13 @@ export default {
     const submitForm = () => {
       editFormRef.value.validate(async(valid) => {
         if (!valid) return
-        const { message } = await editRole(editForm)
-        $baseMessage(message, 'success', false, 'element-hey-message-success')
+        await doEdit(editForm)
         emit('fetch-data')
         close()
       })
     }
     onMounted(async() => {
-      const { data } = await getRolesList()
+      const { data } = await getList()
       rolesGroup.value = data.map((role) => {
         if (!role.parentRole) return role
       })

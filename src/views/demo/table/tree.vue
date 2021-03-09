@@ -93,7 +93,7 @@
 
 <script>
 import { getCurrentInstance, onMounted, reactive, ref } from 'vue'
-import { doTableDelete, getTreeData } from '@/api/demo'
+import { doDelete, getList } from '@/api/demo/tree'
 export default {
   name: 'TreeTable',
   setup() {
@@ -169,14 +169,12 @@ export default {
             ids = ids + ',' + value.id
           })
           $baseConfirm('删除此项会同时删除子节点内容', '提示', async() => {
-            const { message } = await doTableDelete({ ids: ids })
-            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await doDelete({ ids: ids })
             await fetchData()
           })
         } else {
           $baseConfirm('你确定要删除当前项吗', '提示', async() => {
-            const { message } = await doTableDelete({ ids: ids })
-            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await doDelete({ ids: ids })
             await fetchData()
           })
         }
@@ -191,8 +189,7 @@ export default {
             }
           })
           $baseConfirm('你确定要删除选中项吗', '提示', async() => {
-            const { message } = await doTableDelete({ ids: ids })
-            $baseMessage(message, 'success', false, 'element-hey-message-success')
+            await doDelete({ ids: ids })
             await fetchData()
           })
         } else {
@@ -203,7 +200,7 @@ export default {
     }
     const fetchData = async() => {
       listLoading.value = true
-      const { data } = await getTreeData()
+      const { data } = await getList()
       list.value = data
       listLoading.value = false
     }

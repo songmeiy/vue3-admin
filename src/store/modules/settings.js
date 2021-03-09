@@ -5,7 +5,7 @@ import { getLocalStorage, setLocalStorage } from '@/utils/localStorage'
 import defaultConfig from '@/config'
 import { baseMessage } from '@/components/ElementPlus'
 import i18n from '@/utils/i18n'
-import { getSystemSettings, changeSystemSettings } from '@/api/system'
+import { getList, doEdit } from '@/api/system/settings'
 
 const {
   columnStyle,
@@ -143,18 +143,18 @@ const mutations = {
       baseMessage('message.theme.移动端布局被锁定', 'warning', false, 'element-hey-message-warning')
     }
   },
-  async initialSystemSettings(state, settings) {
+  async getSystemSettings(state, settings) {
     Object.keys(settings).forEach((key) => {
       state.system[key] = settings[key]
     })
   },
-  changeSystemSetting(state, item) {
-    changeSystemSettings(item).then(res => {
-      Object.keys(res.data).forEach((key) => {
-        state.system[key] = res.data[key]
+  async changeSystemSetting(state, item) {
+    const { data } = await doEdit(item)
+    if (data) {
+      Object.keys(data).forEach((key) => {
+        state.system[key] = data[key]
       })
-      baseMessage('message.theme.修改成功', 'success', false, 'element-hey-message-success')
-    })
+    }
   },
   resetSystem(state) {
     state.system = { ...defaultSystem }
@@ -189,9 +189,9 @@ const actions = {
   resetTheme({ commit }) {
     commit('resetTheme')
   },
-  async initialSystemSettings({ commit }) {
-    const { data } = await getSystemSettings()
-    commit('initialSystemSettings', data)
+  async getSystemSettings({ commit }) {
+    const { data } = await getList()
+    commit('getSystemSettings', data)
   },
   changeSystemSetting({ commit }, item) {
     commit('changeSystemSetting', item)

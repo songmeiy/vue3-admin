@@ -103,7 +103,7 @@
           v-permissions="{
             role: ['admin'],
             ability: ['DELETE'],
-            mode: 'except',
+            mode: 'except'
           }"
           type="danger"
         >
@@ -230,7 +230,7 @@ import {
   authentication,
   tokenTableName
 } from '@/config'
-import { getRouterList } from '@/api/system'
+import { getList } from '@/api/system/router'
 import { filterRoutes } from '@/utils/routes'
 import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
 
@@ -257,7 +257,7 @@ export default {
       }
     }
     const fetchData = async() => {
-      const { data } = await getRouterList()
+      const { data } = await getList()
       tableData.value = filterRoutes([...data])
     }
     onMounted(() => {

@@ -1,7 +1,7 @@
 /**
  * @description 路由拦截状态管理，目前两种模式：all模式与intelligence模式，其中partialRoutes是菜单暂未使用
  */
-import { getRouterList } from '@/api/system'
+import { getList } from '@/api/system/router'
 import { convertRouter, filterRoutes } from '@/utils/routes'
 import router, { constantRoutes, asyncRoutes } from '@/router'
 const state = () => ({
@@ -60,7 +60,7 @@ const actions = {
       commit('setRoutes', finallyRoutes)
       addedRoutes = asyncRoutes
     } else if (authentication === 'all') {
-      const { data } = await getRouterList()
+      const { data } = await getList()
       // if (data[data.length - 1].path !== '*') {
       //   data.push({ path: '*', redirect: '/404', hidden: true })
       // }
