@@ -626,7 +626,7 @@ export default {
     const onCrop = () => {
       // 获得裁剪框相对原图的xy
       let { x, y } = cropBoxRelativeInfo()
-      // 宽高用计算好的输出尺寸,否则ios又不对，真难伺候md
+      // 宽高用计算好的输出尺寸,否则ios又不对，真tmd难伺候
       const { width: w, height: h } = state.outputSize
       // 图片的当前信息
       const { rotate, width: imgW, height: imgH } = state.originalImage

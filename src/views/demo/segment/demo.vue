@@ -6,7 +6,7 @@
           <template #header>
             <span>Query传参</span>
           </template>
-          <el-form v-for="item in queryList" :key="item.key" label-width="40px">
+          <el-form v-for="(item,index) in queryList" :key="index" label-width="40px">
             <div >
               <el-row>
                 <el-col :span="12">
@@ -31,7 +31,7 @@
           <template #header>
             <span>Params传参</span>
           </template>
-          <el-form v-for="item in paramList" :key="item.key" label-width="40px">
+          <el-form v-for="(item,index) in paramList" :key="index" label-width="40px">
             <div >
               <el-row>
                 <el-col :span="12">
@@ -59,7 +59,7 @@
 import { getCurrentInstance, ref } from 'vue'
 
 export default {
-  name: 'DynamicSegmentIndex',
+  name: 'DynamicSegmentDemo',
   setup() {
     const queryList = ref([{ key: 'id', value: 'test' }])
     const paramList = ref([{ key: 'id', value: 'test' }])
@@ -69,7 +69,7 @@ export default {
       queryList.value.forEach((item) => {
         queryForm[item.key] = item.value
       })
-      $router.push({ path: '/demo/dynamicSegment/query', query: queryForm })
+      $router.push({ path: '/demo/segment/query', query: queryForm })
     }
     const queryAdd = () => {
       queryList.value.push({ key: '', value: '' })

@@ -87,7 +87,7 @@ const settings = {
       redirect: '',
       component: () => import('@/views/settings/roleManagement'),
       meta: {
-        title: '角色权限',
+        title: '角色管理',
         isCustomSvg: true,
         icon: 'jurisdiction',
         roles: ['admin'],
@@ -105,9 +105,9 @@ const settings = {
       hidden: false,
       alwaysShow: false,
       redirect: '',
-      component: () => import('@/views/settings/roleManagement/roles'),
+      component: () => import('@/views/settings/jurisdictionManagement'),
       meta: {
-        title: '角色管理',
+        title: '角色权限',
         isCustomSvg: true,
         icon: 'user',
         roles: ['admin'],
@@ -125,7 +125,7 @@ const settings = {
       hidden: false,
       alwaysShow: false,
       redirect: '',
-      component: () => import('@/views/settings/menuManagement'),
+      component: () => import('@/views/settings/routerManagement'),
       meta: {
         title: '菜单管理',
         isCustomSvg: true,

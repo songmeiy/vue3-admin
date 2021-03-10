@@ -22,6 +22,9 @@
         <el-form-item :label="translate('role', type === 'group' ? '角色组名称' : '角色名称')" prop="role">
           <el-input v-model="addForm.role"></el-input>
         </el-form-item>
+        <el-form-item v-if="type !== 'group'" :label="translate('role', '允许注册')" prop="parentRole">
+          <el-switch v-model="addForm.register"></el-switch>
+        </el-form-item>
         <el-form-item :label="translate('role', '备注')" prop="label">
           <el-input v-model="addForm.label"></el-input>
         </el-form-item>
@@ -35,7 +38,7 @@
 </template>
 
 <script>
-import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
+import { computed, getCurrentInstance, reactive, ref } from 'vue'
 import { translate } from '@/utils/i18n'
 import { doAdd, getList } from '@/api/system/role'
 import { isStartWithCapitalLetter, isStartWithSmallLetter } from '@/utils/validate'
@@ -56,7 +59,8 @@ export default {
       id: '',
       label: '',
       parentRole: '',
-      role: ''
+      role: '',
+      register: true
     })
     const addFormRules = reactive({
       label: [{ required: true, message: t('message.role.请输入备注'), trigger: 'blur' }],
@@ -83,7 +87,11 @@ export default {
         close()
       })
     }
-    const open = (row) => {
+    const open = async(row) => {
+      const { data } = await getList()
+      rolesGroup.value = data.map((role) => {
+        if (!role.parentRole) return role
+      })
       if (row === 'group') {
         type.value = 'group'
         title.value = '添加角色组'
@@ -102,12 +110,6 @@ export default {
       addFormRef.value.resetFields()
       dialogFormVisible.value = false
     }
-    onMounted(async() => {
-      const { data } = await getList()
-      rolesGroup.value = data.map((role) => {
-        if (!role.parentRole) return role
-      })
-    })
     return {
       type,
       dialogFormVisible,
@@ -135,9 +137,9 @@ export default {
         border-bottom: solid 2px #eee !important;
         text-align: left;
       }
-      .el-dialog__body{
-        padding: 20px 20px !important;
-      }
+    }
+    .el-dialog__body{
+      padding: 20px 20px 0 20px !important;
     }
     .el-input-group__prepend {
       width: 120px;

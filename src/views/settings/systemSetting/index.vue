@@ -52,8 +52,10 @@
       </el-form-item>
       <el-form-item :label="translate('system', '消息提示时间')">
         <el-input v-model="messageDuration">
-          <template #append>
+          <template #prepend>
             <el-button icon="el-icon-plus" @click="handleMessageDurationPlus()"></el-button>
+          </template>
+          <template #append>
             <el-button icon="el-icon-minus" @click="handleMessageDurationMinus()"></el-button>
             <el-button icon="el-icon-edit" @click="handleChangeSettings('messageDuration', messageDuration * 1000)"></el-button>
           </template>
@@ -168,9 +170,9 @@ export default {
     })
     return {
       system,
+      device,
       routesWhiteList,
       messageDuration,
-      device,
       translate,
       handleWebsiteLogo,
       handleChangeSettings,

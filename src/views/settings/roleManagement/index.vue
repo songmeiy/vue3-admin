@@ -1,300 +1,404 @@
 <template>
-  <div class="roles-container">
-    <el-alert
-      v-if="!system.loginInterception"
-      :closable="false"
-      show-icon
-      title="检测到您当前的登录拦截已关闭，无法模拟切换角色功能，请在src/config/settings.js中配置loginInterception为ture，开启登录拦截"
-      type="success"
-    />
-    <el-alert
-      :closable="false"
-      :title="`当前路由模式为：{ authentication:${authentication} }，是否开启角色权限控制功能：{ rolesControl:${system.rolesControl} }`"
-      show-icon
-      type="success"
-    />
-
-    <el-form ref="form" :model="form" label-position="top" label-width="140px">
-      <el-form-item label="账号切换">
-        <el-radio-group v-model="form.account" @change="handleChangeRole">
-          <el-radio-button label="admin">admin</el-radio-button>
-          <el-radio-button label="editor">editor</el-radio-button>
-          <el-radio-button label="test">test</el-radio-button>
-        </el-radio-group>
+  <div class="roles-management-container">
+    <el-form
+      ref="form"
+      :inline="true"
+      :model="queryForm"
+      label-width="0"
+    >
+      <el-form-item class="query-input">
+        <el-input v-model="queryForm.role" :placeholder="translate('role', '角色名称')" />
       </el-form-item>
-      <el-form-item label="描述">
-        当前账号拥有的角色
-        <el-tag>{{ JSON.stringify(role) }}</el-tag>
-        ，权限点
-        <el-tag>{{ JSON.stringify(ability) }}</el-tag>
-      </el-form-item>
-      <el-form-item label="按钮级角色">
-        <el-button v-permissions="['admin']" type="primary">
-          拥有["admin"]角色的按钮
-        </el-button>
+      <el-form-item>
         <el-button
-          v-permissions="{ role: ['admin'], mode: 'except' }"
-          type="danger"
-        >
-          未拥有["admin"]角色的按钮
-        </el-button>
-        <el-button v-permissions="['editor']" type="primary">
-          拥有["editor"]角色的按钮
-        </el-button>
-        <el-button
-          v-permissions="{ role: ['editor'], mode: 'except' }"
-          type="danger"
-        >
-          未拥有["editor"]角色的按钮
-        </el-button>
-        <el-button
-          v-permissions="{ role: ['admin', 'editor'], mode: 'allOf' }"
+          :icon="device === 'mobile' ? '' : 'el-icon-search'"
           type="primary"
-        >
-          同时拥有["admin","editor"]角色的按钮
-        </el-button>
-        <el-button v-permissions="['test']" type="primary">
-          拥有["test"]角色的按钮
-        </el-button>
-      </el-form-item>
-      <el-form-item label="按钮级权限点">
-        <el-button v-permissions="{ ability: ['READ'] }" type="primary">
-          拥有["READ"]权限点的按钮
-        </el-button>
+          :size="device === 'mobile' ? 'mini' : 'small'"
+          @click="handleQuery"
+        >{{ translate('role', '查询') }}</el-button>
         <el-button
-          v-permissions="{ ability: ['READ'], mode: 'except' }"
+          :icon="device === 'mobile' ? '' : 'el-icon-delete'"
           type="danger"
-        >
-          未拥有["READ"]权限点的按钮
-        </el-button>
-        <el-button v-permissions="{ ability: ['WRITE'] }" type="primary">
-          拥有["WRITE"]权限点的按钮
-        </el-button>
+          :size="device === 'mobile' ? 'mini' : 'small'"
+          @click="handleDelete"
+        >{{ translate('role', '删除') }}</el-button>
         <el-button
-          v-permissions="{ ability: ['WRITE'], mode: 'except' }"
-          type="danger"
-        >
-          未拥有["WRITE"]权限点的按钮
-        </el-button>
-        <el-button v-permissions="{ ability: ['DELETE'] }" type="primary">
-          拥有["DELETE"]权限点的按钮
-        </el-button>
-        <el-button
-          v-permissions="{ ability: ['DELETE'], mode: 'except' }"
-          type="danger"
-        >
-          未拥有["DELETE"]权限点的按钮
-        </el-button>
-      </el-form-item>
-      <el-form-item label="按钮级角色&权限点">
-        <el-button
-          v-permissions="{ role: ['admin'], ability: ['DELETE'] }"
+          :icon="device === 'mobile' ? '' : 'el-icon-plus'"
           type="primary"
-        >
-          拥有["admin"]角色或者["DELETE"]权限点的按钮
-        </el-button>
+          :size="device === 'mobile' ? 'mini' : 'small'"
+          @click="handleAdd('group')"
+        >{{ translate('role', '添加组') }}</el-button>
         <el-button
-          v-permissions="{ role: ['editor'], ability: ['READ'], mode: 'allOf' }"
+          :icon="device === 'mobile' ? '' : 'el-icon-plus'"
           type="primary"
-        >
-          同时拥有editor和["READ"]权限点的按钮
-        </el-button>
-        <el-button
-          v-permissions="{
-            role: ['admin'],
-            ability: ['DELETE'],
-            mode: 'except'
-          }"
-          type="danger"
-        >
-          没有admin和["DELETE"]权限点的按钮
-        </el-button>
+          :size="device === 'mobile' ? 'mini' : 'small'"
+          @click="handleAdd('role')"
+        >{{ translate('role', '添加') }}</el-button>
       </el-form-item>
     </el-form>
-    <h3>intelligence模式(前端控制路由)</h3>
-    <p>前端根据roles角色和ability数组处理路由</p>
-    <h3>all模式(后端控制路由)</h3>
-    <p>
-      config/setting.config.js配置authentication为all即可路由交由后端控制,mock中有后端接口示例,角色繁琐,有几十种角色的项目直接用这种,
-      当开启rolesControl:true时前端也可以根据roles角色和ability数组处理路由
-    </p>
-    <el-row :gutter="20">
-      <el-col :span="24">
-        <el-table
-          :data="tableData"
-          :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-          border
-          default-expand-all
-          row-key="path"
-        >
-          <el-table-column
-            align="center"
-            label="name"
-            prop="name"
-            show-overflow-tooltip
-            width="220"
-          />
-          <el-table-column
-            align="center"
-            label="path"
-            prop="path"
-            show-overflow-tooltip
-            width="220"
-          />
-          <el-table-column
-            align="center"
-            label="component"
-            prop="component"
-            show-overflow-tooltip
-            width="220"
-          />
-          <el-table-column
-            align="center"
-            label="redirect"
-            prop="redirect"
-            show-overflow-tooltip
-            width="220"
-          />
-          <el-table-column
-            align="center"
-            label="title"
-            prop="meta.title"
-            show-overflow-tooltip
-          />
-          <el-table-column align="center" label="icon" show-overflow-tooltip>
-            <template #default="{ row }">
-              <span v-if="row.meta">
-                <svg-icon v-if="row.meta.icon" :icon-class="row.meta.icon" />
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column align="center" label="affix" show-overflow-tooltip>
-            <template #default="{ row }">
-              <span v-if="row.meta">
-                {{ row.meta.affix || false }}
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            align="center"
-            label="noKeepAlive"
-            show-overflow-tooltip
-            width="100"
-          >
-            <template #default="{ row }">
-              <span v-if="row.meta">
-                <template v-if="!row.meta.noKeepAlive">false</template>
-                <template v-else>true</template>
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column align="center" label="badge" show-overflow-tooltip>
-            <template #default="{ row }">
-              <span v-if="row.meta">
-                {{ row.meta.badge }}
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            align="center"
-            label="isCustomSvg"
-            show-overflow-tooltip
-            width="140"
-          >
-            <template #default="{ row }">
-              <span v-if="row.meta">
-                {{ row.meta.isCustomSvg || false }}
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            align="center"
-            label="tabHidden"
-            show-overflow-tooltip
-          >
-            <template #default="{ row }">
-              <span v-if="row.meta">
-                <template v-if="!row.meta.tabHidden">false</template>
-                <template v-else>true</template>
-              </span>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-col>
-    </el-row>
+    <el-table
+      ref="tableRef"
+      v-loading="listLoading"
+      :data="tableData"
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      border
+      default-expand-all
+      row-key="role"
+      @select="handleRowSelect"
+      @select-all="handleSelectAll"
+      @selection-change="handleSelectRows"
+    >
+      <el-table-column align="center" type="selection" width="55" />
+      <el-table-column
+        align="center"
+        :label="translate('role', 'ID')"
+        prop="id"
+        show-overflow-tooltip
+        width="55"
+      />
+      <el-table-column
+        align="left"
+        :label="translate('role', '角色名称')"
+        show-overflow-tooltip
+        width="auto"
+      >
+        <template v-if="device !== 'mobile'" #default="{ row }">
+          <span v-if="!row.edit">{{ row.role }}</span>
+          <el-form v-else ref="formRef" :model="editRow" :rules="formRules">
+            <el-form-item prop="role">
+              <el-input v-model="editRow.role"></el-input>
+            </el-form-item>
+          </el-form>
+        </template>
+        <template v-else #default="{ row }">
+          <span>{{ row.role }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        :label="translate('role', '角色组')"
+        show-overflow-tooltip
+        width="auto"
+      >
+        <template v-if="device !== 'mobile'" #default="{ row }">
+          <span v-if="!row.edit">{{ row.parentRole }}</span>
+          <el-form v-if="row.edit && row.parentRole" ref="formRef" :model="editRow" :rules="formRules">
+            <el-form-item prop="parentRole">
+              <el-select  v-model="editRow.parentRole">
+                <el-option v-for="item in rolesGroup" :key="item.role" :value="item.role" :label="item.role"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </template>
+        <template v-else #default="{ row }">
+          <span>{{ row.parentRole }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        width="auto"
+        :label="translate('role', '允许注册')"
+      >
+        <template #default="{ row }">
+          <span v-if="!row.edit && row.parentRole">{{ translate('role' ,row.register ? '是' : '否') }}</span>
+          <el-switch v-if="row.edit && row.parentRole" v-model="editRow.register"></el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        :label="translate('role', '备注')"
+        show-overflow-tooltip
+        width="auto"
+      >
+        <template v-if="device !== 'mobile'" #default="{ row }">
+          <span v-if="!row.edit">{{ row.label }}</span>
+          <el-form v-else ref="formRef" :model="editRow" :rules="formRules">
+            <el-form-item prop="label">
+              <el-input v-model="editRow.label"></el-input>
+            </el-form-item>
+          </el-form>
+        </template>
+        <template v-else #default="{ row }">
+          <span>{{ row.label }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        align="left"
+        width="140px"
+        :label="translate('role', '操作')"
+      >
+        <template #default="{ row }">
+          <el-button v-if="!row.edit && row.children" type="text" @click="handleAdd(row)">{{ translate('role', '添加') }}</el-button>
+          <el-button v-if="row.edit" type="text" @click="handleSave(row)">{{ translate('role', '保存') }}</el-button>
+          <el-button v-if="row.edit" type="text" @click="handleCancel(row)">{{ translate('role', '取消') }}</el-button>
+          <el-button v-if="!row.edit"  type="text" @click="handleDelete(row)">{{ translate('role', row.children ? '删除' : '删除') }}</el-button>
+          <el-button v-if="!row.edit"  type="text" @click="handleEdit(row)">{{ translate('role', '修改') }}</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination
+      :current-page="queryForm.pageNo"
+      :layout="device === 'mobile'? 'total, prev, next' : 'total, sizes, prev, pager, next, jumper' "
+      :page-sizes="[5, 10, 30, 50]"
+      :page-size="queryForm.pageSize"
+      :total="total"
+      background
+      @current-change="handleCurrentChange"
+      @size-change="handleSizeChange"
+    />
+    <role-management-edit ref="editRef" @fetch-data="fetchData"></role-management-edit>
+    <role-management-add ref="addRef" @fetch-data="fetchData"></role-management-add>
   </div>
 </template>
 
 <script>
-import {
-  authentication,
-  tokenTableName
-} from '@/config'
-import { getList } from '@/api/system/router'
-import { filterRoutes } from '@/utils/routes'
-import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
-
+import RoleManagementEdit from './components/edit'
+import RoleManagementAdd from './components/add'
+import { computed, getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
+import { getList, doDelete, doEdit } from '@/api/system/role'
+import { filterRoles } from '@/utils/roles'
+import { translate } from '@/utils/i18n'
+import { isStartWithCapitalLetter, isStartWithSmallLetter } from '@/utils/validate'
+import { useI18n } from 'vue-i18n'
 export default {
   name: 'RoleManagement',
+  components: {
+    RoleManagementEdit,
+    RoleManagementAdd
+  },
   setup() {
-    const { $store, $baseLoading, $baseMessage } = getCurrentInstance().appContext.config.globalProperties
-    const userInfo = computed(() => $store.state.user.userInfo)
-    const system = computed(() => $store.state.settings.system)
-    const role = computed(() => $store.state.acl.role)
-    const ability = computed(() => $store.state.acl.ability)
-    const form = reactive({
-      account: userInfo.value.username
+    const { $baseMessage, $baseConfirm, $store } = getCurrentInstance().appContext.config.globalProperties
+    const device = computed(() => $store.state.settings.device)
+    const editRef = ref(null)
+    const type = ref('')
+    const { t } = useI18n()
+    const formRef = ref(null)
+    const editRow = reactive({
+      id: '',
+      role: '',
+      parenRole: '',
+      register: '',
+      label: ''
+    })
+    const formRules = reactive({
+      label: [{ required: true, message: t('message.role.请输入备注'), trigger: 'change' }],
+      role: [
+        { required: true, message: t('message.role.请输入角色名称'), trigger: 'blur' },
+        {
+          validator: (_rule, value) => {
+            if (type.value === 'group') {
+              return isStartWithCapitalLetter(value) ? Promise.resolve() : Promise.reject(t('message.role.角色组名称需要为大写字母开头的英文字符串'))
+            } else {
+              return isStartWithSmallLetter(value) ? Promise.resolve() : Promise.reject(t('message.role.角色名称需要为小写字母开头的英文字符串'))
+            }
+          },
+          trigger: 'change'
+        }
+      ],
+      parentRole: [{ required: true, message: t('message.role.请选择角色组'), trigger: 'blur' }]
+    })
+    const addRef = ref(null)
+    const tableRef = ref(null)
+    const selectRows = ref([])
+    const rolesGroup = ref([])
+    const total = ref(0)
+    const listLoading = ref(true)
+    const queryForm = reactive({
+      role: '',
+      pageNo: 1,
+      pageSize: 5
     })
     const tableData = ref([])
-    const handleChangeRole = async(item) => {
-      if (!system.value.loginInterception) {
-        $baseMessage('您当前的登录拦截已关闭，无法模拟切换角色功能', 'error', false, 'element-hey-message-error')
-        form.account = userInfo.value.username
+    const fetchData = async() => {
+      listLoading.value = true
+      const { data, totalCount } = await getList(queryForm)
+      tableData.value = await filterRoles(data)
+      total.value = totalCount
+      listLoading.value = false
+    }
+    const handleDelete = (row) => {
+      if (row.role) {
+        let roles = row.role
+        if (row.children && row.children.length > 0) {
+          row.children.forEach((value) => {
+            roles = roles + ',' + value.role
+          })
+          $baseConfirm('message.role.删除角色组将会同时删除子角色，及路由权限中该角色的路由权限，是否确认删除', 'message.role.提示', async() => {
+            await doDelete({ roles: roles })
+            await fetchData()
+          })
+        } else {
+          $baseConfirm('message.role.你确定要删除当前项吗', 'message.role.提示', async() => {
+            await doDelete({ roles: roles })
+            await fetchData()
+          })
+        }
       } else {
-        $baseLoading(0, '正在切换账号请稍后...')
-        await localStorage.setItem(tokenTableName, `${item}-accessToken`)
-        await location.reload()
+        if (selectRows.value.length > 0) {
+          let roles = selectRows.value.map((item) => item.role).join()
+          selectRows.value.map((item) => {
+            if (item.children && item.children.length > 0) {
+              item.children.forEach((value) => {
+                roles = roles + ',' + value.role
+              })
+            }
+          })
+          $baseConfirm('你确定要删除选中项吗', '提示', async() => {
+            await doDelete({ roles: roles })
+            await fetchData()
+          })
+        } else {
+          $baseMessage('未选中任何行', 'error', false, 'element-hey-message-error')
+          return false
+        }
       }
     }
-    const fetchData = async() => {
-      const { data } = await getList()
-      tableData.value = filterRoutes([...data])
+    const handleRegister = async(row) => {
+      await doEdit(row)
     }
+    const handleAdd = (row) => {
+      addRef.value.open(row)
+    }
+    const handleSave = (row) => {
+      formRef.value.validate(async(valid) => {
+        if (!valid) return
+        await doEdit(editRow)
+        row.role = editRow.role
+        row.label = editRow.label
+        row.register = editRow.register
+        if (row.parentRole !== editRow.parentRole) {
+          await fetchData()
+        }
+        row.edit = false
+      })
+    }
+    const handleEdit = async(row) => {
+      if (device.value === 'mobile') {
+        editRef.value.open(row)
+      } else {
+        const { data } = await getList()
+        rolesGroup.value = data.map((role) => {
+          if (!role.parentRole) return role
+        })
+        tableRef.value.data.map((items) => {
+          if (items.children && items.children.length > 0) {
+            items.edit = false
+            items.children.map((item) => {
+              item.edit = false
+            })
+          } else {
+            items.edit = false
+          }
+        })
+        type.value = row.parentRole ? 'role' : 'group'
+        row.edit = true
+        Object.keys(row).forEach((key) => {
+          editRow[key] = row[key]
+        })
+        editRow.originRole = row.role
+      }
+    }
+    const handleCancel = (row) => {
+      row.edit = false
+    }
+    const handleQuery = () => {
+      queryForm.pageNo = 1
+      fetchData()
+    }
+    const handleRowSelect = (selection, row) => {
+      if (!row) return
+      if (row.children) {
+        if (!row.isChecked) {
+          row.children.map((item) => {
+            tableRef.value.toggleRowSelection(item, true) // 切换该子节点选中状态
+            item.isChecked = true
+          })
+          row.isChecked = true // 当前行isChecked标志元素切换为false
+        } else {
+          row.children.map((item) => {
+            tableRef.value.toggleRowSelection(item, false) // 切换该子节点选中状态
+            item.isChecked = false
+          })
+          row.isChecked = false // 当前行isChecked标志元素切换为false
+        }
+      }
+    }
+    const handleSelectAll = () => {
+      tableRef.value.data.map((items) => {
+        if (items.children) {
+          if (!items.isChecked) { // 若遍历出来的行未选中
+            tableRef.value.toggleRowSelection(items, true) // 行变为选中状态
+            items.isChecked = true // 更新标志参数
+            items.children.map((item) => { // 遍历子节点并改变状态与标志参数
+              tableRef.value.toggleRowSelection(item, true)
+              item.isChecked = true
+            })
+          } else { // 选中状态同理
+            tableRef.value.toggleRowSelection(items, false)
+            items.isChecked = false
+            items.children.map((item) => {
+              tableRef.value.toggleRowSelection(item, false)
+              item.isChecked = false
+            })
+          }
+        } else {
+          items.isChecked = !items.isChecked
+        }
+      })
+    }
+    const handleSelectRows = (val) => {
+      selectRows.value = val
+    }
+    const handleSizeChange = (val) => {
+      queryForm.pageSize = val
+      fetchData()
+    }
+    const handleCurrentChange = (val) => {
+      queryForm.pageNo = val
+      fetchData()
+    }
+    onActivated(() => {
+      fetchData()
+    })
     onMounted(() => {
       fetchData()
     })
     return {
-      form,
-      role,
-      ability,
+      total,
+      device,
+      addRef,
+      editRef,
+      editRow,
+      formRef,
+      tableRef,
       tableData,
-      authentication,
-      system,
-      handleChangeRole
+      queryForm,
+      formRules,
+      rolesGroup,
+      listLoading,
+      fetchData,
+      translate,
+      handleAdd,
+      handleSave,
+      handleEdit,
+      handleQuery,
+      handleDelete,
+      handleCancel,
+      handleRegister,
+      handleRowSelect,
+      handleSelectAll,
+      handleSizeChange,
+      handleSelectRows,
+      handleCurrentChange
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-::v-deep {
-  .el-button {
-    margin-right: 10px;
-  }
-
-  .el-button + .el-button {
-    margin-right: 10px;
-    margin-left: 0;
-  }
-
-  .el-form-item--small.el-form-item {
-    margin-bottom: 0;
-
-    .el-form-item__content {
-      > * {
-        margin-bottom: 10px;
-      }
-    }
+.roles-management-container {
+  .el-form {
+    text-align: right;
   }
 }
 </style>

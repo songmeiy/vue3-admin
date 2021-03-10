@@ -26,7 +26,7 @@ const demo = {
       component: () => import('@/views/demo/icon'),
       hidden: false,
       alwaysShow: false,
-      redirect: '/demo/icon/icons',
+      redirect: '/demo/icon/svg',
       meta: {
         title: '图标',
         isCustomSvg: true,
@@ -41,7 +41,7 @@ const demo = {
       },
       children: [
         {
-          path: 'icons',
+          path: 'svg',
           name: 'Svgs',
           hidden: false,
           alwaysShow: false,
@@ -62,7 +62,7 @@ const demo = {
           children: []
         },
         {
-          path: 'elementIcons',
+          path: 'element',
           name: 'ElementIcons',
           hidden: false,
           alwaysShow: false,
@@ -83,12 +83,12 @@ const demo = {
           children: []
         },
         {
-          path: 'iconSelector',
+          path: 'selector',
           name: 'IconSelector',
           hidden: false,
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/icon/iconSelector'),
+          component: () => import('@/views/demo/icon/selector'),
           meta: {
             title: '图标选择器',
             isCustomSvg: true,
@@ -511,14 +511,14 @@ const demo = {
       ]
     },
     {
-      path: 'ElementPlus',
-      name: 'ElementPlus',
+      path: 'element',
+      name: 'Element',
       hidden: false,
       alwaysShow: false,
-      component: () => import('@/views/demo/ElementPlus'),
+      component: () => import('@/views/demo/element'),
       redirect: '/demo/ElementPlus/message',
       meta: {
-        title: 'ElementPlus',
+        title: '组件',
         isCustomSvg: true,
         icon: 'element',
         roles: [],
@@ -536,7 +536,7 @@ const demo = {
           hidden: false,
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/ElementPlus/notification'),
+          component: () => import('@/views/demo/element/notification'),
           meta: {
             title: '通知',
             isCustomSvg: true,
@@ -557,7 +557,7 @@ const demo = {
           hidden: false,
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/ElementPlus/message'),
+          component: () => import('@/views/demo/element/message'),
           meta: {
             title: '消息提示',
             isCustomSvg: true,
@@ -578,9 +578,9 @@ const demo = {
           hidden: false,
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/ElementPlus/messageBox'),
+          component: () => import('@/views/demo/element/messageBox'),
           meta: {
-            title: 'messageBox',
+            title: '弹窗',
             isCustomSvg: true,
             icon: 'messageBox',
             roles: [],
@@ -599,7 +599,7 @@ const demo = {
           hidden: false,
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/ElementPlus/loading'),
+          component: () => import('@/views/demo/element/loading'),
           meta: {
             title: 'loading',
             isCustomSvg: true,
@@ -642,7 +642,7 @@ const demo = {
           hidden: false,
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/meta/meta'),
+          component: () => import('@/views/demo/meta/demo'),
           meta: {
             title: '测试',
             isCustomSvg: true,
@@ -658,12 +658,12 @@ const demo = {
           children: []
         },
         {
-          path: 'dynamicMeta',
+          path: 'dynamic',
           name: 'DynamicMeta',
           hidden: false,
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/meta/dynamicMeta'),
+          component: () => import('@/views/demo/meta/dynamic'),
           meta: {
             title: '动态Meta',
             roles: ['admin'],
@@ -684,7 +684,7 @@ const demo = {
           hidden: true,
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/meta/allHidden'),
+          component: () => import('@/views/demo/meta/all'),
           meta: {
             title: 'Menu&Tag',
             isCustomSvg: true,
@@ -705,7 +705,7 @@ const demo = {
           hidden: false,
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/meta/tagHidden'),
+          component: () => import('@/views/demo/meta/tag'),
           meta: {
             title: '隐藏Tag',
             isCustomSvg: true,
@@ -726,7 +726,7 @@ const demo = {
           hidden: true,
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/meta/menuHidden'),
+          component: () => import('@/views/demo/meta/menu'),
           meta: {
             title: '隐藏Menu',
             isCustomSvg: true,
@@ -744,12 +744,12 @@ const demo = {
       ]
     },
     {
-      path: 'dynamicSegment',
+      path: 'segment',
       name: 'DynamicSegment',
       hidden: false,
       alwaysShow: false,
       redirect: '',
-      component: () => import('@/views/demo/dynamicSegment/index'),
+      component: () => import('@/views/demo/segment'),
       meta: {
         title: '路由传参',
         isCustomSvg: true,
@@ -765,11 +765,11 @@ const demo = {
       children: [
         {
           path: 'index',
-          name: 'DynamicSegmentIndex',
+          name: 'DynamicSegmentDemo',
           hidden: false,
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/dynamicSegment/dynamicSegment'),
+          component: () => import('@/views/demo/segment/demo'),
           meta: {
             title: '路由传参',
             isCustomSvg: true,
@@ -789,7 +789,7 @@ const demo = {
           name: 'DynamicSegmentQuery',
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/dynamicSegment/query'),
+          component: () => import('@/views/demo/segment/query'),
           hidden: true,
           meta: {
             title: 'query',
@@ -810,7 +810,7 @@ const demo = {
           name: 'DynamicSegmentParam',
           alwaysShow: false,
           redirect: '',
-          component: () => import('@/views/demo/dynamicSegment/params'),
+          component: () => import('@/views/demo/segment/params'),
           hidden: true,
           meta: {
             title: 'params',

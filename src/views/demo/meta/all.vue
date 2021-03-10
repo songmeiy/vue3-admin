@@ -10,7 +10,7 @@
 import { getCurrentInstance } from 'vue'
 import { useRoute } from 'vue-router'
 export default {
-  name: 'AllHidden',
+  name: 'MetaAllHidden',
   setup() {
     const $route = useRoute()
     const { $store, $router } = getCurrentInstance().appContext.config.globalProperties

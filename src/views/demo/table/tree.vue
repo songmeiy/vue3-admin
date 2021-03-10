@@ -101,7 +101,7 @@ export default {
     const listLoading = ref(true)
     const list = ref([])
     const tableRef = ref(null)
-    const selectRows = ref('')
+    const selectRows = ref([])
     const queryForm = reactive({
       pageNo: 1,
       pageSize: 20,
@@ -109,7 +109,7 @@ export default {
     })
     const rowSelect = (selection, row) => {
       if (!row) return
-      if (row.children) {
+      if (row.children && row.children.length > 0) {
         if (!row.isChecked) {
           row.children.map((item) => {
             tableRef.value.toggleRowSelection(item, true) // 切换该子节点选中状态
@@ -123,11 +123,11 @@ export default {
           })
           row.isChecked = true // 当前行isChecked标志元素切换为false
         } else {
+          row.isChecked = false // 当前行isChecked标志元素切换为false
           row.children.map((item) => {
             tableRef.value.toggleRowSelection(item, false) // 切换该子节点选中状态
             item.isChecked = false
           })
-          row.isChecked = false // 当前行isChecked标志元素切换为false
         }
       }
     }
@@ -159,6 +159,7 @@ export default {
       fetchData()
     }
     const setSelectRows = (val) => {
+      console.log(val)
       selectRows.value = val
     }
     const handleDelete = (row) => {

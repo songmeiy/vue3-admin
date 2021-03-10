@@ -4,15 +4,18 @@ const roles = [
     role: 'User',
     label: '用户组',
     parentRole: '',
+    register: true,
     children: [{
       id: 2,
       role: 'admin',
       label: '管理员',
+      register: true,
       parentRole: 'User'
     }, {
       id: 3,
       role: 'editor',
       label: 'editor',
+      register: true,
       parentRole: 'User'
     }]
   },
@@ -21,10 +24,12 @@ const roles = [
     role: 'Develop',
     label: '测试组',
     parentRole: '',
+    register: true,
     children: [{
       id: 5,
       role: 'test',
       label: '测试用户',
+      register: true,
       parentRole: 'Develop'
     }]
   }

@@ -142,6 +142,16 @@
             />
           </template>
         </el-table>
+        <el-pagination
+          :current-page="queryForm.pageNo"
+          :layout="device === 'mobile'? 'total, prev, next' : 'total, sizes, prev, pager, next, jumper' "
+          :page-sizes="[5, 10, 30, 50]"
+          :page-size="queryForm.pageSize"
+          :total="total"
+          background
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
+        />
       </el-col>
     </el-row>
     <menu-management-edit ref="editRef" @fetch-data="fetchData"/>
@@ -150,7 +160,7 @@
 </template>
 
 <script>
-import { getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
+import { computed, getCurrentInstance, onActivated, onMounted, reactive, ref } from 'vue'
 import { getList as getRolesList } from '@/api/system/role'
 import { doDelete, getList as getRouterList } from '@/api/system/router'
 import MenuManagementEdit from './components/edit'
@@ -165,8 +175,10 @@ export default {
     const editRef = ref(null)
     const addRef = ref(null)
     const tableRef = ref(null)
-    const selectRows = ref('')
-    const { $baseConfirm, $baseMessage } = getCurrentInstance().appContext.config.globalProperties
+    const total = ref(0)
+    const selectRows = ref([])
+    const { $baseConfirm, $baseMessage, $store } = getCurrentInstance().appContext.config.globalProperties
+    const device = computed(() => $store.state.settings.device)
     const roleData = ref([])
     const defaultProps = reactive({
       children: 'children',
@@ -176,7 +188,10 @@ export default {
       selectRows.value = val
     }
     const queryForm = reactive({
-      role: ''
+      role: '',
+      name: '',
+      pageNo: 1,
+      pageSize: 5
     })
     const list = ref([])
     const listLoading = ref(true)
@@ -221,10 +236,15 @@ export default {
       addRef.value.open(type)
     }
     const handleEdit = (row) => {
-      editRef.value.open(row)
+      if (row.meta && !row.meta.parentName) {
+        editRef.value.open(row, 'layout')
+      } else {
+        editRef.value.open(row, 'menu')
+      }
     }
     const handleNodeClick = (item) => {
       queryForm.role = item.role
+      queryForm.pageNo = 1
       if (!item.children) {
         fetchData()
       } else if (item.children.length === 0) {
@@ -233,8 +253,9 @@ export default {
     }
     const fetchData = async() => {
       listLoading.value = true
-      const { data } = await getRouterList(queryForm)
+      const { data, totalCount } = await getRouterList(queryForm)
       list.value = data
+      total.value = totalCount
       listLoading.value = false
     }
     const rowSelect = (selection, row) => {
@@ -284,30 +305,45 @@ export default {
         }
       })
     }
-    onActivated(() => {
+    const handleSizeChange = (val) => {
+      queryForm.pageSize = val
       fetchData()
+    }
+    const handleCurrentChange = (val) => {
+      queryForm.pageNo = val
+      fetchData()
+    }
+    onActivated(async() => {
+      const { data } = await getRolesList({ role: '' })
+      roleData.value = data
+      await fetchData()
     })
     onMounted(async() => {
-      const { data } = await getRolesList()
+      const { data } = await getRolesList({ role: '' })
       roleData.value = data
       await fetchData()
     })
     return {
+      list,
+      total,
+      device,
       addRef,
       editRef,
       tableRef,
       roleData,
-      defaultProps,
-      list,
+      queryForm,
       listLoading,
+      defaultProps,
+      handleAdd,
       rowSelect,
       selectAll,
       fetchData,
-      handleDelete,
       handleEdit,
-      handleAdd,
+      handleDelete,
       setSelectRows,
-      handleNodeClick
+      handleNodeClick,
+      handleSizeChange,
+      handleCurrentChange
     }
   }
 }

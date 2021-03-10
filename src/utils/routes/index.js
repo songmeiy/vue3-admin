@@ -37,7 +37,7 @@ export function convertRouter(asyncRoutes) {
  */
 export function filterRoutes(routes, rolesControl = system.value.rolesControl, baseUrl = '/') {
   return routes.filter((route) => {
-    if (rolesControl && route.meta && route.meta.roles) {
+    if (rolesControl && route.meta && route.meta.roles && route.meta.roles.length > 0) {
       return hasAccess(route.meta.roles)
     } else {
       return true

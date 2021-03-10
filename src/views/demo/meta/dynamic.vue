@@ -59,7 +59,7 @@ import ElementIconSelector from '@/components/ElementIconSelector'
 import { useRoute } from 'vue-router'
 import { getCurrentInstance, ref } from 'vue'
 export default {
-  name: 'DynamicMeta',
+    name: 'DynamicMeta',
   components: { ElementIconSelector },
   setup() {
     const { $store } = getCurrentInstance().appContext.config.globalProperties
@@ -84,6 +84,7 @@ export default {
       changeMenuMeta({ name, meta })
     }
     const handleMeta = (name, meta) => {
+      console.log(meta)
       if (meta.title) getPageTitle(meta.title)
       changeMenuMeta({ name, meta })
       changeTabsMeta({ name, meta })

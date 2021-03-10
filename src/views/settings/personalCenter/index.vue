@@ -50,8 +50,8 @@
                       <el-option :value="2" :label="translate('user', '女')" />
                     </el-select>
                   </el-form-item>
-                  <el-form-item :label="translate('user', '邮箱')" prop="email">
-                    <el-input v-model="userInfo.email" :disabled="userInfo.bindedEmail"/>
+                  <el-form-item v-if="!userInfo.bindingEmail" :label="translate('user', '邮箱')" prop="email">
+                    <el-input v-model="userInfo.email" :disabled="userInfo.bindingEmail"/>
                   </el-form-item>
                   <el-form-item :value="0" :label="translate('user', '个性标签')" prop="personality">
                     <el-tooltip :content="translate('user', '每条标签中间用逗号隔开')" effect="dark">
@@ -73,10 +73,10 @@
                 <div class="personal-center-item-content">
                   <div>{{ translate('user', '绑定邮箱') }}</div>
                   <div class="personal-center-item-content-second">
-                    {{ userInfo.bindedEmail ? userInfo.email : '未绑定邮箱' }}
+                    {{ userInfo.bindingEmail ? userInfo.email : '未绑定邮箱' }}
                   </div>
                 </div>
-                <el-button type="text" @click="openEmailDialog">{{ translate('user', userInfo.bindedEmail ? '更换邮箱' : '绑定邮箱') }}</el-button>
+                <el-button type="text" @click="openEmailDialog">{{ translate('user', userInfo.bindingEmail ? '更换邮箱' : '绑定邮箱') }}</el-button>
               </div>
               <el-divider />
             </el-tab-pane>
@@ -100,7 +100,7 @@
     <EmailDialog ref="emailDialogRef"></EmailDialog>
     <ElementCropper
       v-if="cropperVisible"
-      :action="baseURL + '/user/uploadAvatar'"
+      :action="baseURL + 'user/uploadAvatar'"
       :image-path="imagePath"
       :headers="headers"
       auto-upload
@@ -155,7 +155,7 @@ export default {
         { required: true, message: translate('user', 'message.user.邮箱不能为空'), trigger: 'blur' },
         {
           validator: async(_rule, value) => {
-            if (userInfo.value.bindedEmail) return Promise.reject(t('message.user.已绑定的邮箱不能修改'))
+            if (userInfo.value.bindingEmail) return Promise.reject(t('message.user.已绑定的邮箱不能修改'))
             else if (!isEmail(value)) return Promise.reject(t('message.user.请输入正确的邮箱'))
             return Promise.resolve()
           },
@@ -188,12 +188,6 @@ export default {
     const openEmailDialog = () => {
       emailDialogRef.value.open()
     }
-    onActivated(() => {
-      $store.dispatch('user/getUserInfo')
-    })
-    onMounted(() => {
-      $store.dispatch('user/getUserInfo')
-    })
     // 头像上传
     const accessToken = computed(() => $store.state.user.accessToken)
     const { tokenName, baseURL } = defaultConfig
@@ -209,11 +203,11 @@ export default {
       state.cropperVisible = true
     }
     const handleAvatarSuccess = () => {
-      $baseMessage('message.user.模拟上传成功', 'success', false, 'element-hey-message-success')
+      $baseMessage('message.user.上传成功', 'success', false, 'element-hey-message-success')
       $store.dispatch('user/getUserInfo')
     }
     const handleAvatarFail = (res) => {
-      $baseMessage('message.user.模拟上传失败', 'error', false, 'element-hey-message-error')
+      $baseMessage('message.user.上传失败', 'error', false, 'element-hey-message-error')
       $store.dispatch('errorLog/addErrorLog', res.message)
     }
     const onSave = (res) => {
@@ -228,30 +222,35 @@ export default {
     const onCancel = () => {
       state.cropperVisible = false
     }
-
+    onActivated(() => {
+      $store.dispatch('user/getUserInfo')
+    })
+    onMounted(() => {
+      $store.dispatch('user/getUserInfo')
+    })
     return {
-      ...toRefs(state),
-      onChange,
-      handleAvatarSuccess,
-      handleAvatarFail,
-      onCancel,
-      onSave,
-      device,
-      headers,
-      uploadRef,
-      userInfo,
-      avatar,
-      formRef,
+      roles,
       rules,
+      avatar,
+      device,
+      baseURL,
+      headers,
+      formRef,
+      userInfo,
+      uploadRef,
       activeName,
       personality,
-      onSubmit,
-      openEmailDialog,
-      translate,
-      tabClick,
       emailDialogRef,
-      baseURL,
-      roles
+      onSave,
+      onChange,
+      tabClick,
+      onCancel,
+      onSubmit,
+      translate,
+      openEmailDialog,
+      ...toRefs(state),
+      handleAvatarFail,
+      handleAvatarSuccess
     }
   }
 }

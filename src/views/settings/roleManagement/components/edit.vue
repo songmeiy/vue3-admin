@@ -22,6 +22,9 @@
         <el-form-item :label="translate('role', '角色名称')" prop="role">
           <el-input v-model="editForm.role"></el-input>
         </el-form-item>
+        <el-form-item v-if="type !== 'group'" :label="translate('role', '允许注册')" prop="parentRole">
+          <el-switch v-model="editForm.register"></el-switch>
+        </el-form-item>
         <el-form-item :label="translate('role', '备注')" prop="label">
           <el-input v-model="editForm.label"></el-input>
         </el-form-item>
@@ -56,10 +59,11 @@ export default {
       id: '',
       label: '',
       parentRole: '',
+      register: '',
       role: ''
     })
     const editFormRules = reactive({
-      label: [{ required: true, message: t('message.role.请输入备注'), trigger: 'blur' }],
+      label: [{ required: true, message: t('message.role.请输入备注'), trigger: 'change' }],
       role: [
         { required: true, message: t('message.role.请输入角色名称'), trigger: 'blur' },
         {
@@ -85,6 +89,7 @@ export default {
       Object.keys(row).forEach((key) => {
         editForm[key] = row[key]
       })
+      editForm.originRole = row.role
       dialogFormVisible.value = true
     }
     const close = () => {
@@ -133,9 +138,9 @@ export default {
         border-bottom: solid 2px #eee !important;
         text-align: left;
       }
-      .el-dialog__body{
-        padding: 20px 20px !important;
-      }
+    }
+    .el-dialog__body{
+      padding: 20px 20px 0 20px !important;
     }
     .el-input-group__prepend {
       width: 120px;

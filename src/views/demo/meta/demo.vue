@@ -10,7 +10,7 @@
 import { getCurrentInstance } from 'vue'
 
 export default {
-  name: 'MetaIndex',
+  name: 'MetaDemo',
   setup() {
     const { $router } = getCurrentInstance().appContext.config.globalProperties
     const openMenuHidden = () => {

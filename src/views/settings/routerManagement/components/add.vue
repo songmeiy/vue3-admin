@@ -270,7 +270,7 @@
 
 <script>
 import ElementIconSelector from '@/components/ElementIconSelector'
-import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue'
+import { computed, getCurrentInstance, reactive, ref } from 'vue'
 import { getList as getComponentsList } from '@/api/system/components'
 import { getList as getRolesList } from '@/api/system/role'
 import { getList as getRouterList, doAdd } from '@/api/system/router'
@@ -285,7 +285,7 @@ export default {
   setup(props, { emit }) {
     const { $store } = getCurrentInstance().appContext.config.globalProperties
     const device = computed(() => $store.state.settings.device)
-    const selectComponents = ref('')
+    const selectComponents = ref([])
     const selectRoles = ref([])
     const selectName = ref([])
     const type = ref('')
@@ -378,11 +378,18 @@ export default {
     const tabClick = (item) => {
       tabName.value = item.props.name
     }
-    const open = (row) => {
+    const open = async(row) => {
+      const selectComponentsResponse = await getComponentsList()
+      selectComponents.value = selectComponentsResponse.data
+      const selectRolesResponse = await getRolesList()
+      selectRoles.value = selectRolesResponse.data
+      const selectNameResponse = await getRouterList()
+      await filterSelectName(selectNameResponse.data)
       if (row === 'layout') {
         type.value = 'layout'
         title.value = '添加一级菜单'
         form.component = 'Layout'
+        form.parentName = ''
       } else if (row === 'menu') {
         title.value = '添加子菜单'
         form.component = ''
@@ -398,6 +405,9 @@ export default {
       type.value = ''
       title.value = ''
       formRef.value.resetFields()
+      selectName.value = []
+      selectRoles.value = []
+      selectComponents.value = []
       dialogFormVisible.value = false
     }
     const submitForm = () => {
@@ -414,34 +424,26 @@ export default {
         if (item.children && item.children.length > 0) filterSelectName(item.children)
       })
     }
-    onMounted(async() => {
-      const selectComponentsResponse = await getComponentsList()
-      selectComponents.value = selectComponentsResponse.data
-      const selectRolesResponse = await getRolesList()
-      selectRoles.value = selectRolesResponse.data
-      const selectNameResponse = await getRouterList()
-      await filterSelectName(selectNameResponse.data)
-    })
     return {
       form,
       type,
-      title,
-      tabName,
-      defaultProps,
-      dialogFormVisible,
-      rolesTreeRef,
       rules,
-      formRef,
+      title,
       device,
-      submitForm,
-      handleIcon,
-      tabClick,
+      tabName,
+      formRef,
+      selectName,
+      selectRoles,
+      rolesTreeRef,
+      defaultProps,
+      selectComponents,
+      dialogFormVisible,
       open,
       close,
+      tabClick,
       translate,
-      selectComponents,
-      selectRoles,
-      selectName,
+      submitForm,
+      handleIcon,
       handleCheck
     }
   }
@@ -458,17 +460,28 @@ export default {
 <style lang="scss" scoped>
 .add {
   :deep {
-    .el-dialog {
+    .el-dialog{
       border-radius: 5px;
-
-      .el-dialog__header {
+      .el-dialog__header{
         border-bottom: solid 2px #eee !important;
         text-align: left;
       }
-
-      .el-dialog__body {
-        padding: 20px 20px !important;
+    }
+    .el-dialog__body{
+      padding: 20px 20px 0 20px !important;
+    }
+    .el-input-group__prepend {
+      width: 120px;
+      padding: 0;
+      .el-select {
+        width: 100%;
       }
+    }
+    .el-input-group__append {
+      width: 40px;
+    }
+    .el-select {
+      width: 100%;
     }
   }
   .menu-form {
